@@ -1,0 +1,25 @@
+<suite name="becaons_web_console_test_suite">
+    <test name="test">
+        <!--Parameters for TC001-->
+        <parameter name="emailTC001" value="antodoms@gmail.com"/>
+        <parameter name="passwordTC001" value="password"/>
+        <!--Parameters for TC002-->
+        <parameter name="emailTC002" value="abc@abc.com"/>
+        <parameter name="passwordTC002" value="123456"/>
+        <!--Parameters for TC003-->
+        <parameter name="emailTC003" value="antodoms@gmail.com"/>
+        <parameter name="passwordTC003" value=""/>
+        <!--Parameters for TC004-->
+        <parameter name="emailTC004" value=""/>
+        <parameter name="passwordTC004" value="password"/>
+        <!--Parameters for TC005-->
+        <parameter name="emailTC005" value=""/>
+        <parameter name="passwordTC005" value=""/>
+        <!--Parameters for TC006-->
+        <parameter name="passwordTC006" value="123456"/>
+
+        <classes>
+            <class name="com.company.LoginPageTest"/>
+        </classes>
+    </test>
+</suite>
