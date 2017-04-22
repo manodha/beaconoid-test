@@ -26,6 +26,7 @@ public class LoginPage extends PageObject {
     public void enterEmail(String email) {
         this.emailTextField.clear();
         this.emailTextField.sendKeys(email);
+
     }
 
     public void enterPassword(String password) {
