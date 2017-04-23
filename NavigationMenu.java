@@ -19,7 +19,7 @@ public class NavigationMenu extends PageObject {
     private WebElement logoutLink;
 
     //Selenium Reference to the dashboard link
-    @FindBy(partialLinkText = "Beacon Web Portal")
+    @FindBy(partialLinkText = "Beaconoid")
     private WebElement beconsWebConsoleLink;
 
     @FindBy(partialLinkText = "Dashboard")
@@ -62,8 +62,9 @@ public class NavigationMenu extends PageObject {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", dashboardLink);
     }
 
-    public void clickStoresLink() {
+    public StoresPage clickStoresLink() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", storesLink);
+        return new StoresPage(webDriver);
     }
 
     public void clickCatogoriesLink() {

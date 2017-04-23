@@ -3,12 +3,15 @@
         <!--Parameters for TC001-->
         <parameter name="emailTC001" value="antodoms@gmail.com"/>
         <parameter name="passwordTC001" value="password"/>
+
         <!--Parameters for TC002-->
         <parameter name="emailTC002" value="abc@abc.com"/>
         <parameter name="passwordTC002" value="123456"/>
+
         <!--Parameters for TC003-->
         <parameter name="emailTC003" value="antodoms@gmail.com"/>
         <parameter name="passwordTC003" value=""/>
+
         <!--Parameters for TC004-->
         <parameter name="emailTC004" value=""/>
         <parameter name="passwordTC004" value="password"/>

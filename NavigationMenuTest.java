@@ -1,5 +1,6 @@
 package com.company;
 
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -12,21 +13,20 @@ import static org.junit.Assert.assertEquals;
 public class NavigationMenuTest extends FunctionalTest {
 
     private NavigationMenu navigationMenu;
-    private LoginPage loginPage;
+
+    @BeforeTest
+    @Parameters({"email", "password"})
+    public void accessNavigationMenu(String email, String password) {
+        navigationMenu = loginToBeaconoid(email, password);
+    }
 
     @Test(testName = "TC008", priority = 1)
-    @Parameters({"email", "password"})
-    public void isLoggedIn(String email, String password) {
-        webDriver.get(loginUrl);
-        LoginPage loginPage = new LoginPage(webDriver);
-        loginPage.enterEmail(email);
-        loginPage.enterPassword(password);
-        navigationMenu = loginPage.login();
-        assertEquals("Signed in successfully.", navigationMenu.getSuccessAlertText());
+    public void isDashboard() {
+        assertEquals(baseUrl, webDriver.getCurrentUrl());
     }
 
     @Test(testName = "TC009", priority = 2)
-    public void clickBeaconsWebConcsole() {
+    public void clickBeaconoid() {
         assertEquals(baseUrl, webDriver.getCurrentUrl());
         navigationMenu.clickBeconsWebConsole();
         assertEquals(dashboardUrl, webDriver.getCurrentUrl());
@@ -48,7 +48,7 @@ public class NavigationMenuTest extends FunctionalTest {
     @Test(testName = "TC012", priority = 5)
     public void clickCatogories() {
         navigationMenu.clickCatogoriesLink();
-        assertEquals(catogoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
     }
 
     @Test(testName = "TC013", priority = 6)
@@ -65,7 +65,7 @@ public class NavigationMenuTest extends FunctionalTest {
 
     @Test(testName = "TC015", priority = 8)
     public void clickLogout() {
-        loginPage = navigationMenu.clickLogoutLink();
+        LoginPage loginPage = navigationMenu.clickLogoutLink();
         try {
             Thread.sleep(20000);
         } catch (InterruptedException e) {

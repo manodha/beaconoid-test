@@ -4,9 +4,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by manodha on 27/3/17.
@@ -14,11 +17,11 @@ import java.util.concurrent.TimeUnit;
 public class FunctionalTest {
 
     protected static WebDriver webDriver;
-    protected static String baseUrl = "http://52.36.35.170:3000/";
+    protected static String baseUrl = "https://www.beaconoid.me/";
     protected static String loginUrl = baseUrl + "users/sign_in";
     protected static String dashboardUrl = baseUrl + "dashboard";
     protected static String storesUrl = baseUrl + "stores";
-    protected static String catogoriesUrl = baseUrl + "categories";
+    protected static String categoriesUrl = baseUrl + "categories";
     protected static String beaconsUrl = baseUrl + "beacons";
     protected static String advertisementsUrl = baseUrl + "advertisements";
   /*  protected static String settingsUrl = baseUrl + ""*/
@@ -28,6 +31,13 @@ public class FunctionalTest {
         System.setProperty("webdriver.gecko.driver", "/Users/manodha/Selenium Web Driver/geckodriver");
         webDriver = new FirefoxDriver();
         webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
+
+    @AfterSuite
+    public static void tearDown() {
+        webDriver.manage().deleteAllCookies();
+        webDriver.close();
+        webDriver.quit();
     }
 
     @AfterMethod
@@ -52,11 +62,13 @@ public class FunctionalTest {
         }
     }
 
-    /*@AfterSuite
-    public static void tearDown(){
-        webDriver.manage().deleteAllCookies();
-        webDriver.close();
-        webDriver.quit();
-    }*/
-
+    public NavigationMenu loginToBeaconoid(String email, String password) {
+        webDriver.get(loginUrl);
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
+        NavigationMenu navigationMenu = loginPage.login();
+        assertEquals("Signed in successfully.", navigationMenu.getSuccessAlertText());
+        return navigationMenu;
+    }
 }
