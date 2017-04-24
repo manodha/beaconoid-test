@@ -1,5 +1,7 @@
 package com.company;
 
+import org.openqa.selenium.WebElement;
+
 /**
  * Created by manodha on 24/4/17.
  */
@@ -8,18 +10,15 @@ public class Beacons {
     private String name;
     private String storeName;
     private String status;
-    private String advertisementsLink;
-    private String editLink;
-    private String deleteLink;
+    private WebElement advertisementsLink;
+    private WebElement editLink;
+    private WebElement deleteLink;
 
     public Beacons() {
         this.uniqueRef = "";
         this.name = "";
         this.storeName = "";
         this.status = "";
-        this.advertisementsLink = "";
-        this.editLink = "";
-        this.deleteLink = "";
     }
 
     public Beacons(String uniqueRef, String name, String storeName, String status) {
@@ -27,9 +26,6 @@ public class Beacons {
         this.name = name;
         this.storeName = storeName;
         this.status = status;
-        this.advertisementsLink = "";
-        this.editLink = "";
-        this.deleteLink = "";
     }
 
     public String getUniqueRef() {
@@ -64,27 +60,27 @@ public class Beacons {
         this.status = status;
     }
 
-    public String getAdvertisementsLink() {
+    public WebElement getAdvertisementsLink() {
         return advertisementsLink;
     }
 
-    public void setAdvertisementsLink(String advertisementsLink) {
+    public void setAdvertisementsLink(WebElement advertisementsLink) {
         this.advertisementsLink = advertisementsLink;
     }
 
-    public String getEditLink() {
+    public WebElement getEditLink() {
         return editLink;
     }
 
-    public void setEditLink(String editLink) {
+    public void setEditLink(WebElement editLink) {
         this.editLink = editLink;
     }
 
-    public String getDeleteLink() {
+    public WebElement getDeleteLink() {
         return deleteLink;
     }
 
-    public void setDeleteLink(String deleteLink) {
+    public void setDeleteLink(WebElement deleteLink) {
         this.deleteLink = deleteLink;
     }
 }

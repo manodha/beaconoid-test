@@ -1,5 +1,7 @@
 package com.company;
 
+import org.openqa.selenium.WebElement;
+
 /**
  * Created by manodha on 23/4/17.
  */
@@ -7,6 +9,8 @@ public class Stores {
     private String name;
     private String storeCode;
     private String imgUrl;
+    private WebElement editLink;
+    private WebElement deleteBtn;
 
     public Stores(String name, String storeCode, String imgUrl) {
         this.name = name;
@@ -43,5 +47,21 @@ public class Stores {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public WebElement getEditLink() {
+        return editLink;
+    }
+
+    public void setEditLink(WebElement editLink) {
+        this.editLink = editLink;
+    }
+
+    public WebElement getDeleteBtn() {
+        return deleteBtn;
+    }
+
+    public void setDeleteBtn(WebElement deleteBtn) {
+        this.deleteBtn = deleteBtn;
     }
 }

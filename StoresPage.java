@@ -51,6 +51,8 @@ public class StoresPage extends PageObject {
             Stores store = new Stores();
             store.setName(storeRows.get(i).findElement(By.xpath("td[2]")).getText());
             store.setStoreCode(storeRows.get(i).findElement(By.xpath("td[3]")).getText());
+            store.setEditLink(storeRows.get(i).findElement(By.xpath("td[4]/a")));
+            store.setDeleteBtn(storeRows.get(i).findElement(By.xpath("td[5]/form/input[@type='submit']")));
             stores.add(store);
         }
         return stores;
@@ -85,6 +87,16 @@ public class StoresPage extends PageObject {
 
     public void clickCreateStore() {
         createStoreBtn.click();
+    }
+
+    public void deleteStore(String storeName, String storeUniqueCode) {
+        List<Stores> stores = getAllStores();
+        for (Stores store : stores) {
+            if (store.getName().equals(storeName) && store.getStoreCode().equals(storeUniqueCode)) {
+                WebElement deleteBtn = store.getDeleteBtn();
+                deleteBtn.click();
+            }
+        }
     }
 
 
