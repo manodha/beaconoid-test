@@ -14,6 +14,12 @@ public class Stores {
         this.imgUrl = imgUrl;
     }
 
+    public Stores() {
+        this.name = "";
+        this.storeCode = "";
+        this.imgUrl = "";
+    }
+
 
     public String getName() {
         return name;

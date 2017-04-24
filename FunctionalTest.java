@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import java.util.concurrent.TimeUnit;
@@ -21,6 +20,7 @@ public class FunctionalTest {
     protected static String loginUrl = baseUrl + "users/sign_in";
     protected static String dashboardUrl = baseUrl + "dashboard";
     protected static String storesUrl = baseUrl + "stores";
+    protected static String addStoreUrl = baseUrl + "stores/new";
     protected static String categoriesUrl = baseUrl + "categories";
     protected static String beaconsUrl = baseUrl + "beacons";
     protected static String advertisementsUrl = baseUrl + "advertisements";
@@ -33,12 +33,12 @@ public class FunctionalTest {
         webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterSuite
+    /*@AfterSuite
     public static void tearDown() {
         webDriver.manage().deleteAllCookies();
         webDriver.close();
         webDriver.quit();
-    }
+    }*/
 
     @AfterMethod
     public void printResult(ITestResult result) {
