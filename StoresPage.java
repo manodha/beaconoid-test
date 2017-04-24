@@ -79,6 +79,10 @@ public class StoresPage extends PageObject {
         storeUniqueIdTxt.sendKeys(storeUniqueId);
     }
 
+    public void enterImgUrl(String imgUrl) {
+        storeImgUrlTxt.sendKeys(imgUrl);
+    }
+
     public void clickCreateStore() {
         createStoreBtn.click();
     }

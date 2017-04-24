@@ -19,7 +19,7 @@ public class StoresPageTest extends FunctionalTest {
     private NavigationMenu navigationMenu;
     private StoresPage storesPage;
 
-    @BeforeTest(description = "Login in to the Beaconoid and acessing the stores page")
+    @BeforeTest(description = "Login in to the Beaconoid and accessing the stores page")
     @Parameters({"email", "password"})
     public void accessStoresPage(String email, String password) {
         navigationMenu = loginToBeaconoid(email, password);
@@ -27,13 +27,14 @@ public class StoresPageTest extends FunctionalTest {
         assertEquals(storesUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(testName = "TC017 - Check if a store can be created with valid input")
-    @Parameters({"storeName", "storeUniqueCode"})
-    public void addNewStoreTC017(String storeName, String storeUniqueCode) {
+    @Test(testName = "TC017 - Check if a store can be created with all the fields filled")
+    @Parameters({"storeName", "storeUniqueCode", "imgUrl"})
+    public void addNewStoreTC017(String storeName, String storeUniqueCode, String imgUrl) {
         storesPage.clickNewStore();
         assertEquals(addStoreUrl, webDriver.getCurrentUrl());
         storesPage.enterStoreName(storeName);
         storesPage.enterStoreUniqueId(storeUniqueCode);
+        storesPage.enterImgUrl(imgUrl);
         storesPage.clickCreateStore();
 
         try {
