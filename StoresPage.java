@@ -32,7 +32,7 @@ public class StoresPage extends PageObject {
     private WebElement storeImgUrlTxt;
 
     @FindBy(name = "commit")
-    private WebElement createStoreBtn;
+    private WebElement createUpdateStoreBtn;
 
     public StoresPage(WebDriver driver) {
         super(driver);
@@ -74,37 +74,38 @@ public class StoresPage extends PageObject {
     }
 
     public void enterStoreName(String name) {
+        storeNameTxt.clear();
         storeNameTxt.sendKeys(name);
     }
 
     public void enterStoreUniqueId(String storeUniqueId) {
+        storeUniqueIdTxt.clear();
         storeUniqueIdTxt.sendKeys(storeUniqueId);
     }
 
     public void enterImgUrl(String imgUrl) {
+        storeImgUrlTxt.clear();
         storeImgUrlTxt.sendKeys(imgUrl);
     }
 
-    public void clickCreateStore() {
-        createStoreBtn.click();
+    public void clickCreateUpdateStore() {
+        createUpdateStoreBtn.click();
     }
 
-    public void deleteStore(List<Stores> stores, String storeName, String storeUniqueCode) {
-        if (stores.size() == 0)
-            return;
-        for (Stores store : stores) {
-            if (store.getName().equals(storeName) && store.getStoreCode().equals(storeUniqueCode)) {
-                store.getDeleteBtn().click();
-                webDriver.switchTo().alert().accept();
-            }
-        }
+    public void clickEditButton(Stores stores) {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", stores.getEditLink());
+    }
+
+    public void clickDeleteButton(WebElement deleteButton) {
+        deleteButton.click();
+        webDriver.switchTo().alert().accept();
     }
 
     public void createStore(String storeName, String storeUniqueCode, String imgUrl) {
         enterStoreName(storeName);
         enterStoreUniqueId(storeUniqueCode);
         enterImgUrl(imgUrl);
-        clickCreateStore();
+        clickCreateUpdateStore();
     }
 
 

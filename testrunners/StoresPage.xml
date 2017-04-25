@@ -4,6 +4,9 @@
     <parameter name="storeName" value="Hungry Jacks Hallam"/>
     <parameter name="storeUniqueCode" value="HJ001"/>
     <parameter name="imgUrl" value="https://beaconoid.me/test.jpg"/>
+    <parameter name="storeNameNew" value="Hungry Jacks Dandenong"/>
+    <parameter name="storeUniqueCodeNew" value="HJ002"/>
+    <parameter name="imgUrlNew" value="https://beaconoid.me/test1.jpg"/>
     <test name="test">
         <classes>
             <class name="com.company.StoresPageTest"/>
