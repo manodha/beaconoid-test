@@ -89,14 +89,22 @@ public class StoresPage extends PageObject {
         createStoreBtn.click();
     }
 
-    public void deleteStore(String storeName, String storeUniqueCode) {
-        List<Stores> stores = getAllStores();
+    public void deleteStore(List<Stores> stores, String storeName, String storeUniqueCode) {
+        if (stores.size() == 0)
+            return;
         for (Stores store : stores) {
             if (store.getName().equals(storeName) && store.getStoreCode().equals(storeUniqueCode)) {
-                WebElement deleteBtn = store.getDeleteBtn();
-                deleteBtn.click();
+                store.getDeleteBtn().click();
+                webDriver.switchTo().alert().accept();
             }
         }
+    }
+
+    public void createStore(String storeName, String storeUniqueCode, String imgUrl) {
+        enterStoreName(storeName);
+        enterStoreUniqueId(storeUniqueCode);
+        enterImgUrl(imgUrl);
+        clickCreateStore();
     }
 
 
