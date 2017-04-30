@@ -3,7 +3,7 @@
     <parameter name="password" value="password"/>
     <test name="test">
         <classes>
-            <class name="com.company.NavigationMenuTest"/>
+            <class name="com.company.controller.NavigationMenuTest"/>
         </classes>
     </test>
 </suite>

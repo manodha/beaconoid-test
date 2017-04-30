@@ -1,5 +1,6 @@
-package com.company;
+package com.company.view;
 
+import com.company.model.Beacons;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

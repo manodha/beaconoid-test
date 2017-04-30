@@ -1,5 +1,8 @@
-package com.company;
+package com.company.controller;
 
+import com.company.model.Category;
+import com.company.view.CategoryPage;
+import com.company.view.NavigationMenu;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;

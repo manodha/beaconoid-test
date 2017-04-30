@@ -1,5 +1,6 @@
-package com.company;
+package com.company.controller;
 
+import com.company.view.NavigationMenu;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -61,17 +62,21 @@ public class NavigationMenuTest extends FunctionalTest {
     public void clickAdvertisements() {
         navigationMenu.clickAdvertisementsLink();
         assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test(testName = "TC015", priority = 8)
     public void clickLogout() {
-        LoginPage loginPage = navigationMenu.clickLogoutLink();
+        navigationMenu.clickLogoutLink();
         try {
-            Thread.sleep(20000);
+            Thread.sleep(waitMilliSeconds * 2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         assertEquals(loginUrl, webDriver.getCurrentUrl());
     }
 

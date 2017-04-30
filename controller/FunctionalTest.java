@@ -1,5 +1,7 @@
-package com.company;
+package com.company.controller;
 
+import com.company.view.LoginPage;
+import com.company.view.NavigationMenu;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;

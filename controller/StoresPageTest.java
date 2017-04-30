@@ -1,5 +1,10 @@
-package com.company;
+package com.company.controller;
 
+import com.company.model.Beacons;
+import com.company.model.Stores;
+import com.company.view.BeaconsPage;
+import com.company.view.NavigationMenu;
+import com.company.view.StoresPage;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;

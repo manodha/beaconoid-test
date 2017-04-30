@@ -1,4 +1,4 @@
-package com.company;
+package com.company.view;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
