@@ -9,6 +9,8 @@ import org.openqa.selenium.support.FindBy;
  */
 public class LoginPage extends PageObject {
 
+    private WebDriver webDriver;
+
     @FindBy(id = "user_email")
     private WebElement emailTextField;
 
@@ -21,6 +23,7 @@ public class LoginPage extends PageObject {
 
     public LoginPage(WebDriver webDriver) {
         super(webDriver);
+        this.webDriver = webDriver;
     }
 
     public void enterEmail(String email) {
@@ -40,7 +43,7 @@ public class LoginPage extends PageObject {
 
     public NavigationMenu login() {
         loginButton.click();
-        return new NavigationMenu(FunctionalTest.webDriver);
+        return new NavigationMenu(webDriver);
     }
 
 }

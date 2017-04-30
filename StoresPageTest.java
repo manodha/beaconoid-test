@@ -183,7 +183,7 @@ public class StoresPageTest extends FunctionalTest {
         assertEquals(addStoreUrl, webDriver.getCurrentUrl());
         storesPage.createStore(storeName, storeUniqueCode, imgUrl);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -198,7 +198,7 @@ public class StoresPageTest extends FunctionalTest {
         storesPage.enterImgUrl(imgUrl);
         storesPage.clickCreateUpdateStore();
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

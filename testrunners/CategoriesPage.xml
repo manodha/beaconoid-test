@@ -1,0 +1,15 @@
+<suite name="category_page_test_scripts">
+    <!-- <parameter name="email" value="tanu.srinidhi@gmail.com"/>
+     <parameter name="password" value="password"/>-->
+    <parameter name="email" value="antodoms@gmail.com"/>
+    <parameter name="password" value="password"/>
+    <parameter name="categoryName" value="Health/Life Style"/>
+    <parameter name="categoryDescription" value="Vitamins/Proteins/Supplements"/>
+    <parameter name="categoryNameNew" value="Health"/>
+    <parameter name="categoryDescriptionNew" value="Vitamins/Proteins"/>
+    <test name="test">
+        <classes>
+            <class name="com.company.CategoriesPageTest"/>
+        </classes>
+    </test>
+</suite>

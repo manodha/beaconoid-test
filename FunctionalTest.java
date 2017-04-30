@@ -22,8 +22,12 @@ public class FunctionalTest {
     protected static String storesUrl = baseUrl + "stores";
     protected static String addStoreUrl = baseUrl + "stores/new";
     protected static String categoriesUrl = baseUrl + "categories";
+    protected static String addCategoryUrl = baseUrl + "categories/new";
     protected static String beaconsUrl = baseUrl + "beacons";
+    protected static String addBeaconUrl = baseUrl + "beacons/new";
     protected static String advertisementsUrl = baseUrl + "advertisements";
+    protected int waitMilliSeconds = 1000;
+
   /*  protected static String settingsUrl = baseUrl + ""*/
 
     @BeforeSuite

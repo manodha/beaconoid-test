@@ -5,12 +5,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static com.company.FunctionalTest.webDriver;
-
 /**
  * Created by manodha on 3/4/17.
  */
 public class NavigationMenu extends PageObject {
+    private WebDriver webDriver;
+
     @FindBy(css = "div.alert.alert-success")
     private WebElement succesAlert;
 
@@ -43,6 +43,8 @@ public class NavigationMenu extends PageObject {
 
     public NavigationMenu(WebDriver webDriver) {
         super(webDriver);
+        this.webDriver = webDriver;
+
     }
 
     public String getSuccessAlertText() {
@@ -67,8 +69,9 @@ public class NavigationMenu extends PageObject {
         return new StoresPage(webDriver);
     }
 
-    public void clickCatogoriesLink() {
+    public CategoryPage clickCatogoriesLink() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", categoriesLink);
+        return new CategoryPage(webDriver);
     }
 
     public BeaconsPage clickBeconsLink() {

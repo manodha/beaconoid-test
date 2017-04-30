@@ -1,0 +1,29 @@
+<suite name="category_page_test_scripts">
+    <parameter name="email" value="tanu.srinidhi@gmail.com"/>
+    <parameter name="password" value="password"/>
+    <!--<parameter name="email" value="antodoms@gmail.com"/>
+    <parameter name="password" value="password"/>-->
+
+    <!--New Beacons Details-->
+    <parameter name="uniqueRef" value="BE003"/>
+    <parameter name="beaconName" value="New Test Beacon"/>
+    <parameter name="store" value="Hungry Jacks Hallam"/>
+    <parameter name="currentStatus" value="Active"/>
+    <parameter name="latitude" value="-38.0010650"/>
+    <parameter name="longitude" value="145.2758490"/>
+
+    <!--Updated Beacons Details-->
+    <parameter name="uniqueRefNew" value="BE004"/>
+    <parameter name="beaconNameNew" value="Update Test Beacon"/>
+    <parameter name="storeNew" value="Hungry Jacks Dandenong"/>
+    <parameter name="currentStatusNew" value="Inactive"/>
+    <parameter name="latitudeNew" value="-52.0010650"/>
+    <parameter name="longitudeNew" value="83.2758490"/>
+
+
+    <test name="test">
+        <classes>
+            <class name="com.company.BeaconsPageTest"/>
+        </classes>
+    </test>
+</suite>

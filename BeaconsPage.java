@@ -1,9 +1,11 @@
 package com.company;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +15,39 @@ import java.util.List;
  */
 public class BeaconsPage extends PageObject {
 
+    private WebDriver webDriver;
+
     @FindBy(css = "table.table-bordered.table-striped > tbody")
     private WebElement beaconsTable;
 
-    public BeaconsPage(WebDriver driver) {
-        super(driver);
+    @FindBy(xpath = "//a[@href='/beacons/new']")
+    private WebElement newBeaconBtn;
+
+    @FindBy(id = "beacon_name")
+    private WebElement beaconNameTxt;
+
+    @FindBy(id = "beacon_store_id")
+    private WebElement storeDropDown;
+
+    @FindBy(id = "beacon_current_status")
+    private WebElement currentStatusTxt;
+
+    @FindBy(id = "beacon_unique_reference")
+    private WebElement uniqueReferenceTxt;
+
+    @FindBy(id = "beacon_latitude")
+    private WebElement latitudeTxt;
+
+    @FindBy(id = "beacon_longitude")
+    private WebElement longitudeTxt;
+
+    @FindBy(name = "commit")
+    private WebElement createUpdateBeaconBtn;
+
+
+    public BeaconsPage(WebDriver webDriver) {
+        super(webDriver);
+        this.webDriver = webDriver;
     }
 
     public List<Beacons> getAllBeacons() {
@@ -40,12 +70,56 @@ public class BeaconsPage extends PageObject {
 
     }
 
-    public void printAllBeacons(List<Beacons> beacons) {
-        for (Beacons beacon : beacons) {
-            System.out.print("Unique Reference - " + beacon.getUniqueRef());
-            System.out.print(" Beacons Name - " + beacon.getName());
-            System.out.print(" Store Name - " + beacon.getStoreName());
-            System.out.println(" Status - " + beacon.getStatus());
-        }
+    public void clickNewBeaconBtn() {
+        newBeaconBtn.click();
     }
+
+    public void enterBeaconsName(String beaconName) {
+        beaconNameTxt.clear();
+        beaconNameTxt.sendKeys(beaconName);
+    }
+
+    public void selectStoreByName(String storeName) {
+        Select storeDropdown = new Select(storeDropDown);
+        storeDropdown.selectByVisibleText(storeName);
+    }
+
+    public void selectStoreByIndex(int index) {
+        Select storeDropdown = new Select(storeDropDown);
+        storeDropdown.selectByIndex(index);
+    }
+
+    public void enterUniqueRef(String uniqueRef) {
+        uniqueReferenceTxt.clear();
+        uniqueReferenceTxt.sendKeys(uniqueRef);
+    }
+
+    public void enterCurrentStatus(String currentStatus) {
+        currentStatusTxt.clear();
+        currentStatusTxt.sendKeys(currentStatus);
+    }
+
+    public void enterLatitude(String latitude) {
+        latitudeTxt.clear();
+        latitudeTxt.sendKeys(latitude);
+    }
+
+    public void enterLongitude(String longitude) {
+        longitudeTxt.clear();
+        longitudeTxt.sendKeys(longitude);
+    }
+
+    public void clickCreateUpdateBeaconBtn() {
+        createUpdateBeaconBtn.click();
+    }
+
+    public void clickEditBeaconBtn(WebElement editBeaconBtn) {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", editBeaconBtn);
+    }
+
+    public void clickDeleteBeaconBtn(WebElement deleteBeaconBtn) {
+        deleteBeaconBtn.click();
+        webDriver.switchTo().alert().accept();
+    }
+
 }

@@ -9,12 +9,12 @@ import org.openqa.selenium.support.FindBy;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.company.FunctionalTest.webDriver;
-
 /**
  * Created by manodha on 22/4/17.
  */
 public class StoresPage extends PageObject {
+
+    private WebDriver webDriver;
 
     @FindBy(xpath = "//a[@href='/stores/new']")
     private WebElement newStore;
@@ -34,8 +34,9 @@ public class StoresPage extends PageObject {
     @FindBy(name = "commit")
     private WebElement createUpdateStoreBtn;
 
-    public StoresPage(WebDriver driver) {
-        super(driver);
+    public StoresPage(WebDriver webDriver) {
+        super(webDriver);
+        this.webDriver = webDriver;
     }
 
     public void clickNewStore() {

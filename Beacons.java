@@ -10,6 +10,8 @@ public class Beacons {
     private String name;
     private String storeName;
     private String status;
+    private String longitude;
+    private String latitude;
     private WebElement advertisementsLink;
     private WebElement editLink;
     private WebElement deleteLink;
@@ -19,13 +21,25 @@ public class Beacons {
         this.name = "";
         this.storeName = "";
         this.status = "";
+        this.latitude = "";
+        this.longitude = "";
+        this.advertisementsLink = null;
+        this.editLink = null;
+        this.deleteLink = null;
+
     }
 
-    public Beacons(String uniqueRef, String name, String storeName, String status) {
+    public Beacons(String uniqueRef, String name, String storeName, String status, String latitude, String longitude) {
         this.uniqueRef = uniqueRef;
         this.name = name;
         this.storeName = storeName;
         this.status = status;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.advertisementsLink = null;
+        this.editLink = null;
+        this.deleteLink = null;
+
     }
 
     public String getUniqueRef() {
@@ -82,5 +96,21 @@ public class Beacons {
 
     public void setDeleteLink(WebElement deleteLink) {
         this.deleteLink = deleteLink;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 }
