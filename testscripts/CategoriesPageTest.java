@@ -1,13 +1,12 @@
 package com.company.testscripts;
 
 import com.company.model.Category;
-import com.company.view.CategoryPage;
-import com.company.view.NavigationMenu;
+import com.company.pageobjects.CategoryPage;
+import com.company.pageobjects.NavigationMenu;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.testng.AssertJUnit.assertEquals;
@@ -19,7 +18,6 @@ public class CategoriesPageTest extends FunctionalTest {
 
     private NavigationMenu navigationMenu;
     private List<Category> allCategories;
-    private List<Category> testCategories = new ArrayList<>();
     private CategoryPage categoryPage;
 
 
@@ -34,16 +32,13 @@ public class CategoriesPageTest extends FunctionalTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        allCategories = categoryPage.getAllCategories();
-        printAllCategories(allCategories);
-
     }
 
     @Test(priority = 1)
     @Parameters({"categoryName", "categoryDescription"})
     public void createCategoryTC(String categoryName, String categoryDescription) {
 
-        createCategory(categoryName, categoryDescription);
+        createCategory(new Category(categoryName, categoryDescription));
     }
 
     @Test(priority = 2)
@@ -53,9 +48,9 @@ public class CategoriesPageTest extends FunctionalTest {
         assertEquals(categoriesUrl, webDriver.getCurrentUrl());
         allCategories = categoryPage.getAllCategories();
 
-        Category category = getCategory(allCategories, categoryName, categoryDescription);
+        Category category = categoryPage.getCategory(allCategories, categoryName, categoryDescription);
 
-        updateCategory(category, categoryNameNew, categoryDescriptionNew);
+        updateCategory(category, new Category(categoryNameNew, categoryDescriptionNew));
     }
 
     @Test(priority = 3)
@@ -64,18 +59,16 @@ public class CategoriesPageTest extends FunctionalTest {
         assertEquals(categoriesUrl, webDriver.getCurrentUrl());
         allCategories = categoryPage.getAllCategories();
 
-        Category category = getCategory(allCategories, categoryName, categoryDescription);
-        deleteCategory(category);
+        Category category = categoryPage.getCategory(allCategories, categoryName, categoryDescription);
+        categoryPage.clickDeleteCategoryBtn(category.getDeleteButton());
     }
 
 
-    private void createCategory(String categoryName, String categoryDescription) {
+    private void createCategory(Category category) {
         assertEquals(categoriesUrl, webDriver.getCurrentUrl());
         categoryPage.clickNewCategoryBtn();
         assertEquals(addCategoryUrl, webDriver.getCurrentUrl());
-        categoryPage.enterCategoryName(categoryName);
-        categoryPage.enterCategoryDescription(categoryDescription);
-        categoryPage.clickCreateEditCategoryBtn();
+        categoryPage.createUpdateCategory(category);
         //testCategories.add(new Category(categoryName, categoryDescription));
         try {
             Thread.sleep(1500);
@@ -85,12 +78,11 @@ public class CategoriesPageTest extends FunctionalTest {
         assertEquals(categoriesUrl, webDriver.getCurrentUrl());
     }
 
-    private void updateCategory(Category category, String categoryName, String categoryDescription) {
+    private void updateCategory(Category oldCategory, Category newCategory) {
         assertEquals(categoriesUrl, webDriver.getCurrentUrl());
-        categoryPage.clickEditCategoryBtn(category.getEditButton());
-        categoryPage.enterCategoryName(categoryName);
-        categoryPage.enterCategoryDescription(categoryDescription);
-        categoryPage.clickCreateEditCategoryBtn();
+        categoryPage.clickEditCategoryBtn(oldCategory.getEditButton());
+        assertEquals(oldCategory.getEditButton().getAttribute("href"), webDriver.getCurrentUrl());
+        categoryPage.createUpdateCategory(newCategory);
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {
@@ -99,31 +91,6 @@ public class CategoriesPageTest extends FunctionalTest {
         assertEquals(categoriesUrl, webDriver.getCurrentUrl());
     }
 
-    private void deleteCategory(Category category) {
-        categoryPage.clickDeleteCategoryBtn(category.getDeleteButton());
-    }
 
-    private Category getCategory(List<Category> categories, String categoryName, String categoryDescription) {
-        for (Category category : categories) {
-            if (category.getCategoryName().equals(categoryName) && category.getCategoryDescription().equals(categoryDescription)) {
-                return category;
-            }
-
-        }
-        return null;
-    }
-
-    private void printAllCategories(List<Category> categoryList) {
-        for (Category category : categoryList) {
-            printCategory(category);
-        }
-
-    }
-
-    private void printCategory(Category category) {
-        System.out.print("Category Id - " + category.getCategoryId());
-        System.out.print(" Category Name - " + category.getCategoryName());
-        System.out.println(" Category Name - " + category.getCategoryDescription());
-    }
 
 }

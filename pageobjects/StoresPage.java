@@ -1,4 +1,4 @@
-package com.company.view;
+package com.company.pageobjects;
 
 import com.company.model.Stores;
 import org.openqa.selenium.By;
@@ -103,11 +103,22 @@ public class StoresPage extends PageObject {
         webDriver.switchTo().alert().accept();
     }
 
-    public void createStore(String storeName, String storeUniqueCode, String imgUrl) {
-        enterStoreName(storeName);
-        enterStoreUniqueId(storeUniqueCode);
-        enterImgUrl(imgUrl);
+    public void createUpdateStore(Stores store) {
+        enterStoreName(store.getName());
+        enterStoreUniqueId(store.getStoreCode());
+        enterImgUrl(store.getImgUrl());
         clickCreateUpdateStore();
+    }
+
+    public Stores getStore(List<Stores> stores, String storeName, String storeUniqueCode) {
+        if (stores.size() == 0)
+            return null;
+        for (Stores store : stores) {
+            if (store.getName().equals(storeName) && store.getStoreCode().equals(storeUniqueCode)) {
+                return store;
+            }
+        }
+        return null;
     }
 
 

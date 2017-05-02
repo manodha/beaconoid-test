@@ -1,4 +1,4 @@
-package com.company.view;
+package com.company.pageobjects;
 
 import com.company.model.Beacons;
 import org.openqa.selenium.By;
@@ -126,6 +126,45 @@ public class BeaconsPage extends PageObject {
     public BeaconAdvPage clickViewAdvertisementsLink(WebElement viewAdvertisementsLink) {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", viewAdvertisementsLink);
         return new BeaconAdvPage(webDriver);
+    }
+
+    public Beacons getBeacon(List<Beacons> beacons, String uniqueRef, String beaconName) {
+        for (Beacons beacon : beacons) {
+            if (beacon.getUniqueRef().equals(uniqueRef) && beacon.getName().equals(beaconName)) {
+                return beacon;
+            }
+        }
+        return null;
+    }
+
+    public void createUpdateBeacon(Beacons newBeacon) {
+        enterBeaconsName(newBeacon.getName());
+        if (newBeacon.getStoreName().equals("")) {
+            selectStoreByIndex(0);
+        } else {
+            selectStoreByName(newBeacon.getStoreName());
+        }
+        enterCurrentStatus(newBeacon.getStatus());
+        enterUniqueRef(newBeacon.getUniqueRef());
+        enterLatitude(newBeacon.getLatitude());
+        enterLongitude(newBeacon.getLongitude());
+        clickCreateUpdateBeaconBtn();
+    }
+
+    public void printAllBeacons(List<Beacons> beacons) {
+        System.out.println("*********** All Beacons ***********");
+        for (Beacons beacon : beacons) {
+            printBeacon(beacon);
+        }
+    }
+
+    public void printBeacon(Beacons beacon) {
+        System.out.print("Unique Reference - " + beacon.getUniqueRef());
+        System.out.print(" Beacons Name - " + beacon.getName());
+        System.out.print(" Store Name - " + beacon.getStoreName());
+        System.out.print(" Status - " + beacon.getStatus());
+        System.out.print(" Latitude - " + beacon.getLatitude());
+        System.out.println(" Longitude - " + beacon.getLongitude());
     }
 
 }

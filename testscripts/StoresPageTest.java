@@ -2,9 +2,9 @@ package com.company.testscripts;
 
 import com.company.model.Beacons;
 import com.company.model.Stores;
-import com.company.view.BeaconsPage;
-import com.company.view.NavigationMenu;
-import com.company.view.StoresPage;
+import com.company.pageobjects.BeaconsPage;
+import com.company.pageobjects.NavigationMenu;
+import com.company.pageobjects.StoresPage;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -37,7 +37,7 @@ public class StoresPageTest extends FunctionalTest {
         beaconsPage = navigationMenu.clickBeconsLink();
         assertEquals(beaconsUrl, webDriver.getCurrentUrl());
         try {
-            Thread.sleep(2000);
+            Thread.sleep(waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -51,8 +51,8 @@ public class StoresPageTest extends FunctionalTest {
     @Test(testName = "TC017 - Check if a store can be created with all the fields filled", priority = 1)
     @Parameters({"storeName", "storeUniqueCode", "imgUrl"})
     public void createNewStoreTC017(String storeName, String storeUniqueCode, String imgUrl) {
-        createStore(storeName, storeUniqueCode, imgUrl);
-        assertEquals(storesUrl, webDriver.getCurrentUrl());
+
+        createStore(new Stores(storeName, storeUniqueCode, imgUrl));
         allStores = storesPage.getAllStores();
 
         //Checking if the Store has been successfully created by checking if the list of stores contains the newly created store.
@@ -68,22 +68,20 @@ public class StoresPageTest extends FunctionalTest {
         assertEquals(addStoreUrl, webDriver.getCurrentUrl());
 
         //Checking if a store can be created with only Store Unique Code and Image Url
-        storesPage.createStore("", storeUniqueCode, imgUrl);
+        storesPage.createUpdateStore(new Stores("", storeUniqueCode, imgUrl));
         assertEquals(addStoreUrl, webDriver.getCurrentUrl());
 
         //Checking if a store can be created with only Image Url
-        storesPage.createStore("", "", imgUrl);
+        storesPage.createUpdateStore(new Stores("", "", imgUrl));
         assertEquals(addStoreUrl, webDriver.getCurrentUrl());
 
         //Checking if a store can be created with only Store Unique Code
-        storesPage.createStore("", storeUniqueCode, "");
+        storesPage.createUpdateStore(new Stores("", storeUniqueCode, ""));
         assertEquals(addStoreUrl, webDriver.getCurrentUrl());
 
         //Checking if a store can be created with empty fields
-        storesPage.createStore("", storeUniqueCode, "");
+        storesPage.createUpdateStore(new Stores("", storeUniqueCode, ""));
         assertEquals(addStoreUrl, webDriver.getCurrentUrl());
-
-
     }
 
 
@@ -97,10 +95,12 @@ public class StoresPageTest extends FunctionalTest {
         assertThat(beacons, not(hasItem(hasProperty("storeName", equalTo(storeName)))));
         //Deleting the Store
         allStores = storesPage.getAllStores();
-        deleteStore(allStores, storeName, storeUniqueCode);
+        Stores store = storesPage.getStore(allStores, storeName, storeUniqueCode);
+        storesPage.clickDeleteButton(store.getDeleteBtn());
+        ;
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -116,10 +116,10 @@ public class StoresPageTest extends FunctionalTest {
         String assginedStore = beacons.get(0).getStoreName();
         System.out.println(assginedStore);
         allStores = storesPage.getAllStores();
-        deleteStore(allStores, assginedStore, "");
+        /*deleteStore(allStores, assginedStore, "");*/
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -138,20 +138,18 @@ public class StoresPageTest extends FunctionalTest {
         assertNotEquals("", imgUrl);
         String store_name = storeName + "_TC021_1";
         testStores.add(new Stores(store_name, "", ""));
-        createStore(store_name, "", "");
+        createStore(new Stores(store_name, "", ""));
 
         store_name = storeName + "_TC021_2";
         testStores.add(new Stores(store_name, storeUniqueCode + "_TC021_2", ""));
-        createStore(store_name, storeUniqueCode + "_TC021_2", "");
+        createStore(new Stores(store_name, storeUniqueCode + "_TC021_2", ""));
 
         store_name = storeName + "_TC021_3";
         testStores.add(new Stores(store_name, "", imgUrl + "_TC021_3"));
-        createStore(store_name, "", imgUrl + "_TC021_3");
+        createStore(new Stores(store_name, "", imgUrl + "_TC021_3"));
 
         store_name = storeName + "_TC021_4";
         testStores.add(new Stores(store_name, storeUniqueCode + "_TC021_4", imgUrl + "_TC021_4"));
-        createStore(store_name, storeUniqueCode + "_TC021_4", imgUrl + "_TC021_4");
-
     }
 
     @Test(testName = "TC022 - Check if a user can edit the details of an existing Store", priority = 2)
@@ -160,8 +158,8 @@ public class StoresPageTest extends FunctionalTest {
                                    String storeUniqueCodeNew, String imgUrlNew) {
         assertEquals(storesUrl, webDriver.getCurrentUrl());
         allStores = storesPage.getAllStores();
-        Stores store = getStore(allStores, storeName, storeUniqueCode);
-        updateStore(store, storeNameNew, storeUniqueCodeNew, imgUrlNew);
+        Stores store = storesPage.getStore(allStores, storeName, storeUniqueCode);
+        updateStore(store, new Stores(storeNameNew, storeUniqueCodeNew, imgUrlNew));
 
         allStores = storesPage.getAllStores();
         assertThat(allStores, hasItem(allOf(hasProperty("name", equalTo(storeNameNew)),
@@ -176,54 +174,38 @@ public class StoresPageTest extends FunctionalTest {
         if (testStores != null) {
             for (Stores testStore : testStores) {
                 allStores = storesPage.getAllStores();
-                //storesPage.deleteStore(allStores, testStore.getName(), testStore.getStoreCode());
-                deleteStore(allStores, testStore.getName(), testStore.getStoreCode());
+                for (Stores store : allStores) {
+                    if (testStore.getName().equals(store.getName()) && testStore.getStoreCode().equals(store.getStoreCode())) {
+                        storesPage.clickDeleteButton(store.getDeleteBtn());
+                    }
+                }
             }
         }
     }
 
-    private void createStore(String storeName, String storeUniqueCode, String imgUrl) {
+    private void createStore(Stores store) {
         assertEquals(storesUrl, webDriver.getCurrentUrl());
         storesPage.clickNewStore();
         assertEquals(addStoreUrl, webDriver.getCurrentUrl());
-        storesPage.createStore(storeName, storeUniqueCode, imgUrl);
+        storesPage.createUpdateStore(store);
         try {
-            Thread.sleep(1500);
+            Thread.sleep(waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         assertEquals(storesUrl, webDriver.getCurrentUrl());
     }
 
-    private void updateStore(Stores store, String storeName, String storeUniqueCode, String imgUrl) {
-        storesPage.clickEditButton(store);
-        assertEquals(store.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
-        storesPage.enterStoreName(storeName);
-        storesPage.enterStoreUniqueId(storeUniqueCode);
-        storesPage.enterImgUrl(imgUrl);
-        storesPage.clickCreateUpdateStore();
+    private void updateStore(Stores oldStore, Stores newStore) {
+        assertEquals(storesUrl, webDriver.getCurrentUrl());
+        storesPage.clickEditButton(oldStore);
+        assertEquals(oldStore.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
+        storesPage.createUpdateStore(newStore);
         try {
-            Thread.sleep(1500);
+            Thread.sleep(waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         assertEquals(storesUrl, webDriver.getCurrentUrl());
     }
-
-    private void deleteStore(List<Stores> stores, String storeName, String storeUniqueCode) {
-        Stores store = getStore(stores, storeName, storeUniqueCode);
-        storesPage.clickDeleteButton(store.getDeleteBtn());
-    }
-
-    private Stores getStore(List<Stores> stores, String storeName, String storeUniqueCode) {
-        if (stores.size() == 0)
-            return null;
-        for (Stores store : stores) {
-            if (store.getName().equals(storeName) && store.getStoreCode().equals(storeUniqueCode)) {
-                return store;
-            }
-        }
-        return null;
-    }
-
 }

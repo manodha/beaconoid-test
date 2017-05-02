@@ -1,4 +1,4 @@
-package com.company.view;
+package com.company.pageobjects;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

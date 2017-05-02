@@ -1,4 +1,4 @@
-package com.company.view;
+package com.company.pageobjects;
 
 import com.company.model.Category;
 import org.openqa.selenium.By;
@@ -82,5 +82,35 @@ public class CategoryPage extends PageObject {
     public void clickDeleteCategoryBtn(WebElement deleteBtn) {
         deleteBtn.click();
         webDriver.switchTo().alert().accept();
+    }
+
+    public void createUpdateCategory(Category category) {
+        enterCategoryName(category.getCategoryName());
+        enterCategoryDescription(category.getCategoryDescription());
+        clickCreateEditCategoryBtn();
+    }
+
+
+    public Category getCategory(List<Category> categories, String categoryName, String categoryDescription) {
+        for (Category category : categories) {
+            if (category.getCategoryName().equals(categoryName) && category.getCategoryDescription().equals(categoryDescription)) {
+                return category;
+            }
+
+        }
+        return null;
+    }
+
+    public void printAllCategories(List<Category> categoryList) {
+        for (Category category : categoryList) {
+            printCategory(category);
+        }
+
+    }
+
+    public void printCategory(Category category) {
+        System.out.print("Category Id - " + category.getCategoryId());
+        System.out.print(" Category Name - " + category.getCategoryName());
+        System.out.println(" Category Name - " + category.getCategoryDescription());
     }
 }

@@ -1,7 +1,7 @@
 package com.company.testscripts;
 
-import com.company.view.LoginPage;
-import com.company.view.NavigationMenu;
+import com.company.pageobjects.LoginPage;
+import com.company.pageobjects.NavigationMenu;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
@@ -28,6 +28,7 @@ public class FunctionalTest {
     protected static String beaconsUrl = baseUrl + "beacons";
     protected static String addBeaconUrl = baseUrl + "beacons/new";
     protected static String advertisementsUrl = baseUrl + "advertisements";
+    protected static String addAdvertisementUrl = baseUrl + "advertisements/new";
     protected int waitMilliSeconds = 1500;
 
   /*  protected static String settingsUrl = baseUrl + ""*/

@@ -1,8 +1,8 @@
 package com.company.testscripts;
 
 
-import com.company.view.LoginPage;
-import com.company.view.NavigationMenu;
+import com.company.pageobjects.LoginPage;
+import com.company.pageobjects.NavigationMenu;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;

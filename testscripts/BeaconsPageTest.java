@@ -1,9 +1,9 @@
 package com.company.testscripts;
 
 import com.company.model.Beacons;
-import com.company.view.BeaconAdvPage;
-import com.company.view.BeaconsPage;
-import com.company.view.NavigationMenu;
+import com.company.pageobjects.BeaconAdvPage;
+import com.company.pageobjects.BeaconsPage;
+import com.company.pageobjects.NavigationMenu;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -49,16 +49,16 @@ public class BeaconsPageTest extends FunctionalTest {
     public void updateBeaconTC(String uniqueRef, String beaconName, String uniqueRefNew, String beaconNameNew, String storeNew,
                                String currentStatusNew, String latitudeNew, String longitudeNew) {
         allBeacons = beaconsPage.getAllBeacons();
-        Beacons beacon = getBeacon(allBeacons, uniqueRef, beaconName);
-        Beacons updateBeacon = new Beacons(uniqueRefNew, beaconNameNew, "", currentStatusNew, latitudeNew, longitudeNew);
-        updateBeacon(beacon, updateBeacon);
+        Beacons beacon = beaconsPage.getBeacon(allBeacons, uniqueRef, beaconName);
+        updateBeacon(beacon, new Beacons(uniqueRefNew, beaconNameNew, "", currentStatusNew, latitudeNew, longitudeNew));
+
     }
 
     @Test(priority = 3)
     @Parameters({"uniqueRefNew", "beaconNameNew"})
     public void viewBeaconAdvertisementsTC(String uniqueRefNew, String beaconNameNew) {
         allBeacons = beaconsPage.getAllBeacons();
-        Beacons beacon = getBeacon(allBeacons, uniqueRefNew, beaconNameNew);
+        Beacons beacon = beaconsPage.getBeacon(allBeacons, uniqueRefNew, beaconNameNew);
         viewAdvertisements(beacon);
     }
 
@@ -67,8 +67,8 @@ public class BeaconsPageTest extends FunctionalTest {
     public void deleteBeaconTC(String uniqueRefNew, String beaconNameNew) {
         webDriver.get(beaconsUrl);
         allBeacons = beaconsPage.getAllBeacons();
-        Beacons beacon = getBeacon(allBeacons, uniqueRefNew, beaconNameNew);
-        deleteBeacon(beacon);
+        Beacons beacon = beaconsPage.getBeacon(allBeacons, uniqueRefNew, beaconNameNew);
+        beaconsPage.clickDeleteBeaconBtn(beacon.getDeleteLink());
     }
 
 
@@ -76,14 +76,14 @@ public class BeaconsPageTest extends FunctionalTest {
         assertEquals(beaconsUrl, webDriver.getCurrentUrl());
         beaconsPage.clickNewBeaconBtn();
         assertEquals(addBeaconUrl, webDriver.getCurrentUrl());
-        enterBeaconDetails(newBeacon);
+        beaconsPage.createUpdateBeacon(newBeacon);
     }
 
     private void updateBeacon(Beacons beacon, Beacons newBeacon) {
         assertEquals(beaconsUrl, webDriver.getCurrentUrl());
         beaconsPage.clickEditBeaconBtn(beacon.getEditLink());
         assertEquals(beacon.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
-        enterBeaconDetails(newBeacon);
+        beaconsPage.createUpdateBeacon(newBeacon);
     }
 
     private void viewAdvertisements(Beacons beacon) {
@@ -99,53 +99,4 @@ public class BeaconsPageTest extends FunctionalTest {
         assertEquals(beaconAdvPage.getBeaconUniqueRef(), beacon.getUniqueRef());
     }
 
-    private void deleteBeacon(Beacons beacon) {
-        beaconsPage.clickDeleteBeaconBtn(beacon.getDeleteLink());
-    }
-
-    private Beacons getBeacon(List<Beacons> beacons, String uniqueRef, String beaconName) {
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
-        for (Beacons beacon : beacons) {
-            if (beacon.getUniqueRef().equals(uniqueRef) && beacon.getName().equals(beaconName)) {
-                return beacon;
-            }
-        }
-        return null;
-    }
-
-    private void enterBeaconDetails(Beacons newBeacon) {
-        beaconsPage.enterBeaconsName(newBeacon.getName());
-        if (newBeacon.getStoreName().equals("")) {
-            beaconsPage.selectStoreByIndex(0);
-        } else {
-            beaconsPage.selectStoreByName(newBeacon.getStoreName());
-        }
-        beaconsPage.enterCurrentStatus(newBeacon.getStatus());
-        beaconsPage.enterUniqueRef(newBeacon.getUniqueRef());
-        beaconsPage.enterLatitude(newBeacon.getLatitude());
-        beaconsPage.enterLongitude(newBeacon.getLongitude());
-        beaconsPage.clickCreateUpdateBeaconBtn();
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
-    }
-
-    private void printAllBeacons(List<Beacons> beacons) {
-        System.out.println("*********** All Beacons ***********");
-        for (Beacons beacon : beacons) {
-            printBeacon(beacon);
-        }
-    }
-
-    private void printBeacon(Beacons beacon) {
-        System.out.print("Unique Reference - " + beacon.getUniqueRef());
-        System.out.print(" Beacons Name - " + beacon.getName());
-        System.out.print(" Store Name - " + beacon.getStoreName());
-        System.out.print(" Status - " + beacon.getStatus());
-        System.out.print(" Latitude - " + beacon.getLatitude());
-        System.out.println(" Longitude - " + beacon.getLongitude());
-    }
 }
