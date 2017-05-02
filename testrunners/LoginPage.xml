@@ -22,7 +22,7 @@
         <parameter name="passwordTC006" value="123456"/>
 
         <classes>
-            <class name="com.company.controller.LoginPageTest"/>
+            <class name="com.company.testscripts.LoginPageTest"/>
         </classes>
     </test>
 </suite>

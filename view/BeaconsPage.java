@@ -123,4 +123,9 @@ public class BeaconsPage extends PageObject {
         webDriver.switchTo().alert().accept();
     }
 
+    public BeaconAdvPage clickViewAdvertisementsLink(WebElement viewAdvertisementsLink) {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", viewAdvertisementsLink);
+        return new BeaconAdvPage(webDriver);
+    }
+
 }

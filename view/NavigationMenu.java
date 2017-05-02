@@ -79,8 +79,9 @@ public class NavigationMenu extends PageObject {
         return new BeaconsPage(webDriver);
     }
 
-    public void clickAdvertisementsLink() {
+    public AdvertisementsPage clickAdvertisementsLink() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", advertisementsLink);
+        return new AdvertisementsPage(webDriver);
     }
 
     public void clickSettingsLink() {

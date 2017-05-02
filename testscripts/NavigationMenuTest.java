@@ -1,4 +1,4 @@
-package com.company.controller;
+package com.company.testscripts;
 
 import com.company.view.NavigationMenu;
 import org.testng.annotations.BeforeTest;

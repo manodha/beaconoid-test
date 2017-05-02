@@ -1,6 +1,7 @@
-package com.company.controller;
+package com.company.testscripts;
 
 import com.company.model.Beacons;
+import com.company.view.BeaconAdvPage;
 import com.company.view.BeaconsPage;
 import com.company.view.NavigationMenu;
 import org.testng.annotations.BeforeTest;
@@ -18,6 +19,7 @@ public class BeaconsPageTest extends FunctionalTest {
 
     private NavigationMenu navigationMenu;
     private BeaconsPage beaconsPage;
+    private BeaconAdvPage beaconAdvPage;
     private List<Beacons> allBeacons;
 
 
@@ -54,7 +56,16 @@ public class BeaconsPageTest extends FunctionalTest {
 
     @Test(priority = 3)
     @Parameters({"uniqueRefNew", "beaconNameNew"})
+    public void viewBeaconAdvertisementsTC(String uniqueRefNew, String beaconNameNew) {
+        allBeacons = beaconsPage.getAllBeacons();
+        Beacons beacon = getBeacon(allBeacons, uniqueRefNew, beaconNameNew);
+        viewAdvertisements(beacon);
+    }
+
+    @Test(priority = 4)
+    @Parameters({"uniqueRefNew", "beaconNameNew"})
     public void deleteBeaconTC(String uniqueRefNew, String beaconNameNew) {
+        webDriver.get(beaconsUrl);
         allBeacons = beaconsPage.getAllBeacons();
         Beacons beacon = getBeacon(allBeacons, uniqueRefNew, beaconNameNew);
         deleteBeacon(beacon);
@@ -73,6 +84,19 @@ public class BeaconsPageTest extends FunctionalTest {
         beaconsPage.clickEditBeaconBtn(beacon.getEditLink());
         assertEquals(beacon.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
         enterBeaconDetails(newBeacon);
+    }
+
+    private void viewAdvertisements(Beacons beacon) {
+        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
+        beaconAdvPage = beaconsPage.clickViewAdvertisementsLink(beacon.getAdvertisementsLink());
+        assertEquals(beacon.getAdvertisementsLink().getAttribute("href"), webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(beaconAdvPage.getBeaconName(), beacon.getName());
+        assertEquals(beaconAdvPage.getBeaconUniqueRef(), beacon.getUniqueRef());
     }
 
     private void deleteBeacon(Beacons beacon) {

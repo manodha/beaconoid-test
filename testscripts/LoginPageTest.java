@@ -1,4 +1,4 @@
-package com.company.controller;
+package com.company.testscripts;
 
 
 import com.company.view.LoginPage;
@@ -117,6 +117,8 @@ public class LoginPageTest extends FunctionalTest {
             e.printStackTrace();
         }
         assertEquals(loginUrl, webDriver.getCurrentUrl());
+        /*webDriver.navigate().back();
+        assertEquals(loginUrl, webDriver.getCurrentUrl());*/
 
     }
 

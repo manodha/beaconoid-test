@@ -1,0 +1,24 @@
+<suite name="advertisements_page_test_scripts">
+    <parameter name="email" value="tanu.srinidhi@gmail.com"/>
+    <parameter name="password" value="password"/>
+    <!--<parameter name="email" value="antodoms@gmail.com"/>
+    <parameter name="password" value="password"/>-->
+
+    <parameter name="adverName" value="50% Discount, Great Deal!!"/>
+    <parameter name="adverBeacon" value="Beacon001"/>
+    <parameter name="adverCategory" value="Groceries"/>
+    <parameter name="adverDescription" value="A great deal for the Super Saver. 50% of on all women clothings"/>
+    <parameter name="adverPrice" value="5.00"/>
+
+    <parameter name="adverNameNew" value="85% Discount, Great Deal!!"/>
+    <parameter name="adverBeaconNew" value="Beacon02"/>
+    <parameter name="adverCategoryNew" value="Meat"/>
+    <parameter name="adverDescriptionNew" value="A great deal for the Super Saver. 85% of on all women/men clothings"/>
+    <parameter name="adverPriceNew" value="4.00"/>
+
+    <test name="test">
+        <classes>
+            <class name="com.company.testscripts.AdvertisementsPageTest"/>
+        </classes>
+    </test>
+</suite>

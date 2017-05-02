@@ -1,4 +1,4 @@
-package com.company.controller;
+package com.company.testscripts;
 
 import com.company.model.Beacons;
 import com.company.model.Stores;

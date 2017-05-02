@@ -1,4 +1,4 @@
-<suite name="category_page_test_scripts">
+<suite name="beacons_page_test_scripts">
     <parameter name="email" value="tanu.srinidhi@gmail.com"/>
     <parameter name="password" value="password"/>
     <!--<parameter name="email" value="antodoms@gmail.com"/>
@@ -23,7 +23,7 @@
 
     <test name="test">
         <classes>
-            <class name="com.company.controller.BeaconsPageTest"/>
+            <class name="com.company.testscripts.BeaconsPageTest"/>
         </classes>
     </test>
 </suite>

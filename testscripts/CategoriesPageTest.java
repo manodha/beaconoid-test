@@ -1,4 +1,4 @@
-package com.company.controller;
+package com.company.testscripts;
 
 import com.company.model.Category;
 import com.company.view.CategoryPage;

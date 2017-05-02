@@ -1,4 +1,4 @@
-package com.company.controller;
+package com.company.testscripts;
 
 import com.company.view.LoginPage;
 import com.company.view.NavigationMenu;
@@ -28,7 +28,7 @@ public class FunctionalTest {
     protected static String beaconsUrl = baseUrl + "beacons";
     protected static String addBeaconUrl = baseUrl + "beacons/new";
     protected static String advertisementsUrl = baseUrl + "advertisements";
-    protected int waitMilliSeconds = 1000;
+    protected int waitMilliSeconds = 1500;
 
   /*  protected static String settingsUrl = baseUrl + ""*/
 

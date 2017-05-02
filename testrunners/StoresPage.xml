@@ -9,7 +9,7 @@
     <parameter name="imgUrlNew" value="https://beaconoid.me/test1.jpg"/>
     <test name="test">
         <classes>
-            <class name="com.company.controller.StoresPageTest"/>
+            <class name="com.company.testscripts.StoresPageTest"/>
         </classes>
     </test>
 </suite>
