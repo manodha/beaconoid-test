@@ -113,7 +113,7 @@ public class CategoriesPageTest extends FunctionalTest {
         }
         allAdvertisements = advertisementsPage.getAllAdvertisements();
         /* Checking that there are no advertisement with this category */
-        assertThat(allCategories, not(hasItem(hasProperty("category", equalTo(categoryName)))));
+        assertThat(allAdvertisements, not(hasItem(hasProperty("category", equalTo(categoryName)))));
 
         categoryPage = navigationMenu.clickCatogoriesLink();
         assertEquals(categoriesUrl, webDriver.getCurrentUrl());
@@ -184,7 +184,6 @@ public class CategoriesPageTest extends FunctionalTest {
 
     @AfterTest
     public void clearAllTestData() {
-
         // Deleting the Test Advertisement that was created for the Test Case TC030
         if (!webDriver.getCurrentUrl().equals(advertisementsUrl)) {
             advertisementsPage = navigationMenu.clickAdvertisementsLink();

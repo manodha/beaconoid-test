@@ -25,16 +25,16 @@ public class NavigationMenu extends PageObject {
     @FindBy(partialLinkText = "Dashboard")
     private WebElement dashboardLink;
 
-    @FindBy(partialLinkText = " Stores")
+    @FindBy(xpath = "//a[@href='/stores']")
     private WebElement storesLink;
 
-    @FindBy(partialLinkText = " Categories")
+    @FindBy(xpath = "//a[@href='/categories']")
     private WebElement categoriesLink;
 
-    @FindBy(partialLinkText = " Beacons")
+    @FindBy(xpath = "//a[@href='/beacons']")
     private WebElement beaconsLink;
 
-    @FindBy(partialLinkText = " Advertisements")
+    @FindBy(xpath = "//a[@href='/advertisements']")
     private WebElement advertisementsLink;
 
     @FindBy(partialLinkText = " Settings")

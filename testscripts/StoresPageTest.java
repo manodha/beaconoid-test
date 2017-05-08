@@ -60,7 +60,7 @@ public class StoresPageTest extends FunctionalTest {
                 hasProperty("storeCode", equalTo(storeUniqueCode)))));
     }
 
-    //@Test(testName = "TC018 - Verify that a store will not be created with required fields empty", priority = 3)
+    @Test(testName = "TC018 - Verify that a store will not be created with required fields empty", priority = 3)
     @Parameters({"storeName", "storeUniqueCode", "imgUrl"})
     public void createNewStoreTC018(String storeName, String storeUniqueCode, String imgUrl) {
         assertEquals(storesUrl, webDriver.getCurrentUrl());

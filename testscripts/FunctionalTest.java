@@ -159,7 +159,6 @@ public class FunctionalTest {
         categoryPage.clickNewCategoryBtn();
         assertEquals(addCategoryUrl, webDriver.getCurrentUrl());
         categoryPage.createUpdateCategory(category);
-        //testCategories.add(new Category(categoryName, categoryDescription));
         try {
             Thread.sleep(waitMilliSeconds);
         } catch (InterruptedException e) {
