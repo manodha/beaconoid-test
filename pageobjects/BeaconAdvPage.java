@@ -1,15 +1,19 @@
 package com.company.pageobjects;
 
+import com.company.model.Advertisement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by manodha on 30/4/17.
  */
-public class BeaconAdvPage extends PageObject {
+public class BeaconAdvPage extends AdvertisementsPage {
     private WebDriver webDriver;
 
 
@@ -22,6 +26,29 @@ public class BeaconAdvPage extends PageObject {
     public BeaconAdvPage(WebDriver webDriver) {
         super(webDriver);
         this.webDriver = webDriver;
+    }
+
+    @Override
+    public List<Advertisement> getAllAdvertisements() {
+        List<Advertisement> advertisements = new ArrayList<>();
+        List<WebElement> advertisementRows = advertisementsTable.findElements(By.tagName("tr"));
+        int numRows, numColumns;
+        numRows = advertisementRows.size();
+        numColumns = advertisementRows.get(0).findElements(By.tagName("td")).size();
+
+        for (int i = 0; i < numRows; i++) {
+            Advertisement advertisement = new Advertisement();
+            advertisement.setName(advertisementRows.get(i).findElement(By.xpath("td[1]")).getText());
+            advertisement.setCategory(advertisementRows.get(i).findElement(By.xpath("td[2]")).getText());
+            advertisement.setDescription(advertisementRows.get(i).findElement(By.xpath("td[3]")).getText());
+            advertisement.setPrice(advertisementRows.get(i).findElement(By.xpath("td[4]")).getText());
+            advertisement.setViewLink(advertisementRows.get(i).findElement(By.xpath("td[5]/a")));
+            advertisement.setEditLink(advertisementRows.get(i).findElement(By.xpath("td[6]/a")));
+            advertisement.setDeleteBtn(advertisementRows.get(i).findElement(By.xpath("td[7]/form/input[@value='Delete']")));
+            advertisement.setBeacon(getBeaconName());
+            advertisements.add(advertisement);
+        }
+        return advertisements;
     }
 
     public void clickBackLink() {

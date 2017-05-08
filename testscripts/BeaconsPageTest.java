@@ -41,7 +41,7 @@ public class BeaconsPageTest extends FunctionalTest {
     @Parameters({"uniqueRef", "beaconName", "store", "currentStatus", "latitude", "longitude"})
     public void createBeaconTC(String uniqueRef, String beaconName, String store, String currentStatus, String latitude, String longitude) {
         Beacons beacon = new Beacons(uniqueRef, beaconName, "", currentStatus, latitude, longitude);
-        createBeacon(beacon);
+        createBeacon(beaconsPage, beacon);
     }
 
     @Test(priority = 2)
@@ -59,7 +59,7 @@ public class BeaconsPageTest extends FunctionalTest {
     public void viewBeaconAdvertisementsTC(String uniqueRefNew, String beaconNameNew) {
         allBeacons = beaconsPage.getAllBeacons();
         Beacons beacon = beaconsPage.getBeacon(allBeacons, uniqueRefNew, beaconNameNew);
-        viewAdvertisements(beacon);
+        viewBeaconAdvertisements(beaconsPage, beacon);
     }
 
     @Test(priority = 4)
@@ -71,32 +71,18 @@ public class BeaconsPageTest extends FunctionalTest {
         beaconsPage.clickDeleteBeaconBtn(beacon.getDeleteLink());
     }
 
-
-    private void createBeacon(Beacons newBeacon) {
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
-        beaconsPage.clickNewBeaconBtn();
-        assertEquals(addBeaconUrl, webDriver.getCurrentUrl());
-        beaconsPage.createUpdateBeacon(newBeacon);
-    }
-
     private void updateBeacon(Beacons beacon, Beacons newBeacon) {
         assertEquals(beaconsUrl, webDriver.getCurrentUrl());
         beaconsPage.clickEditBeaconBtn(beacon.getEditLink());
         assertEquals(beacon.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
         beaconsPage.createUpdateBeacon(newBeacon);
-    }
-
-    private void viewAdvertisements(Beacons beacon) {
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
-        beaconAdvPage = beaconsPage.clickViewAdvertisementsLink(beacon.getAdvertisementsLink());
-        assertEquals(beacon.getAdvertisementsLink().getAttribute("href"), webDriver.getCurrentUrl());
         try {
             Thread.sleep(waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(beaconAdvPage.getBeaconName(), beacon.getName());
-        assertEquals(beaconAdvPage.getBeaconUniqueRef(), beacon.getUniqueRef());
+        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
     }
+
 
 }

@@ -33,7 +33,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
     @Parameters({"adverName", "adverBeacon", "adverCategory", "adverDescription", "adverPrice"})
     public void createAdvertisementTC(String adverName, String adverBeacon, String adverCategory, String adverDescription, String adverPrice) {
 
-        createAdvertisement(new Advertisement(adverName, adverBeacon, adverCategory, adverDescription, adverPrice));
+        createAdvertisement(advertisementsPage, new Advertisement(adverName, adverBeacon, adverCategory, adverDescription, adverPrice));
 
     }
 
@@ -45,7 +45,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
         assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
         allAdvertisements = advertisementsPage.getAllAdvertisements();
         Advertisement oldAdvertisement = advertisementsPage.getAdvertisment(allAdvertisements, adverName, adverBeacon);
-        updateCategory(oldAdvertisement, new Advertisement(adverNameNew, adverBeaconNew, adverCategoryNew, adverDescriptionNew, adverPriceNew));
+        updateAdvertisement(oldAdvertisement, new Advertisement(adverNameNew, adverBeaconNew, adverCategoryNew, adverDescriptionNew, adverPriceNew));
 
     }
 
@@ -58,20 +58,8 @@ public class AdvertisementsPageTest extends FunctionalTest {
         advertisementsPage.clickDeleteAdvBtn(advertisement.getDeleteBtn());
     }
 
-    private void createAdvertisement(Advertisement advertisement) {
-        assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
-        advertisementsPage.clickNewAdvertisementBtn();
-        assertEquals(addAdvertisementUrl, webDriver.getCurrentUrl());
-        advertisementsPage.createUpdateAdvertisement(advertisement);
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
-    }
 
-    private void updateCategory(Advertisement oldAdvertisement, Advertisement newAdvertisement) {
+    private void updateAdvertisement(Advertisement oldAdvertisement, Advertisement newAdvertisement) {
         assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
         advertisementsPage.clickEditAdverBtn(oldAdvertisement.getEditLink());
         assertEquals(oldAdvertisement.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());

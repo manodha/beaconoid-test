@@ -1,5 +1,5 @@
-<suite name="becaons_web_console_test_suite">
-    <test name="test">
+<suite name="login_page_test_scripts">
+    <test name="Test Cases for Login Page">
         <!--Parameters for TC001-->
         <parameter name="emailTC001" value="antodoms@gmail.com"/>
         <parameter name="passwordTC001" value="password"/>

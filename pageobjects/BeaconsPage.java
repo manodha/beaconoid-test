@@ -140,7 +140,7 @@ public class BeaconsPage extends PageObject {
     public void createUpdateBeacon(Beacons newBeacon) {
         enterBeaconsName(newBeacon.getName());
         if (newBeacon.getStoreName().equals("")) {
-            selectStoreByIndex(0);
+            selectStoreByIndex(1);
         } else {
             selectStoreByName(newBeacon.getStoreName());
         }

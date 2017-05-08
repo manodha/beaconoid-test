@@ -15,12 +15,10 @@ import java.util.List;
  * Created by manodha on 1/5/17.
  */
 public class AdvertisementsPage extends PageObject {
-    private WebDriver webDriver;
-
     @FindBy(css = "table.table-bordered.table-striped > tbody")
-    private WebElement advertisementsTable;
-
-    @FindBy(xpath = "//a[@href='/advertisements/new']")
+    protected WebElement advertisementsTable;
+    private WebDriver webDriver;
+    @FindBy(partialLinkText = "New Advertisement")
     private WebElement newAdvertisementBtn;
 
     @FindBy(id = "advertisement_name")
@@ -104,6 +102,8 @@ public class AdvertisementsPage extends PageObject {
         List<WebElement> advertisementRows = advertisementsTable.findElements(By.tagName("tr"));
         int numRows, numColumns;
         numRows = advertisementRows.size();
+        numColumns = advertisementRows.get(0).findElements(By.tagName("td")).size();
+
         for (int i = 0; i < numRows; i++) {
             Advertisement advertisement = new Advertisement();
             advertisement.setName(advertisementRows.get(i).findElement(By.xpath("td[1]")).getText());
@@ -112,6 +112,8 @@ public class AdvertisementsPage extends PageObject {
             advertisement.setViewLink(advertisementRows.get(i).findElement(By.xpath("td[4]/a")));
             advertisement.setEditLink(advertisementRows.get(i).findElement(By.xpath("td[5]/a")));
             advertisement.setDeleteBtn(advertisementRows.get(i).findElement(By.xpath("td[6]/form/input[@value='Delete']")));
+
+
             advertisements.add(advertisement);
         }
         return advertisements;

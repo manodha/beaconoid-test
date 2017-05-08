@@ -52,7 +52,7 @@ public class StoresPageTest extends FunctionalTest {
     @Parameters({"storeName", "storeUniqueCode", "imgUrl"})
     public void createNewStoreTC017(String storeName, String storeUniqueCode, String imgUrl) {
 
-        createStore(new Stores(storeName, storeUniqueCode, imgUrl));
+        createStore(storesPage, new Stores(storeName, storeUniqueCode, imgUrl));
         allStores = storesPage.getAllStores();
 
         //Checking if the Store has been successfully created by checking if the list of stores contains the newly created store.
@@ -136,20 +136,10 @@ public class StoresPageTest extends FunctionalTest {
         assertNotEquals("", storeName);
         assertNotEquals("", storeUniqueCode);
         assertNotEquals("", imgUrl);
-        String store_name = storeName + "_TC021_1";
-        testStores.add(new Stores(store_name, "", ""));
-        createStore(new Stores(store_name, "", ""));
+        Stores store = new Stores(storeName, storeUniqueCode, "");
+        testStores.add(store);
+        createStore(storesPage, store);
 
-        store_name = storeName + "_TC021_2";
-        testStores.add(new Stores(store_name, storeUniqueCode + "_TC021_2", ""));
-        createStore(new Stores(store_name, storeUniqueCode + "_TC021_2", ""));
-
-        store_name = storeName + "_TC021_3";
-        testStores.add(new Stores(store_name, "", imgUrl + "_TC021_3"));
-        createStore(new Stores(store_name, "", imgUrl + "_TC021_3"));
-
-        store_name = storeName + "_TC021_4";
-        testStores.add(new Stores(store_name, storeUniqueCode + "_TC021_4", imgUrl + "_TC021_4"));
     }
 
     @Test(testName = "TC022 - Check if a user can edit the details of an existing Store", priority = 2)
@@ -181,19 +171,6 @@ public class StoresPageTest extends FunctionalTest {
                 }
             }
         }
-    }
-
-    private void createStore(Stores store) {
-        assertEquals(storesUrl, webDriver.getCurrentUrl());
-        storesPage.clickNewStore();
-        assertEquals(addStoreUrl, webDriver.getCurrentUrl());
-        storesPage.createUpdateStore(store);
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(storesUrl, webDriver.getCurrentUrl());
     }
 
     private void updateStore(Stores oldStore, Stores newStore) {
