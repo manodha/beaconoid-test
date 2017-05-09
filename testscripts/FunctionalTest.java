@@ -9,7 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import java.util.concurrent.TimeUnit;
@@ -34,8 +33,10 @@ public class FunctionalTest {
             "Restaurants & Cafes", "50% off on the side onion rings when purchased with meal", "$10.00");
 
     /* Production base URL */
-    static String baseUrl = "https://www.beaconoid.me/";
+    /*static String baseUrl = "https://www.beaconoid.me/";*/
 
+    /* Development base URL*/
+    static String baseUrl = "http://localhost:3000/";
 
     static String loginUrl = baseUrl + "users/sign_in";
     static String dashboardUrl = baseUrl + "dashboard";
@@ -45,7 +46,8 @@ public class FunctionalTest {
     static String addCategoryUrl = baseUrl + "categories/new";
     static String beaconsUrl = baseUrl + "beacons";
     static String advertisementsUrl = baseUrl + "advertisements";
-    private static String addBeaconUrl = baseUrl + "beacons/new";
+    static String addBeaconUrl = baseUrl + "beacons/new";
+    static String duplicateBeaconDanger = "";
     private static String addAdvertisementUrl = baseUrl + "advertisements/new";
 
     //protected static String settingsUrl = baseUrl + ""
@@ -100,12 +102,23 @@ public class FunctionalTest {
         }
     }
 
-    @AfterSuite
+    BeaconsPage accessBeaconsPage(NavigationMenu navigationMenu) {
+        BeaconsPage beaconsPage = navigationMenu.clickBeconsLink();
+        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return beaconsPage;
+    }
+
+   /* @AfterSuite
     public static void tearDown() {
         webDriver.manage().deleteAllCookies();
         webDriver.close();
         webDriver.quit();
-    }
+    }*/
 
     @AfterMethod
     public void printResult(ITestResult result) {
@@ -137,7 +150,7 @@ public class FunctionalTest {
         loginPage.enterEmail(email);
         loginPage.enterPassword(password);
         NavigationMenu navigationMenu = loginPage.login();
-        assertEquals("Signed in successfully.", navigationMenu.getSuccessAlertText());
+        assertEquals("Signed in successfully.", navigationMenu.getSucessAlert());
         return navigationMenu;
     }
 

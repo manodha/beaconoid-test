@@ -36,7 +36,7 @@ public class LoginPageTest extends FunctionalTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals("Signed in successfully.", navigationMenu.getSuccessAlertText());
+        assertEquals("Signed in successfully.", navigationMenu.getSucessAlert());
     }
 
     @Parameters({"emailTC002", "passwordTC002"})

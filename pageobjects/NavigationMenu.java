@@ -47,10 +47,6 @@ public class NavigationMenu extends PageObject {
 
     }
 
-    public String getSuccessAlertText() {
-        return succesAlert.getText();
-    }
-
     public LoginPage clickLogoutLink() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", logoutLink);
         return new LoginPage(webDriver);

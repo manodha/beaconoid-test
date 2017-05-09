@@ -18,6 +18,12 @@ public class BeaconsPage extends PageObject {
 
     private WebDriver webDriver;
 
+    @FindBy(css = "div.alert.alert-success")
+    private WebElement succesAlert;
+
+    @FindBy(css = "div.alert.alert-danger")
+    private WebElement errorAlert;
+
     @FindBy(css = "table.table-bordered.table-striped > tbody")
     private WebElement beaconsTable;
 
@@ -122,6 +128,7 @@ public class BeaconsPage extends PageObject {
         deleteBeaconBtn.click();
         webDriver.switchTo().alert().accept();
     }
+
 
     public BeaconAdvPage clickViewAdvertisementsLink(WebElement viewAdvertisementsLink) {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", viewAdvertisementsLink);

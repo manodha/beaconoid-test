@@ -104,6 +104,9 @@ public class AdvertisementsPage extends PageObject {
         numRows = advertisementRows.size();
         numColumns = advertisementRows.get(0).findElements(By.tagName("td")).size();
 
+        if (numColumns <= 1)
+            return advertisements;
+
         for (int i = 0; i < numRows; i++) {
             Advertisement advertisement = new Advertisement();
             advertisement.setName(advertisementRows.get(i).findElement(By.xpath("td[1]")).getText());
