@@ -3,6 +3,7 @@ package com.company.testscripts;
 import com.company.model.Advertisement;
 import com.company.model.Beacons;
 import com.company.pageobjects.*;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -200,8 +201,23 @@ public class BeaconsPageTest extends FunctionalTest {
     //@Test(priority = 10, testName = "TC035")
     public void checkIfBeaconBeDelAssiToAdv() {
         beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteDefaultTestBeacon(beaconsPage);
+        deleteBeacon(beaconsPage, defaultTestBeacon);
 
+    }
+
+    @AfterTest
+    public void clearAllTestData() {
+        advertisementsPage = accessAdvertisementsPage(navigationMenu);
+        deleteAdvertisement(advertisementsPage, defaultTestAdvertisement);
+
+        beaconsPage = accessBeaconsPage(navigationMenu);
+        deleteBeacon(beaconsPage, defaultTestBeacon);
+
+        categoryPage = accessCategoriesPage(navigationMenu);
+        deleteCategory(categoryPage, defaultTestCategory);
+
+        storesPage = accessStoresPage(navigationMenu);
+        deleteStore(storesPage, defaultTestStore);
     }
 
     private void updateBeacon(Beacons beacon, Beacons newBeacon) {

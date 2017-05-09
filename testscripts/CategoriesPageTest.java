@@ -34,17 +34,10 @@ public class CategoriesPageTest extends FunctionalTest {
     private void accessCategoriesPage(String email, String password) {
         navigationMenu = loginToBeaconoid(email, password);
 
-        storesPage = navigationMenu.clickStoresLink();
-        assertEquals(storesUrl, webDriver.getCurrentUrl());
+        storesPage = accessStoresPage(navigationMenu);
         createStore(storesPage, defaultTestStore);
 
-        categoryPage = navigationMenu.clickCatogoriesLink();
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        categoryPage = accessCategoriesPage(navigationMenu);
     }
 
     @Test(priority = 1, testName = "TC023")
@@ -84,8 +77,7 @@ public class CategoriesPageTest extends FunctionalTest {
                                     String categoryDescriptionNew) {
         // Accessing the Categories Page
         if (!webDriver.getCurrentUrl().equals(categoriesUrl))
-            webDriver.get(categoriesUrl);
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
+            categoryPage = accessCategoriesPage(navigationMenu);
 
         Category category = categoryPage.getCategory(categoryPage.getAllCategories(), categoryName, categoryDescription);
         updateCategory(category, new Category(categoryNameNew, categoryDescriptionNew));
@@ -104,24 +96,13 @@ public class CategoriesPageTest extends FunctionalTest {
     @Test(priority = 4, testName = "TC026")
     @Parameters({"categoryNameNew", "categoryDescriptionNew"})
     public void deleteCategoryTC026(String categoryName, String categoryDescription) {
-        AdvertisementsPage advertisementsPage = navigationMenu.clickAdvertisementsLink();
-        assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        AdvertisementsPage advertisementsPage = accessAdvertisementsPage(navigationMenu);
+
         allAdvertisements = advertisementsPage.getAllAdvertisements();
         /* Checking that there are no advertisement with this category */
         assertThat(allAdvertisements, not(hasItem(hasProperty("category", equalTo(categoryName)))));
 
-        categoryPage = navigationMenu.clickCatogoriesLink();
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        categoryPage = accessCategoriesPage(navigationMenu);
         // Deleting the category
         Category category = categoryPage.getCategory(categoryPage.getAllCategories(), categoryName, categoryDescription);
         categoryPage.clickDeleteCategoryBtn(category.getDeleteButton());
@@ -160,15 +141,10 @@ public class CategoriesPageTest extends FunctionalTest {
     // @Test(priority = 7, testName = "TC027")
     public void checkIfCategoryAssiToAdvBeDeleted() {
         if (webDriver.getCurrentUrl().equals(categoriesUrl)) {
-            categoryPage = navigationMenu.clickCatogoriesLink();
-            try {
-                Thread.sleep(waitMilliSeconds);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            categoryPage = accessCategoriesPage(navigationMenu);
         }
         assertEquals(categoriesUrl, webDriver.getCurrentUrl());
-        deleteDefaultTestCategory(categoryPage);
+        deleteCategory(categoryPage, defaultTestCategory);
         allCategories = categoryPage.getAllCategories();
         assertThat(allCategories, hasItem(allOf(hasProperty("categoryName", equalTo(defaultTestCategory.getCategoryName())),
                 hasProperty("categoryDescription", equalTo(defaultTestCategory.getCategoryDescription())))));
@@ -186,43 +162,22 @@ public class CategoriesPageTest extends FunctionalTest {
     public void clearAllTestData() {
         // Deleting the Test Advertisement that was created for the Test Case TC030
         if (!webDriver.getCurrentUrl().equals(advertisementsUrl)) {
-            advertisementsPage = navigationMenu.clickAdvertisementsLink();
-            try {
-                Thread.sleep(waitMilliSeconds);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            advertisementsPage = accessAdvertisementsPage(navigationMenu);
         }
-        deleteDefaultTestAdvertisement(advertisementsPage);
-
+        deleteAdvertisement(advertisementsPage, defaultTestAdvertisement);
 
         // Deleting the Test Category that was created for the test case TC028
-        categoryPage = navigationMenu.clickCatogoriesLink();
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        deleteDefaultTestCategory(categoryPage);
+        categoryPage = accessCategoriesPage(navigationMenu);
+        deleteCategory(categoryPage, defaultTestCategory);
 
 
         // Deleting the Test Beacon that was created for the test case TC030
-        beaconsPage = navigationMenu.clickBeconsLink();
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        deleteDefaultTestBeacon(beaconsPage);
+        beaconsPage = accessBeaconsPage(navigationMenu);
+        deleteBeacon(beaconsPage, defaultTestBeacon);
 
         // Deleting the Test Store that was created in the @BeforeTest Method
-        storesPage = navigationMenu.clickStoresLink();
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        deleteDefaultTestStore(storesPage);
+        storesPage = accessStoresPage(navigationMenu);
+        deleteStore(storesPage, defaultTestStore);
     }
 
     private void updateCategory(Category oldCategory, Category newCategory) {

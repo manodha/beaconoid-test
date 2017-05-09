@@ -45,6 +45,11 @@ public class CategoryPage extends PageObject {
         List<WebElement> categoryRows = categoriesTable.findElements(By.tagName("tr"));
         int numRows, numColumns;
         numRows = categoryRows.size();
+        numColumns = categoryRows.get(0).findElements(By.tagName("td")).size();
+
+        if (numColumns <= 1)
+            return categories;
+
         for (int i = 0; i < numRows; i++) {
             Category category = new Category();
             category.setCategoryId(categoryRows.get(i).findElement(By.xpath("td[1]")).getText());

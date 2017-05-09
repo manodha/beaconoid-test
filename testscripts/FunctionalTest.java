@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import java.util.concurrent.TimeUnit;
@@ -59,66 +60,56 @@ public class FunctionalTest {
         webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    static void deleteDefaultTestStore(StoresPage storesPage) {
-        Stores store = storesPage.getStore(storesPage.getAllStores(), defaultTestStore.getName(), defaultTestStore.getStoreCode());
-        storesPage.clickDeleteButton(store.getDeleteBtn());
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    static void deleteDefaultTestCategory(CategoryPage categoryPage) {
-        Category category = categoryPage.getCategory(categoryPage.getAllCategories(), defaultTestCategory.getCategoryName(),
-                defaultTestCategory.getCategoryDescription());
-        categoryPage.clickDeleteCategoryBtn(category.getDeleteButton());
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    static void deleteDefaultTestBeacon(BeaconsPage beaconsPage) {
-        Beacons beacons = beaconsPage.getBeacon(beaconsPage.getAllBeacons(), defaultTestBeacon.getUniqueRef(),
-                defaultTestBeacon.getName());
-        beaconsPage.clickDeleteBeaconBtn(beacons.getDeleteLink());
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    static void deleteDefaultTestAdvertisement(AdvertisementsPage advertisementsPage) {
-        Advertisement advertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(),
-                defaultTestAdvertisement.getName(), defaultTestAdvertisement.getBeacon());
-        advertisementsPage.clickDeleteAdvBtn(advertisement.getDeleteBtn());
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    BeaconsPage accessBeaconsPage(NavigationMenu navigationMenu) {
-        BeaconsPage beaconsPage = navigationMenu.clickBeconsLink();
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return beaconsPage;
-    }
-
-   /* @AfterSuite
+    @AfterSuite
     public static void tearDown() {
         webDriver.manage().deleteAllCookies();
         webDriver.close();
         webDriver.quit();
-    }*/
+    }
+
+    static void deleteStore(StoresPage storesPage, Stores store) {
+        Stores testStore = storesPage.getStore(storesPage.getAllStores(), store.getName(), store.getStoreCode());
+        storesPage.clickDeleteButton(testStore.getDeleteBtn());
+        try {
+            Thread.sleep(waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void deleteCategory(CategoryPage categoryPage, Category category) {
+        Category testCategory = categoryPage.getCategory(categoryPage.getAllCategories(), category.getCategoryName(),
+                category.getCategoryDescription());
+        categoryPage.clickDeleteCategoryBtn(testCategory.getDeleteButton());
+        try {
+            Thread.sleep(waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void deleteBeacon(BeaconsPage beaconsPage, Beacons beacon) {
+        Beacons testBeacon = beaconsPage.getBeacon(beaconsPage.getAllBeacons(), beacon.getUniqueRef(),
+                beacon.getName());
+        beaconsPage.clickDeleteBeaconBtn(testBeacon.getDeleteLink());
+        try {
+            Thread.sleep(waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void deleteAdvertisement(AdvertisementsPage advertisementsPage, Advertisement advertisement) {
+        Advertisement testAdvertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(),
+                advertisement.getName(), advertisement.getBeacon());
+        advertisementsPage.clickDeleteAdvBtn(testAdvertisement.getDeleteBtn());
+        try {
+            Thread.sleep(waitMilliSeconds);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @AfterMethod
     public void printResult(ITestResult result) {
@@ -154,6 +145,17 @@ public class FunctionalTest {
         return navigationMenu;
     }
 
+    StoresPage accessStoresPage(NavigationMenu navigationMenu) {
+        StoresPage storesPage = navigationMenu.clickStoresLink();
+        assertEquals(storesUrl, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return storesPage;
+    }
+
     void createStore(StoresPage storesPage, Stores store) {
         assertEquals(storesUrl, webDriver.getCurrentUrl());
         storesPage.clickNewStore();
@@ -167,6 +169,17 @@ public class FunctionalTest {
         assertEquals(storesUrl, webDriver.getCurrentUrl());
     }
 
+    CategoryPage accessCategoriesPage(NavigationMenu navigationMenu) {
+        CategoryPage categoryPage = navigationMenu.clickCatogoriesLink();
+        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return categoryPage;
+    }
+
     void createCategory(CategoryPage categoryPage, Category category) {
         assertEquals(categoriesUrl, webDriver.getCurrentUrl());
         categoryPage.clickNewCategoryBtn();
@@ -178,6 +191,17 @@ public class FunctionalTest {
             e.printStackTrace();
         }
         assertEquals(categoriesUrl, webDriver.getCurrentUrl());
+    }
+
+    BeaconsPage accessBeaconsPage(NavigationMenu navigationMenu) {
+        BeaconsPage beaconsPage = navigationMenu.clickBeconsLink();
+        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return beaconsPage;
     }
 
     void createBeacon(BeaconsPage beaconsPage, Beacons newBeacon) {
@@ -207,6 +231,17 @@ public class FunctionalTest {
         return beaconAdvPage;
     }
 
+    AdvertisementsPage accessAdvertisementsPage(NavigationMenu navigationMenu) {
+        AdvertisementsPage advertisementsPage = navigationMenu.clickAdvertisementsLink();
+        assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return advertisementsPage;
+    }
+
     void createAdvertisement(AdvertisementsPage advertisementsPage, Advertisement advertisement) {
         assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
         advertisementsPage.clickNewAdvertisementBtn();
@@ -219,5 +254,6 @@ public class FunctionalTest {
         }
         assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
     }
+
 
 }
