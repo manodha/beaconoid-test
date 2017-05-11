@@ -96,6 +96,10 @@ public class AdvertisementsPage extends PageObject {
         webDriver.switchTo().alert().accept();
     }
 
+    public void clickViewAdverBtn(WebElement editAdverBtn) {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", editAdverBtn);
+    }
+
 
     public List<Advertisement> getAllAdvertisements() {
         List<Advertisement> advertisements = new ArrayList<>();
@@ -106,6 +110,7 @@ public class AdvertisementsPage extends PageObject {
 
         if (numColumns <= 1)
             return advertisements;
+
 
         for (int i = 0; i < numRows; i++) {
             Advertisement advertisement = new Advertisement();
@@ -147,6 +152,10 @@ public class AdvertisementsPage extends PageObject {
         enterAdvDescription(advertisement.getDescription());
         enterAdvPrice(advertisement.getPrice());
         clickCreateUpdateAdverBtn();
+    }
+
+    public String getNoAdvertisementsTXT() {
+        return advertisementsTable.findElement(By.xpath("tr[1]/td[1]")).getText();
     }
 
     public void printAllAdvertisements(List<Advertisement> advertisements) {

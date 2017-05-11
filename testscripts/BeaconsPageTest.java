@@ -112,13 +112,11 @@ public class BeaconsPageTest extends FunctionalTest {
         assertThat(allAdvertisements, not(hasItem(hasProperty("beacon", equalTo(beaconNameNew)))));
 
         beaconsPage = accessBeaconsPage(navigationMenu);
-        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getAllBeacons(), uniqueRefNew, beaconNameNew);
-        beaconsPage.clickDeleteBeaconBtn(beacon.getDeleteLink());
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        deleteBeacon(beaconsPage, new Beacons(uniqueRefNew, beaconNameNew));
+
+        allBeacons = beaconsPage.getAllBeacons();
+        assertThat(allBeacons, not(hasItem(allOf(hasProperty("uniqueRef", equalTo(uniqueRefNew)),
+                hasProperty("name", equalTo(beaconNameNew))))));
 
     }
 

@@ -42,6 +42,11 @@ public class Beacons {
 
     }
 
+    public Beacons(String uniqueRef, String name) {
+        this.uniqueRef = uniqueRef;
+        this.name = name;
+    }
+
     public String getUniqueRef() {
         return uniqueRef;
     }

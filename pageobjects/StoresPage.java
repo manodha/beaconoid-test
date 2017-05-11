@@ -49,6 +49,11 @@ public class StoresPage extends PageObject {
         List<WebElement> storeRows = storesTable.findElements(By.tagName("tr"));
         int numRows, numColumns;
         numRows = storeRows.size();
+        numColumns = storeRows.get(0).findElements(By.tagName("td")).size();
+
+        if (numColumns <= 1)
+            return stores;
+
         for (int i = 0; i < numRows; i++) {
             Stores store = new Stores();
             store.setName(storeRows.get(i).findElement(By.xpath("td[2]")).getText());

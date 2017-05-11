@@ -22,7 +22,6 @@ public class CategoriesPageTest extends FunctionalTest {
 
     private NavigationMenu navigationMenu;
     private List<Category> allCategories;
-    private List<Advertisement> allAdvertisements;
     private CategoryPage categoryPage;
     private StoresPage storesPage;
     private AdvertisementsPage advertisementsPage;
@@ -98,19 +97,14 @@ public class CategoriesPageTest extends FunctionalTest {
     public void deleteCategoryTC026(String categoryName, String categoryDescription) {
         AdvertisementsPage advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
-        allAdvertisements = advertisementsPage.getAllAdvertisements();
+        List<Advertisement> allAdvertisements = advertisementsPage.getAllAdvertisements();
         /* Checking that there are no advertisement with this category */
         assertThat(allAdvertisements, not(hasItem(hasProperty("category", equalTo(categoryName)))));
 
         categoryPage = accessCategoriesPage(navigationMenu);
         // Deleting the category
-        Category category = categoryPage.getCategory(categoryPage.getAllCategories(), categoryName, categoryDescription);
-        categoryPage.clickDeleteCategoryBtn(category.getDeleteButton());
-        try {
-            Thread.sleep(waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        deleteCategory(categoryPage, new Category(categoryName, categoryDescription));
+
         assertEquals(categoriesUrl, webDriver.getCurrentUrl());
         allCategories = categoryPage.getAllCategories();
         // Checking that the category has been deleted successfully.

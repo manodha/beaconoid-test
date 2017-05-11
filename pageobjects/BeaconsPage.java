@@ -62,6 +62,11 @@ public class BeaconsPage extends PageObject {
         List<WebElement> beaconRows = beaconsTable.findElements(By.tagName("tr"));
         int numRows, numColumns;
         numRows = beaconRows.size();
+        numColumns = beaconRows.get(0).findElements(By.tagName("td")).size();
+
+        if (numColumns <= 1)
+            return beacons;
+
         for (int i = 0; i < numRows; i++) {
             Beacons beacon = new Beacons();
             beacon.setUniqueRef(beaconRows.get(i).findElement(By.xpath("td[1]")).getText());

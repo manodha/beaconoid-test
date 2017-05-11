@@ -34,22 +34,29 @@ public class FunctionalTest {
             "Restaurants & Cafes", "50% off on the side onion rings when purchased with meal", "$10.00");
 
     /* Production base URL */
-    /*static String baseUrl = "https://www.beaconoid.me/";*/
+    //static String baseUrl = "https://www.beaconoid.me/";
 
     /* Development base URL*/
     static String baseUrl = "http://localhost:3000/";
 
     static String loginUrl = baseUrl + "users/sign_in";
     static String dashboardUrl = baseUrl + "dashboard";
+
     static String storesUrl = baseUrl + "stores";
     static String addStoreUrl = baseUrl + "stores/new";
+
     static String categoriesUrl = baseUrl + "categories";
     static String addCategoryUrl = baseUrl + "categories/new";
+
     static String beaconsUrl = baseUrl + "beacons";
-    static String advertisementsUrl = baseUrl + "advertisements";
     static String addBeaconUrl = baseUrl + "beacons/new";
     static String duplicateBeaconDanger = "";
-    private static String addAdvertisementUrl = baseUrl + "advertisements/new";
+
+    static String advertisementsUrl = baseUrl + "advertisements";
+    static String addAdvertisementUrl = baseUrl + "advertisements/new";
+    static String noAdvertisementTxt = "No beacon found.";
+
+
 
     //protected static String settingsUrl = baseUrl + ""
 
@@ -147,12 +154,12 @@ public class FunctionalTest {
 
     StoresPage accessStoresPage(NavigationMenu navigationMenu) {
         StoresPage storesPage = navigationMenu.clickStoresLink();
-        assertEquals(storesUrl, webDriver.getCurrentUrl());
         try {
             Thread.sleep(waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        assertEquals(storesUrl, webDriver.getCurrentUrl());
         return storesPage;
     }
 
@@ -171,12 +178,12 @@ public class FunctionalTest {
 
     CategoryPage accessCategoriesPage(NavigationMenu navigationMenu) {
         CategoryPage categoryPage = navigationMenu.clickCatogoriesLink();
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
         try {
             Thread.sleep(waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
         return categoryPage;
     }
 
@@ -195,12 +202,12 @@ public class FunctionalTest {
 
     BeaconsPage accessBeaconsPage(NavigationMenu navigationMenu) {
         BeaconsPage beaconsPage = navigationMenu.clickBeconsLink();
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
         try {
             Thread.sleep(waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
         return beaconsPage;
     }
 
@@ -233,12 +240,12 @@ public class FunctionalTest {
 
     AdvertisementsPage accessAdvertisementsPage(NavigationMenu navigationMenu) {
         AdvertisementsPage advertisementsPage = navigationMenu.clickAdvertisementsLink();
-        assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
         try {
             Thread.sleep(waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
         return advertisementsPage;
     }
 
