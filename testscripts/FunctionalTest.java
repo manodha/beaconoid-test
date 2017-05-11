@@ -56,6 +56,8 @@ public class FunctionalTest {
     static String addAdvertisementUrl = baseUrl + "advertisements/new";
     static String noAdvertisementTxt = "No beacon found.";
 
+    static String staffUrl = baseUrl + "staffs";
+
 
 
     //protected static String settingsUrl = baseUrl + ""
@@ -260,6 +262,17 @@ public class FunctionalTest {
             e.printStackTrace();
         }
         assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
+    }
+
+    StaffPage accessStaffPage(NavigationMenu navigationMenu) {
+        StaffPage staffPage = navigationMenu.clickStaffLink();
+        try {
+            Thread.sleep(waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(staffUrl, webDriver.getCurrentUrl());
+        return staffPage;
     }
 
 

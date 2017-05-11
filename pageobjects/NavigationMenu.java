@@ -37,6 +37,9 @@ public class NavigationMenu extends PageObject {
     @FindBy(xpath = "//a[@href='/advertisements']")
     private WebElement advertisementsLink;
 
+    @FindBy(xpath = "//a[@href='/staffs']")
+    private WebElement staffLink;
+
     @FindBy(partialLinkText = " Settings")
     private WebElement settingsLink;
 
@@ -78,6 +81,11 @@ public class NavigationMenu extends PageObject {
     public AdvertisementsPage clickAdvertisementsLink() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", advertisementsLink);
         return new AdvertisementsPage(webDriver);
+    }
+
+    public StaffPage clickStaffLink() {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", staffLink);
+        return new StaffPage(webDriver);
     }
 
     public void clickSettingsLink() {

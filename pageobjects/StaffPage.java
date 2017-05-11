@@ -2,6 +2,7 @@ package com.company.pageobjects;
 
 import com.company.model.Staff;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,7 +43,7 @@ public class StaffPage extends PageObject {
     private WebElement roleDropDown;
 
     @FindBy(name = "commit")
-    private WebElement creaUpdateStaff;
+    private WebElement creaUpdateStaffBtn;
 
     public StaffPage(WebDriver webDriver) {
         super(webDriver);
@@ -84,6 +85,24 @@ public class StaffPage extends PageObject {
         roleDropdown.selectByIndex(index);
     }
 
+    public void clickNewStaffBtn() {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", newStaffBtn);
+    }
+
+    public void clickCreaUpdateStaffBtn() {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", creaUpdateStaffBtn);
+    }
+
+    public void clickEditStaffBtn(WebElement editBtn) {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", editBtn);
+
+    }
+
+    public void clickDeleteStaffBtn(WebElement deleteBtn) {
+        deleteBtn.click();
+        webDriver.switchTo().alert().accept();
+    }
+
     public List<Staff> getAllStaff() {
         List<Staff> staffs = new ArrayList<>();
         List<WebElement> staffRows = staffsTable.findElements(By.tagName("tr"));
@@ -101,7 +120,7 @@ public class StaffPage extends PageObject {
             staff.setEmail(staffRows.get(i).findElement(By.xpath("td[3]")).getText());
             staff.setRole(staffRows.get(i).findElement(By.xpath("td[4]")).getText());
             staff.setEditLink(staffRows.get(i).findElement(By.xpath("td[5]/a")));
-            staff.setDeleteBtn(staffRows.get(i).findElement(By.xpath("td[7]/form/input[@value='Delete']")));
+            staff.setDeleteBtn(staffRows.get(i).findElement(By.xpath("td[6]/form/input[@value='Delete']")));
             staffs.add(staff);
         }
 
@@ -128,10 +147,24 @@ public class StaffPage extends PageObject {
     public void printStaff(Staff staff) {
         System.out.print("id - " + staff.getId());
         System.out.print(" name - " + staff.getName());
+        System.out.print(" email - " + staff.getEmail());
         System.out.print(" nickname - " + staff.getNickname());
         System.out.print(" password - " + staff.getPassword());
         System.out.print(" confirmPassword - " + staff.getConfirmPassword());
         System.out.println(" role - " + staff.getRole());
+    }
+
+    public void creaUpdateStaff(Staff staff) {
+        enterName(staff.getName());
+        enterEmail(staff.getEmail());
+        enterNickname(staff.getNickname());
+        enterPassword(staff.getPassword());
+        enterConfirmPassword(staff.getConfirmPassword());
+        if (staff.getRole().equals(""))
+            selectRoleByIndex(1);
+        else
+            selectRoleByName(staff.getRole());
+        clickCreaUpdateStaffBtn();
     }
 
 }

@@ -1,0 +1,28 @@
+<suite name="staff_page_test_suite">
+    <parameter name="email" value="antodoms@gmail.com"/>
+    <parameter name="password" value="password"/>
+
+    <parameter name="userName" value="Manodha Thanapathy"/>
+    <parameter name="userEmail" value="manodha@yahoo.com"/>
+    <parameter name="nickname" value="manu"/>
+    <parameter name="userPassword" value="password"/>
+    <parameter name="confirmPassword" value="password"/>
+
+    <parameter name="userNameNew" value="Tanya Srinidhi"/>
+    <parameter name="userEmailNew" value="tanu.srinidhi@gmail.com"/>
+    <parameter name="nicknameNew" value="tanu"/>
+    <parameter name="userPasswordNew" value="123456"/>
+    <parameter name="confirmPasswordNew" value="123456"/>
+
+
+    <parameter name="admin_role" value="Admin"/>
+    <parameter name="store_manager_role" value="Store Manager"/>
+    <parameter name="beacon_manager_role" value="Beacon Manager"/>
+    <parameter name="user_report_manager_role" value="User Report Manager"/>
+
+    <test name="test">
+        <classes>
+            <class name="com.company.testscripts.StaffPageTest"/>
+        </classes>
+    </test>
+</suite>
