@@ -39,7 +39,8 @@ public class StaffPageTest extends FunctionalTest {
 
     @Test(priority = 2)
     @Parameters({"userEmail", "userNameNew", "userEmailNew", "nicknameNew", "userPasswordNew", "confirmPasswordNew", "beacon_manager_role"})
-    public void updateStaffTC(String userEmail, String name, String userEmailNew, String nickname, String password, String confirmPassword, String role) {
+    public void updateStaffTC(String userEmail, String name, String userEmailNew, String nickname, String password,
+                              String confirmPassword, String role) {
         Staff staff = staffPage.getStaff(userEmail);
         updateStaff(staff, new Staff(name, userEmailNew, nickname, password, confirmPassword, role));
 
