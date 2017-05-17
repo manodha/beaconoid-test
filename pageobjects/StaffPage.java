@@ -127,10 +127,20 @@ public class StaffPage extends PageObject {
         return staffs;
     }
 
-    public Staff getStaff(String email) {
+    public Staff getStaffByEmail(String email) {
         List<Staff> staffs = getAllStaff();
         for (Staff staff : staffs) {
             if (staff.getEmail().equals(email)) {
+                return staff;
+            }
+        }
+        return null;
+    }
+
+    public Staff getStaffByRole(String role) {
+        List<Staff> staffs = getAllStaff();
+        for (Staff staff : staffs) {
+            if (staff.getRole().equals(role)) {
                 return staff;
             }
         }
@@ -160,10 +170,7 @@ public class StaffPage extends PageObject {
         enterNickname(staff.getNickname());
         enterPassword(staff.getPassword());
         enterConfirmPassword(staff.getConfirmPassword());
-        if (staff.getRole().equals(""))
-            selectRoleByIndex(1);
-        else
-            selectRoleByName(staff.getRole());
+        selectRoleByName(staff.getRole());
         clickCreaUpdateStaffBtn();
     }
 

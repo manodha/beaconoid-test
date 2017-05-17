@@ -34,10 +34,10 @@ public class FunctionalTest {
             "Restaurants & Cafes", "50% off on the side onion rings when purchased with meal", "$10.00");
 
     /* Production base URL */
-    //static String baseUrl = "https://www.beaconoid.me/";
+    static String baseUrl = "https://www.beaconoid.me/";
 
     /* Development base URL*/
-    static String baseUrl = "http://localhost:3000/";
+    //static String baseUrl = "http://localhost:3000/";
 
     static String loginUrl = baseUrl + "users/sign_in";
     static String dashboardUrl = baseUrl + "dashboard";
@@ -57,6 +57,9 @@ public class FunctionalTest {
     static String noAdvertisementTxt = "No beacon found.";
 
     static String staffUrl = baseUrl + "staffs";
+    static String deleteStaffMsg = " has been deleted!";
+
+    static String notAuthorisedMsg = "You are not authorized to perform this action.";
 
 
 

@@ -1,5 +1,6 @@
 package com.company.pageobjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -91,4 +92,17 @@ public class NavigationMenu extends PageObject {
     public void clickSettingsLink() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", settingsLink);
     }
+
+    public WebElement getStaffLink() {
+        if (webDriver.findElements(By.xpath("//a[@href='/staffs']")).size() != 0)
+            return staffLink;
+        else
+            return null;
+    }
+
+    public WebElement getLogoutLink() {
+        return logoutLink;
+    }
+
+
 }
