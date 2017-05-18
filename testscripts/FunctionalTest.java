@@ -5,6 +5,7 @@ import com.company.model.Beacons;
 import com.company.model.Category;
 import com.company.model.Stores;
 import com.company.pageobjects.*;
+import com.company.util.Constants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
@@ -22,45 +23,6 @@ import static org.junit.Assert.assertEquals;
 public class FunctionalTest {
 
     protected static WebDriver webDriver;
-    static int waitMilliSeconds = 1500;
-
-    static Stores defaultTestStore = new Stores("TGI Fridays Fountain Gate", "TGI001",
-            "https://tgifridays.com/image.jpg");
-    static Category defaultTestCategory = new Category("Restaurants & Cafes",
-            "Including but not limited to Fast Food Places");
-    static Beacons defaultTestBeacon = new Beacons("BE010", "TGI BEACON", "TGI Fridays Fountain Gate",
-            "Active", "38.0180° S", "145.3039° E");
-    static Advertisement defaultTestAdvertisement = new Advertisement("50% Deal on Onion Rings", "TGI BEACON",
-            "Restaurants & Cafes", "50% off on the side onion rings when purchased with meal", "$10.00");
-
-    /* Production base URL */
-    static String baseUrl = "https://www.beaconoid.me/";
-
-    /* Development base URL*/
-    //static String baseUrl = "http://localhost:3000/";
-
-    static String loginUrl = baseUrl + "users/sign_in";
-    static String dashboardUrl = baseUrl + "dashboard";
-
-    static String storesUrl = baseUrl + "stores";
-    static String addStoreUrl = baseUrl + "stores/new";
-
-    static String categoriesUrl = baseUrl + "categories";
-    static String addCategoryUrl = baseUrl + "categories/new";
-
-    static String beaconsUrl = baseUrl + "beacons";
-    static String addBeaconUrl = baseUrl + "beacons/new";
-    static String duplicateBeaconDanger = "";
-
-    static String advertisementsUrl = baseUrl + "advertisements";
-    static String addAdvertisementUrl = baseUrl + "advertisements/new";
-    static String noAdvertisementTxt = "No beacon found.";
-
-    static String staffUrl = baseUrl + "staffs";
-    static String deleteStaffMsg = " has been deleted!";
-
-    static String notAuthorisedMsg = "You are not authorized to perform this action.";
-
 
 
     //protected static String settingsUrl = baseUrl + ""
@@ -83,7 +45,7 @@ public class FunctionalTest {
         Stores testStore = storesPage.getStore(storesPage.getAllStores(), store.getName(), store.getStoreCode());
         storesPage.clickDeleteButton(testStore.getDeleteBtn());
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -94,7 +56,7 @@ public class FunctionalTest {
                 category.getCategoryDescription());
         categoryPage.clickDeleteCategoryBtn(testCategory.getDeleteButton());
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -105,7 +67,7 @@ public class FunctionalTest {
                 beacon.getName());
         beaconsPage.clickDeleteBeaconBtn(testBeacon.getDeleteLink());
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -116,7 +78,7 @@ public class FunctionalTest {
                 advertisement.getName(), advertisement.getBeacon());
         advertisementsPage.clickDeleteAdvBtn(testAdvertisement.getDeleteBtn());
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -148,7 +110,7 @@ public class FunctionalTest {
     }
 
     NavigationMenu loginToBeaconoid(String email, String password) {
-        webDriver.get(loginUrl);
+        webDriver.get(Constants.loginUrl);
         LoginPage loginPage = new LoginPage(webDriver);
         loginPage.enterEmail(email);
         loginPage.enterPassword(password);
@@ -160,81 +122,81 @@ public class FunctionalTest {
     StoresPage accessStoresPage(NavigationMenu navigationMenu) {
         StoresPage storesPage = navigationMenu.clickStoresLink();
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(storesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
         return storesPage;
     }
 
     void createStore(StoresPage storesPage, Stores store) {
-        assertEquals(storesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
         storesPage.clickNewStore();
-        assertEquals(addStoreUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addStoreUrl, webDriver.getCurrentUrl());
         storesPage.createUpdateStore(store);
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(storesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
     }
 
     CategoryPage accessCategoriesPage(NavigationMenu navigationMenu) {
         CategoryPage categoryPage = navigationMenu.clickCatogoriesLink();
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
         return categoryPage;
     }
 
     void createCategory(CategoryPage categoryPage, Category category) {
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
         categoryPage.clickNewCategoryBtn();
-        assertEquals(addCategoryUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addCategoryUrl, webDriver.getCurrentUrl());
         categoryPage.createUpdateCategory(category);
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
     }
 
     BeaconsPage accessBeaconsPage(NavigationMenu navigationMenu) {
         BeaconsPage beaconsPage = navigationMenu.clickBeconsLink();
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
         return beaconsPage;
     }
 
     void createBeacon(BeaconsPage beaconsPage, Beacons newBeacon) {
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
         beaconsPage.clickNewBeaconBtn();
-        assertEquals(addBeaconUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addBeaconUrl, webDriver.getCurrentUrl());
         beaconsPage.createUpdateBeacon(newBeacon);
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
     BeaconAdvPage viewBeaconAdvertisements(BeaconsPage beaconsPage, Beacons beacon) {
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
         BeaconAdvPage beaconAdvPage = beaconsPage.clickViewAdvertisementsLink(beacon.getAdvertisementsLink());
         assertEquals(beacon.getAdvertisementsLink().getAttribute("href"), webDriver.getCurrentUrl());
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -246,35 +208,35 @@ public class FunctionalTest {
     AdvertisementsPage accessAdvertisementsPage(NavigationMenu navigationMenu) {
         AdvertisementsPage advertisementsPage = navigationMenu.clickAdvertisementsLink();
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
         return advertisementsPage;
     }
 
     void createAdvertisement(AdvertisementsPage advertisementsPage, Advertisement advertisement) {
-        assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
         advertisementsPage.clickNewAdvertisementBtn();
-        assertEquals(addAdvertisementUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addAdvertisementUrl, webDriver.getCurrentUrl());
         advertisementsPage.createUpdateAdvertisement(advertisement);
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
     }
 
     StaffPage accessStaffPage(NavigationMenu navigationMenu) {
         StaffPage staffPage = navigationMenu.clickStaffLink();
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(staffUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
         return staffPage;
     }
 

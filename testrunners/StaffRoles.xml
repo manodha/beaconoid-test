@@ -1,0 +1,40 @@
+<suite name="staff_page_test_suite">
+    <parameter name="email" value="antodoms@gmail.com"/>
+    <parameter name="password" value="password"/>
+
+    <parameter name="name2" value="Manodha Thanapathy"/>
+    <parameter name="email2" value="manodha@yahoo.com"/>
+    <parameter name="nickname2" value="manu"/>
+    <parameter name="password2" value="password"/>
+    <parameter name="confirmPassword2" value="password"/>
+
+    <parameter name="name3" value="Tanya Srinidhi"/>
+    <parameter name="email3" value="tanu.srinidhi@gmail.com"/>
+    <parameter name="nickname3" value="tanu"/>
+    <parameter name="password3" value="123456"/>
+    <parameter name="confirmPassword3" value="123456"/>
+
+    <parameter name="name4" value="Kuan Lu"/>
+    <parameter name="email4" value="kuanlu@gmail.com"/>
+    <parameter name="nickname4" value="klu"/>
+    <parameter name="password4" value="654321"/>
+    <parameter name="confirmPassword4" value="654321"/>
+
+    <parameter name="name5" value="Jeremy Kra"/>
+    <parameter name="email5" value="jeremykra@gmail.com"/>
+    <parameter name="nickname5" value="JK"/>
+    <parameter name="password5" value="000000"/>
+    <parameter name="confirmPassword5" value="000000"/>
+
+    <parameter name="super_admin_role" value="Super Admin"/>
+    <parameter name="admin_role" value="Admin"/>
+    <parameter name="store_manager_role" value="Store Manager"/>
+    <parameter name="beacon_manager_role" value="Beacon Manager"/>
+    <parameter name="user_report_manager_role" value="User Report Manager"/>
+
+    <test name="test">
+        <classes>
+            <class name="com.company.testscripts.StaffPageTest"/>
+        </classes>
+    </test>
+</suite>

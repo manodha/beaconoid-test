@@ -1,11 +1,13 @@
 package com.company.testscripts;
 
+import com.company.pageobjects.LoginPage;
 import com.company.pageobjects.NavigationMenu;
-import org.testng.annotations.BeforeTest;
+import com.company.util.Constants;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 
 /**
@@ -15,77 +17,73 @@ public class NavigationMenuTest extends FunctionalTest {
 
     private NavigationMenu navigationMenu;
 
-    @BeforeTest
-    @Parameters({"email", "password"})
-    public void accessNavigationMenu(String email, String password) {
-        navigationMenu = loginToBeaconoid(email, password);
-    }
 
     @Test(testName = "TC008", priority = 1)
-    public void isDashboard() {
-        assertEquals(baseUrl, webDriver.getCurrentUrl());
+    @Parameters({"email", "password"})
+    public void isDashboard(String email, String password) {
+        navigationMenu = loginToBeaconoid(email, password);
+        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
+        assertNotNull(navigationMenu.getLogoutLink());
+
     }
 
-    @Test(testName = "TC009", priority = 2)
+    @Test(testName = "TC010", priority = 2)
     public void clickBeaconoid() {
-        assertEquals(baseUrl, webDriver.getCurrentUrl());
         navigationMenu.clickBeconsWebConsole();
-        assertEquals(dashboardUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.dashboardUrl, webDriver.getCurrentUrl());
 
     }
 
-    @Test(testName = "TC010", priority = 3)
+    @Test(testName = "TC011", priority = 3)
     public void clickDashboard() {
         navigationMenu.clickDashboardLink();
-        assertEquals(dashboardUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.dashboardUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(testName = "TC011", priority = 4)
+    @Test(testName = "TC012", priority = 4)
     public void clickStores() {
         navigationMenu.clickStoresLink();
-        assertEquals(storesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(testName = "TC012", priority = 5)
+    @Test(testName = "TC013", priority = 5)
     public void clickCatogories() {
         navigationMenu.clickCatogoriesLink();
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(testName = "TC013", priority = 6)
-    public void clickBecons() {
+    @Test(testName = "TC014", priority = 6)
+    public void clickBeacons() {
         navigationMenu.clickBeconsLink();
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(testName = "TC014", priority = 7)
+    @Test(testName = "TC015", priority = 7)
     public void clickAdvertisements() {
         navigationMenu.clickAdvertisementsLink();
-        assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+    }
+
+    @Test(testName = "TC016", priority = 8)
+    public void clickStaff() {
+        navigationMenu.clickStaffLink();
+        assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    @Test(testName = "TC015", priority = 8)
+    @Test(testName = "TC009", priority = 9)
     public void clickLogout() {
-        navigationMenu.clickLogoutLink();
+        LoginPage loginPage = navigationMenu.clickLogoutLink();
         try {
-            Thread.sleep(waitMilliSeconds * 2);
+            Thread.sleep(Constants.waitMilliSeconds * 2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(loginUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.loginTitle, loginPage.getTitleText());
     }
-
-
-    /*@Test(testName = "TC016")
-    public void clickSettings(){
-        navigationMenu.clickSettingsLink();
-        assertEquals(storesUrl,webDriver.getCurrentUrl());
-    }*/
-
-
 }

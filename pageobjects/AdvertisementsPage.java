@@ -21,19 +21,19 @@ public class AdvertisementsPage extends PageObject {
     @FindBy(partialLinkText = "New Advertisement")
     private WebElement newAdvertisementBtn;
 
-    @FindBy(id = "advertisement_name")
+    @FindBy(id = "name")
     private WebElement adverNameTxt;
 
     @FindBy(id = "advertisement_beacon_id")
     private WebElement adverBeaconDD;
 
-    @FindBy(id = "advertisement_category_id")
+    @FindBy(id = "category")
     private WebElement adverCategoryDD;
 
-    @FindBy(id = "advertisement_description")
+    @FindBy(id = "description")
     private WebElement adverDescriptionTxt;
 
-    @FindBy(id = "advertisement_price")
+    @FindBy(id = "price")
     private WebElement adverPriceTxt;
 
     @FindBy(name = "commit")

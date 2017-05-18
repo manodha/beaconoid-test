@@ -11,6 +11,9 @@ public class LoginPage extends PageObject {
 
     private WebDriver webDriver;
 
+    @FindBy(tagName = "h3")
+    private WebElement titleH3;
+
     @FindBy(id = "user_email")
     private WebElement emailTextField;
 
@@ -44,6 +47,10 @@ public class LoginPage extends PageObject {
     public NavigationMenu login() {
         loginButton.click();
         return new NavigationMenu(webDriver);
+    }
+
+    public String getTitleText() {
+        return titleH3.getText();
     }
 
 }

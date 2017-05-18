@@ -101,8 +101,15 @@ public class NavigationMenu extends PageObject {
     }
 
     public WebElement getLogoutLink() {
-        return logoutLink;
+        if (webDriver.findElements(By.xpath("//a[@href='/users/sign_out']")).size() != 0)
+            return staffLink;
+        else
+            return null;
     }
+
+    /*public WebElement getLogoutLink() {
+        return logoutLink;
+    }*/
 
 
 }

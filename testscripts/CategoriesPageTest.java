@@ -3,6 +3,7 @@ package com.company.testscripts;
 import com.company.model.Advertisement;
 import com.company.model.Category;
 import com.company.pageobjects.*;
+import com.company.util.Constants;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -34,7 +35,7 @@ public class CategoriesPageTest extends FunctionalTest {
         navigationMenu = loginToBeaconoid(email, password);
 
         storesPage = accessStoresPage(navigationMenu);
-        createStore(storesPage, defaultTestStore);
+        createStore(storesPage, Constants.defaultTestStore);
 
         categoryPage = accessCategoriesPage(navigationMenu);
     }
@@ -55,19 +56,19 @@ public class CategoriesPageTest extends FunctionalTest {
     @Test(priority = 2, testName = "TC024")
     @Parameters({"categoryName", "categoryDescription"})
     public void createCategoryTC024(String categoryName, String categoryDescription) {
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
         categoryPage.clickNewCategoryBtn();
 
         /*To create a category it is required to enter both category name and the category description.*/
 
         categoryPage.createUpdateCategory(new Category("", categoryDescription));
-        assertEquals(addCategoryUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addCategoryUrl, webDriver.getCurrentUrl());
 
         categoryPage.createUpdateCategory(new Category(categoryName, ""));
-        assertEquals(addCategoryUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addCategoryUrl, webDriver.getCurrentUrl());
 
         categoryPage.createUpdateCategory(new Category("", ""));
-        assertEquals(addCategoryUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addCategoryUrl, webDriver.getCurrentUrl());
     }
 
     @Test(priority = 3, testName = "TC025")
@@ -75,7 +76,7 @@ public class CategoriesPageTest extends FunctionalTest {
     public void updateCategoryTC025(String categoryName, String categoryDescription, String categoryNameNew,
                                     String categoryDescriptionNew) {
         // Accessing the Categories Page
-        if (!webDriver.getCurrentUrl().equals(categoriesUrl))
+        if (!webDriver.getCurrentUrl().equals(Constants.categoriesUrl))
             categoryPage = accessCategoriesPage(navigationMenu);
 
         Category category = categoryPage.getCategory(categoryPage.getAllCategories(), categoryName, categoryDescription);
@@ -105,7 +106,7 @@ public class CategoriesPageTest extends FunctionalTest {
         // Deleting the category
         deleteCategory(categoryPage, new Category(categoryName, categoryDescription));
 
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
         allCategories = categoryPage.getAllCategories();
         // Checking that the category has been deleted successfully.
         assertThat(allCategories, not(hasItem(allOf(hasProperty("categoryName", equalTo(categoryName)),
@@ -114,40 +115,40 @@ public class CategoriesPageTest extends FunctionalTest {
 
     @Test(priority = 5, testName = "TC028")
     public void getListOfCategories() {
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
-        createCategory(categoryPage, defaultTestCategory);
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
+        createCategory(categoryPage, Constants.defaultTestCategory);
         allCategories = categoryPage.getAllCategories();
         assertNotNull(allCategories);
     }
 
     @Test(priority = 6, testName = "TC030")
     public void checkIfAdvertisementBeCreated() {
-        beaconsPage = navigationMenu.clickBeconsLink();
-        assertEquals(beaconsUrl, webDriver.getCurrentUrl());
-        createBeacon(beaconsPage, defaultTestBeacon);
-        advertisementsPage = navigationMenu.clickAdvertisementsLink();
-        assertEquals(advertisementsUrl, webDriver.getCurrentUrl());
-        createAdvertisement(advertisementsPage, defaultTestAdvertisement);
+        beaconsPage = accessBeaconsPage(navigationMenu);
+        createBeacon(beaconsPage, Constants.defaultTestBeacon);
+
+        advertisementsPage = accessAdvertisementsPage(navigationMenu);
+        createAdvertisement(advertisementsPage, Constants.defaultTestAdvertisement);
+
         assertThat(advertisementsPage.getAllAdvertisements(), hasItem(hasProperty("category",
-                equalTo(defaultTestAdvertisement.getCategory()))));
+                equalTo(Constants.defaultTestAdvertisement.getCategory()))));
     }
 
     // @Test(priority = 7, testName = "TC027")
     public void checkIfCategoryAssiToAdvBeDeleted() {
-        if (webDriver.getCurrentUrl().equals(categoriesUrl)) {
+        if (webDriver.getCurrentUrl().equals(Constants.categoriesUrl)) {
             categoryPage = accessCategoriesPage(navigationMenu);
         }
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
-        deleteCategory(categoryPage, defaultTestCategory);
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
+        deleteCategory(categoryPage, Constants.defaultTestCategory);
         allCategories = categoryPage.getAllCategories();
-        assertThat(allCategories, hasItem(allOf(hasProperty("categoryName", equalTo(defaultTestCategory.getCategoryName())),
-                hasProperty("categoryDescription", equalTo(defaultTestCategory.getCategoryDescription())))));
+        assertThat(allCategories, hasItem(allOf(hasProperty("categoryName", equalTo(Constants.defaultTestCategory.getCategoryName())),
+                hasProperty("categoryDescription", equalTo(Constants.defaultTestCategory.getCategoryDescription())))));
     }
 
     //@Test(priority = 8, testName = "TC029")
     public void checkIfCateCreaWithSameName() {
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
-        createCategory(categoryPage, defaultTestCategory);
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
+        createCategory(categoryPage, Constants.defaultTestCategory);
 
 
     }
@@ -155,35 +156,35 @@ public class CategoriesPageTest extends FunctionalTest {
     @AfterTest
     public void clearAllTestData() {
         // Deleting the Test Advertisement that was created for the Test Case TC030
-        if (!webDriver.getCurrentUrl().equals(advertisementsUrl)) {
+        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl)) {
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
         }
-        deleteAdvertisement(advertisementsPage, defaultTestAdvertisement);
+        deleteAdvertisement(advertisementsPage, Constants.defaultTestAdvertisement);
 
         // Deleting the Test Category that was created for the test case TC028
         categoryPage = accessCategoriesPage(navigationMenu);
-        deleteCategory(categoryPage, defaultTestCategory);
+        deleteCategory(categoryPage, Constants.defaultTestCategory);
 
 
         // Deleting the Test Beacon that was created for the test case TC030
         beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, defaultTestBeacon);
+        deleteBeacon(beaconsPage, Constants.defaultTestBeacon);
 
         // Deleting the Test Store that was created in the @BeforeTest Method
         storesPage = accessStoresPage(navigationMenu);
-        deleteStore(storesPage, defaultTestStore);
+        deleteStore(storesPage, Constants.defaultTestStore);
     }
 
     private void updateCategory(Category oldCategory, Category newCategory) {
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
         categoryPage.clickEditCategoryBtn(oldCategory.getEditButton());
         assertEquals(oldCategory.getEditButton().getAttribute("href"), webDriver.getCurrentUrl());
         categoryPage.createUpdateCategory(newCategory);
         try {
-            Thread.sleep(waitMilliSeconds);
+            Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
     }
 }
