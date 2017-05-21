@@ -69,7 +69,7 @@ public class StoresPageTest extends FunctionalTest {
         assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
         allStores = storesPage.getAllStores();
         Stores store = storesPage.getStore(allStores, storeName, storeUniqueCode);
-        updateStore(store, new Stores(storeNameNew, storeUniqueCodeNew, imgUrlNew));
+        updateStore(storesPage, store, new Stores(storeNameNew, storeUniqueCodeNew, imgUrlNew));
 
         allStores = storesPage.getAllStores();
         assertThat(allStores, hasItem(allOf(
@@ -186,16 +186,5 @@ public class StoresPageTest extends FunctionalTest {
         }
     }
 
-    private void updateStore(Stores oldStore, Stores newStore) {
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
-        storesPage.clickEditButton(oldStore);
-        assertEquals(oldStore.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
-        storesPage.createUpdateStore(newStore);
-        try {
-            Thread.sleep(Constants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
-    }
+
 }

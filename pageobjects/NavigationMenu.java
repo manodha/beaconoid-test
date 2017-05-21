@@ -117,4 +117,18 @@ public class NavigationMenu extends PageObject {
             return null;
     }
 
+    public WebElement getDashboardLink() {
+        if (webDriver.findElements(By.partialLinkText("Dashboard")).size() != 0)
+            return dashboardLink;
+        else
+            return null;
+    }
+
+    public WebElement getStoresLink() {
+        if (webDriver.findElements(By.xpath("//a[@href='/stores']")).size() != 0)
+            return storesLink;
+        else
+            return null;
+    }
+
 }

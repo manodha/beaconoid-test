@@ -1,0 +1,41 @@
+<suite name="store_manager_role_test_suite">
+    <parameter name="email" value="antodoms@gmail.com"/>
+    <parameter name="password" value="password"/>
+
+    <parameter name="userName3" value="Tanya Srinidhi"/>
+    <parameter name="userEmail3" value="tanu.srinidhi@gmail.com"/>
+    <parameter name="nickname3" value="tanu"/>
+    <parameter name="userPassword3" value="123456"/>
+    <parameter name="confirmPassword3" value="123456"/>
+
+    <parameter name="super_admin_role" value="Super Admin"/>
+    <parameter name="admin_role" value="Admin"/>
+    <parameter name="store_manager_role" value="Store Manager"/>
+    <parameter name="beacon_manager_role" value="Beacon Manager"/>
+    <parameter name="user_report_manager_role" value="User Report Manager"/>
+
+
+    <!-- Store Details -->
+    <parameter name="storeName" value="Hungry Jacks Hallam"/>
+    <parameter name="storeUniqueCode" value="HJ001"/>
+    <parameter name="imgUrl" value="https://beaconoid.me/test.jpg"/>
+
+
+    <!--Beacons Details-->
+    <parameter name="uniqueRef1" value="TGI003"/>
+    <parameter name="beaconName1" value="TGI Beacon 3"/>
+    <parameter name="currentStatus1" value="Inactive"/>
+    <parameter name="latitude1" value="-52.0010650"/>
+    <parameter name="longitude1" value="83.2758490"/>
+
+    <!-- Advertisements Details -->
+    <parameter name="adverName" value="50% Discount, Great Deal!!"/>
+    <parameter name="adverDescription" value="A great deal for the Super Saver. 50% of on all women clothings"/>
+    <parameter name="adverPrice" value="5.00"/>
+
+    <test name="test">
+        <classes>
+            <class name="com.company.testscripts.StoreManagerRoleTest"/>
+        </classes>
+    </test>
+</suite>

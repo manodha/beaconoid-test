@@ -141,6 +141,19 @@ public class FunctionalTest {
         assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
     }
 
+    void updateStore(StoresPage storesPage, Stores oldStore, Stores newStore) {
+        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
+        storesPage.clickEditButton(oldStore);
+        assertEquals(oldStore.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
+        storesPage.createUpdateStore(newStore);
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
+    }
+
     CategoryPage accessCategoriesPage(NavigationMenu navigationMenu) {
         CategoryPage categoryPage = navigationMenu.clickCatogoriesLink();
         try {
