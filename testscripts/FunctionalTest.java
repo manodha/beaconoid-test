@@ -1,9 +1,6 @@
 package com.company.testscripts;
 
-import com.company.model.Advertisement;
-import com.company.model.Beacons;
-import com.company.model.Category;
-import com.company.model.Stores;
+import com.company.model.*;
 import com.company.pageobjects.*;
 import com.company.util.Constants;
 import org.openqa.selenium.WebDriver;
@@ -71,6 +68,7 @@ public class FunctionalTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
     static void deleteAdvertisement(AdvertisementsPage advertisementsPage, Advertisement advertisement) {
@@ -191,6 +189,19 @@ public class FunctionalTest {
         assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
+    void updateBeacon(BeaconsPage beaconsPage, Beacons beacon, Beacons newBeacon) {
+        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
+        beaconsPage.clickEditBeaconBtn(beacon.getEditLink());
+        assertEquals(beacon.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
+        beaconsPage.createUpdateBeacon(newBeacon);
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
+    }
+
     BeaconAdvPage viewBeaconAdvertisements(BeaconsPage beaconsPage, Beacons beacon) {
         assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
         BeaconAdvPage beaconAdvPage = beaconsPage.clickViewAdvertisementsLink(beacon.getAdvertisementsLink());
@@ -229,6 +240,19 @@ public class FunctionalTest {
         assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
     }
 
+    void updateAdvertisement(AdvertisementsPage advertisementsPage, Advertisement oldAdvertisement, Advertisement newAdvertisement) {
+        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+        advertisementsPage.clickEditAdverBtn(oldAdvertisement.getEditLink());
+        assertEquals(oldAdvertisement.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
+        advertisementsPage.createUpdateAdvertisement(newAdvertisement);
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+    }
+
     StaffPage accessStaffPage(NavigationMenu navigationMenu) {
         StaffPage staffPage = navigationMenu.clickStaffLink();
         try {
@@ -238,6 +262,42 @@ public class FunctionalTest {
         }
         assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
         return staffPage;
+    }
+
+    void createStaff(StaffPage staffPage, Staff staff) {
+        assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
+        staffPage.clickNewStaffBtn();
+        assertEquals(Constants.addStaffUrl, webDriver.getCurrentUrl());
+        staffPage.creaUpdateStaff(staff);
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
+    }
+
+    void deleteStaff(StaffPage staffPage, Staff staff) {
+        assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
+        staffPage.clickDeleteStaffBtn(staff.getDeleteBtn());
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
+    }
+
+    DashboardPage accessDashboardPage(NavigationMenu navigationMenu) {
+        DashboardPage dashboardPage = navigationMenu.clickDashboardLink();
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.dashboardUrl, webDriver.getCurrentUrl());
+        return dashboardPage;
     }
 
 

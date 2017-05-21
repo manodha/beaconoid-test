@@ -84,7 +84,7 @@ public class BeaconsPageTest extends FunctionalTest {
                                String currentStatusNew, String latitudeNew, String longitudeNew) {
         allBeacons = beaconsPage.getAllBeacons();
         Beacons beacon = beaconsPage.getBeacon(allBeacons, uniqueRef, beaconName);
-        updateBeacon(beacon, new Beacons(uniqueRefNew, beaconNameNew, Constants.defaultTestStore.getName(), currentStatusNew, latitudeNew, longitudeNew));
+        updateBeacon(beaconsPage, beacon, new Beacons(uniqueRefNew, beaconNameNew, Constants.defaultTestStore.getName(), currentStatusNew, latitudeNew, longitudeNew));
         allBeacons = beaconsPage.getAllBeacons();
         assertThat(allBeacons, hasItem(allOf(hasProperty("uniqueRef", equalTo(uniqueRefNew)),
                 hasProperty("name", equalTo(beaconNameNew)))));
@@ -213,19 +213,5 @@ public class BeaconsPageTest extends FunctionalTest {
         storesPage = accessStoresPage(navigationMenu);
         deleteStore(storesPage, Constants.defaultTestStore);
     }
-
-    private void updateBeacon(Beacons beacon, Beacons newBeacon) {
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
-        beaconsPage.clickEditBeaconBtn(beacon.getEditLink());
-        assertEquals(beacon.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
-        beaconsPage.createUpdateBeacon(newBeacon);
-        try {
-            Thread.sleep(Constants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
-    }
-
 
 }

@@ -25,6 +25,8 @@ public class Constants {
     /* Development base URL*/
     public static String baseUrl = "http://localhost:3000/";
 
+    public static String reportsUrl = baseUrl + "reports";
+
     public static String addAdvertisementUrl = baseUrl + "advertisements/new";
     public static String advertisementsUrl = baseUrl + "advertisements";
 
@@ -37,6 +39,7 @@ public class Constants {
     public static String addStoreUrl = baseUrl + "stores/new";
     public static String storesUrl = baseUrl + "stores";
     public static String cantDelStoreMsg = " has not been deleted! Beacons are assigned to this store.";
+
     public static String dashboardUrl = baseUrl + "dashboard";
 
 
@@ -47,6 +50,7 @@ public class Constants {
     public static String noAdvertisementTxt = "No beacon found.";
 
     public static String staffUrl = baseUrl + "staffs";
+    public static String addStaffUrl = baseUrl + "staffs/new";
     public static String deleteStaffMsg = " has been deleted!";
     public static String notAuthorisedMsg = "You are not authorized to perform this action.";
 

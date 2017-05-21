@@ -41,8 +41,10 @@ public class NavigationMenu extends PageObject {
     @FindBy(xpath = "//a[@href='/staffs']")
     private WebElement staffLink;
 
-    @FindBy(partialLinkText = " Settings")
-    private WebElement settingsLink;
+    @FindBy(xpath = "//a[@href='/report']")
+    private WebElement reportLink;
+
+
 
 
     public NavigationMenu(WebDriver webDriver) {
@@ -60,8 +62,9 @@ public class NavigationMenu extends PageObject {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", beconsWebConsoleLink);
     }
 
-    public void clickDashboardLink() {
+    public DashboardPage clickDashboardLink() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", dashboardLink);
+        return new DashboardPage(webDriver);
     }
 
     public StoresPage clickStoresLink() {
@@ -89,9 +92,9 @@ public class NavigationMenu extends PageObject {
         return new StaffPage(webDriver);
     }
 
-    public void clickSettingsLink() {
+    /*public void clickSettingsLink() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", settingsLink);
-    }
+    }*/
 
     public WebElement getStaffLink() {
         if (webDriver.findElements(By.xpath("//a[@href='/staffs']")).size() != 0)
@@ -107,9 +110,11 @@ public class NavigationMenu extends PageObject {
             return null;
     }
 
-    /*public WebElement getLogoutLink() {
-        return logoutLink;
-    }*/
-
+    public WebElement getReportLink() {
+        if (webDriver.findElements(By.xpath("//a[@href='/report']")).size() != 0)
+            return reportLink;
+        else
+            return null;
+    }
 
 }

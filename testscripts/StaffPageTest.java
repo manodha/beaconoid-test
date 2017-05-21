@@ -20,10 +20,11 @@ import static org.junit.Assert.*;
  */
 public class StaffPageTest extends FunctionalTest {
 
-    private String addStaffUrl = Constants.baseUrl + "staffs/new";
+
     private NavigationMenu navigationMenu;
     private StaffPage staffPage;
     private List<Staff> allStaff;
+    private LoginPage loginPage;
 
 
     @BeforeGroups("SuperAdmin")
@@ -55,20 +56,20 @@ public class StaffPageTest extends FunctionalTest {
         assertNotNull(allStaff);
     }
 
-    //@Test(priority = 4, testName = "TC056", groups = "SuperAdmin")
-    @Parameters({"email"})
-    public void checkIfSACanDelSARecord(String email) {
-        Staff superAdmin = staffPage.getStaffByEmail(email);
-        deleteStaff(superAdmin);
-
+    @Test(priority = 4, testName = "TC056", groups = "SuperAdmin")
+    @Parameters({"super_admin_role"})
+    public void checkIfSACanDelSARecord(String role) {
+        Staff superAdmin = staffPage.getStaffByRole(role);
+        deleteStaff(staffPage, superAdmin);
+        assertEquals(Constants.notAuthorisedMsg, staffPage.getDangerAlert());
         allStaff = staffPage.getAllStaff();
-        assertThat(allStaff, hasItem(hasProperty("email", equalTo(email))));
+        assertThat(allStaff, hasItem(hasProperty("role", equalTo(role))));
     }
 
     @Test(priority = 5, testName = "TC057", groups = "SuperAdmin")
     @Parameters({"userName", "userEmail", "nickname", "userPassword", "confirmPassword", "store_manager_role"})
     public void checkIfSACanAddStaff(String name, String email, String nickname, String password, String confirmPassword, String role) {
-        createStaff(new Staff(name, email, nickname, password, confirmPassword, role));
+        createStaff(staffPage, new Staff(name, email, nickname, password, confirmPassword, role));
         allStaff = staffPage.getAllStaff();
         assertThat(allStaff, hasItem(hasProperty("email", equalTo(email))));
     }
@@ -93,7 +94,7 @@ public class StaffPageTest extends FunctionalTest {
     public void checkIfSACanDelStaff(String userEmailNew) {
         Staff staff = staffPage.getStaffByEmail(userEmailNew);
         // Deleting the Staff Member
-        deleteStaff(staff);
+        deleteStaff(staffPage, staff);
         allStaff = staffPage.getAllStaff();
         // Verifying that the staff has been deleted successfully
         assertThat(allStaff, not(hasItem(hasProperty("email", equalTo(userEmailNew)))));
@@ -104,7 +105,7 @@ public class StaffPageTest extends FunctionalTest {
     @Parameters({"userName", "userEmail", "nickname", "userPassword", "confirmPassword", "admin_role"})
     public void addAdminUserLogout(String name, String email, String nickname, String password, String confirmPassword,
                                    String role) {
-        createStaff(new Staff(name, email, nickname, password, confirmPassword, role));
+        createStaff(staffPage, new Staff(name, email, nickname, password, confirmPassword, role));
         navigationMenu.clickLogoutLink();
         try {
             Thread.sleep(Constants.waitMilliSeconds);
@@ -133,13 +134,12 @@ public class StaffPageTest extends FunctionalTest {
         assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
     }
 
-    //@Test(priority = 11, testName = "TC060", groups = "Admin")
+    @Test(priority = 11, testName = "TC060", groups = "Admin")
     @Parameters({"super_admin_role"})
     public void checkIfACanDelSA(String role) {
         allStaff = staffPage.getAllStaff();
         Staff superAdmin = staffPage.getStaffByRole(role);
-        deleteStaff(superAdmin);
-
+        deleteStaff(staffPage, superAdmin);
 
         // Checking the error message.
         assertEquals(Constants.notAuthorisedMsg, staffPage.getDangerAlert());
@@ -153,7 +153,7 @@ public class StaffPageTest extends FunctionalTest {
     @Parameters({"userNameNew", "userEmailNew", "nicknameNew", "userPasswordNew", "confirmPasswordNew", "beacon_manager_role"})
     public void checkIfACanAddStaff(String name, String email, String nickname, String password, String confirmPassword,
                                     String role) {
-        createStaff(new Staff(name, email, nickname, password, confirmPassword, role));
+        createStaff(staffPage, new Staff(name, email, nickname, password, confirmPassword, role));
         allStaff = staffPage.getAllStaff();
         assertThat(allStaff, hasItem(hasProperty("email", equalTo(email))));
     }
@@ -178,7 +178,7 @@ public class StaffPageTest extends FunctionalTest {
     public void checkIfACanDelStaff(String email) {
         Staff staff = staffPage.getStaffByEmail(email);
         // Deleting the Staff Member
-        deleteStaff(staff);
+        deleteStaff(staffPage, staff);
 
         assertEquals(staff.getName() + Constants.deleteStaffMsg, staffPage.getSucessAlert());
         allStaff = staffPage.getAllStaff();
@@ -186,14 +186,20 @@ public class StaffPageTest extends FunctionalTest {
         assertThat(allStaff, not(hasItem(hasProperty("email", equalTo(email)))));
     }
 
-    //@Test(priority = 15, testName = "TC064", groups = "Admin")
+    @Test(priority = 15, testName = "TC064", groups = "Admin")
     @Parameters({"userEmail"})
     public void checkIfACanDelHisRecord(String email) {
         Staff staff = staffPage.getStaffByEmail(email);
         // Deleting the Staff Member
-        deleteStaff(staff);
-
-        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
+        staffPage.clickDeleteStaffBtn(staff.getDeleteBtn());
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        loginPage = new LoginPage(webDriver);
+        assertEquals(Constants.loginTitle, loginPage.getTitleText());
+        assertEquals(Constants.loginUrl, webDriver.getCurrentUrl());
     }
 
     @AfterGroups("Admin")
@@ -220,32 +226,37 @@ public class StaffPageTest extends FunctionalTest {
     public void checkIfStaffCanBeCreaWithOutRF(String name, String email, String nickname, String password, String confirmPassword, String role) {
         assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
         staffPage.clickNewStaffBtn();
-        assertEquals(addStaffUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addStaffUrl, webDriver.getCurrentUrl());
 
         staffPage.creaUpdateStaff(new Staff("", "", "", "", "", ""));
-        assertEquals(addStaffUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addStaffUrl, webDriver.getCurrentUrl());
 
         staffPage.creaUpdateStaff(new Staff(name, "", "", "", "", ""));
-        assertEquals(addStaffUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addStaffUrl, webDriver.getCurrentUrl());
 
         staffPage.creaUpdateStaff(new Staff(name, email, "", "", "", ""));
-        assertEquals(addStaffUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addStaffUrl, webDriver.getCurrentUrl());
 
         staffPage.creaUpdateStaff(new Staff(name, email, nickname, password, "", ""));
-        assertEquals(addStaffUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addStaffUrl, webDriver.getCurrentUrl());
 
         staffPage.creaUpdateStaff(new Staff(name, email, nickname, password, confirmPassword, ""));
-        assertEquals(addStaffUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addStaffUrl, webDriver.getCurrentUrl());
 
     }
 
-    //@Test(priority = 17, testName = "TC071", groups = "General")
+    @Test(priority = 17, testName = "TC071", groups = "General")
     @Parameters({"name3", "email3", "nickname3", "password3", "confirmPassword4", "store_manager_role"})
     public void checkIfStaffCanBeCreaWithDifPassAndCP(String name, String email, String nickname, String password,
                                                       String confirmPassword, String role) {
-        assertEquals(addStaffUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.addStaffUrl, webDriver.getCurrentUrl());
         staffPage.creaUpdateStaff(new Staff(name, email, nickname, password, confirmPassword, role));
-        assertEquals(addStaffUrl, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.addStaffUrl, webDriver.getCurrentUrl());
     }
 
 
@@ -253,7 +264,12 @@ public class StaffPageTest extends FunctionalTest {
     @Parameters({"name3", "email3", "nickname3", "password3", "confirmPassword3", "store_manager_role"})
     public void checkIfStaffBeCreaWithRF(String name, String email, String nickname, String password,
                                          String confirmPassword, String role) {
-        assertEquals(addStaffUrl, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.addStaffUrl, webDriver.getCurrentUrl());
         staffPage.creaUpdateStaff(new Staff(name, email, nickname, password, confirmPassword, role));
         try {
             Thread.sleep(Constants.waitMilliSeconds);
@@ -270,7 +286,7 @@ public class StaffPageTest extends FunctionalTest {
                                                 String confirmPassword, String role) {
 
         Staff existingStaff = staffPage.getStaffByEmail(email);
-        createStaff(new Staff(name, email, nickname, password, confirmPassword, role));
+        createStaff(staffPage, new Staff(name, email, nickname, password, confirmPassword, role));
 
         allStaff = staffPage.getAllStaff();
 
@@ -318,8 +334,8 @@ public class StaffPageTest extends FunctionalTest {
     @Parameters({"email3", "password3"})
     public void checkIfDelStaffCanLogin(String email, String password) {
         Staff staff = staffPage.getStaffByEmail(email);
-        deleteStaff(staff);
-        LoginPage loginPage = navigationMenu.clickLogoutLink();
+        deleteStaff(staffPage, staff);
+        loginPage = navigationMenu.clickLogoutLink();
         try {
             Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
@@ -341,9 +357,10 @@ public class StaffPageTest extends FunctionalTest {
     @Parameters({"email", "password", "userNameNew", "userEmailNew", "nicknameNew", "userPasswordNew", "confirmPasswordNew", "beacon_manager_role"})
     public void createBeaconManager(String loginEmail, String loginPassword, String name, String email, String nickname,
                                     String password, String confirmPassword, String role) {
-        navigationMenu = loginToBeaconoid(loginEmail, loginPassword);
+        if (navigationMenu.getLogoutLink() == null)
+            navigationMenu = loginToBeaconoid(loginEmail, loginPassword);
         staffPage = accessStaffPage(navigationMenu);
-        createStaff(new Staff(name, email, nickname, password, confirmPassword, role));
+        createStaff(staffPage, new Staff(name, email, nickname, password, confirmPassword, role));
         navigationMenu.clickLogoutLink();
         try {
             Thread.sleep(Constants.waitMilliSeconds);
@@ -435,18 +452,6 @@ public class StaffPageTest extends FunctionalTest {
         }
     }
 
-    private void createStaff(Staff staff) {
-        assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
-        staffPage.clickNewStaffBtn();
-        assertEquals(addStaffUrl, webDriver.getCurrentUrl());
-        staffPage.creaUpdateStaff(staff);
-        try {
-            Thread.sleep(Constants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
-    }
 
     private void updateStaff(Staff oldStaff, Staff newStaff) {
         assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
@@ -461,15 +466,5 @@ public class StaffPageTest extends FunctionalTest {
         assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
     }
 
-    private void deleteStaff(Staff staff) {
-        assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
-        staffPage.clickDeleteStaffBtn(staff.getDeleteBtn());
-        try {
-            Thread.sleep(Constants.waitMilliSeconds);
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
-    }
 }

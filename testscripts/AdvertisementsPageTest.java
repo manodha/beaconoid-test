@@ -102,7 +102,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
                 Constants.defaultTestBeacon.getName());
 
         // Updating the beacon
-        updateAdvertisement(oldAdvertisement, new Advertisement(adverNameNew, Constants.defaultTestBeacon.getName(),
+        updateAdvertisement(advertisementsPage, oldAdvertisement, new Advertisement(adverNameNew, Constants.defaultTestBeacon.getName(),
                 Constants.defaultTestCategory.getCategoryName(), adverDescriptionNew, adverPriceNew));
 
         // Asserting that there are no advertisements with the old name details
@@ -213,20 +213,6 @@ public class AdvertisementsPageTest extends FunctionalTest {
         storesPage = accessStoresPage(navigationMenu);
         deleteStore(storesPage, Constants.defaultTestStore);
 
-    }
-
-
-    private void updateAdvertisement(Advertisement oldAdvertisement, Advertisement newAdvertisement) {
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
-        advertisementsPage.clickEditAdverBtn(oldAdvertisement.getEditLink());
-        assertEquals(oldAdvertisement.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
-        advertisementsPage.createUpdateAdvertisement(newAdvertisement);
-        try {
-            Thread.sleep(Constants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
     }
 
 }
