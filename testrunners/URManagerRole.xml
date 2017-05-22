@@ -1,0 +1,22 @@
+<suite name="user_report_manager_role_test_suite">
+    <parameter name="email" value="antodoms@gmail.com"/>
+    <parameter name="password" value="password"/>
+
+    <parameter name="name5" value="Jeremy Kra"/>
+    <parameter name="email5" value="jeremykra@gmail.com"/>
+    <parameter name="nickname5" value="JK"/>
+    <parameter name="password5" value="000000"/>
+    <parameter name="confirmPassword5" value="000000"/>
+
+    <parameter name="super_admin_role" value="Super Admin"/>
+    <parameter name="admin_role" value="Admin"/>
+    <parameter name="store_manager_role" value="Store Manager"/>
+    <parameter name="beacon_manager_role" value="Beacon Manager"/>
+    <parameter name="user_report_manager_role" value="User Report Manager"/>
+
+    <test name="test">
+        <classes>
+            <class name="com.company.testscripts.URManagerRoleTest"/>
+        </classes>
+    </test>
+</suite>

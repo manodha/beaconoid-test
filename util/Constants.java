@@ -25,7 +25,11 @@ public class Constants {
     /* Development base URL*/
     public static String baseUrl = "http://localhost:3000/";
 
-    public static String reportsUrl = baseUrl + "reports";
+    public static String reportsUrl = baseUrl + "report";
+    public static String storeReportsUrl = baseUrl + "report/store";
+    public static String beaconReportsUrl = baseUrl + "report/beacon";
+    public static String categoryReportsUrl = baseUrl + "report/category";
+
 
     public static String addAdvertisementUrl = baseUrl + "advertisements/new";
     public static String advertisementsUrl = baseUrl + "advertisements";

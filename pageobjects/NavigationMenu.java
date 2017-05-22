@@ -44,7 +44,14 @@ public class NavigationMenu extends PageObject {
     @FindBy(xpath = "//a[@href='/report']")
     private WebElement reportLink;
 
+    @FindBy(xpath = "//a[@href='/report/store']")
+    private WebElement storeReportLink;
 
+    @FindBy(xpath = "//a[@href='/report/beacon']")
+    private WebElement beaconReportLink;
+
+    @FindBy(xpath = "//a[@href='/report/category']")
+    private WebElement categoryReportLink;
 
 
     public NavigationMenu(WebDriver webDriver) {
@@ -92,9 +99,27 @@ public class NavigationMenu extends PageObject {
         return new StaffPage(webDriver);
     }
 
-    /*public void clickSettingsLink() {
-        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", settingsLink);
-    }*/
+    public ReportPage clickReportLink() {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", reportLink);
+        return new ReportPage(webDriver);
+
+    }
+
+    public StoreReportPage clickStoreReportLink() {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", storeReportLink);
+        return new StoreReportPage(webDriver);
+    }
+
+    public BeaconReportPage clickBeaconReportLink() {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", storeReportLink);
+        return new BeaconReportPage(webDriver);
+    }
+
+    public CategoryReportPage clickCategoryReportLink() {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", categoryReportLink);
+        return new CategoryReportPage(webDriver);
+    }
+
 
     public WebElement getStaffLink() {
         if (webDriver.findElements(By.xpath("//a[@href='/staffs']")).size() != 0)
@@ -113,6 +138,27 @@ public class NavigationMenu extends PageObject {
     public WebElement getReportLink() {
         if (webDriver.findElements(By.xpath("//a[@href='/report']")).size() != 0)
             return reportLink;
+        else
+            return null;
+    }
+
+    public WebElement getStoreReportLink() {
+        if (webDriver.findElements(By.xpath("//a[@href='/report/store']")).size() != 0)
+            return storeReportLink;
+        else
+            return null;
+    }
+
+    public WebElement getBeaconReportLink() {
+        if (webDriver.findElements(By.xpath("//a[@href='/report/beacon']")).size() != 0)
+            return beaconReportLink;
+        else
+            return null;
+    }
+
+    public WebElement getCategoryReportLink() {
+        if (webDriver.findElements(By.xpath("//a[@href='/report/category']")).size() != 0)
+            return categoryReportLink;
         else
             return null;
     }

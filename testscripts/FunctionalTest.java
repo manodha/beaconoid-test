@@ -326,5 +326,50 @@ public class FunctionalTest {
         return dashboardPage;
     }
 
+    ReportPage accessReportPage(NavigationMenu navigationMenu) {
+        ReportPage reportPage = navigationMenu.clickReportLink();
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.reportsUrl, webDriver.getCurrentUrl());
+        return reportPage;
+    }
+
+    StoreReportPage accessStoreReportPage(NavigationMenu navigationMenu) {
+        StoreReportPage storeReportPage = navigationMenu.clickStoreReportLink();
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.storeReportsUrl, webDriver.getCurrentUrl());
+        return storeReportPage;
+
+    }
+
+    BeaconReportPage accessBeaconReportPage(NavigationMenu navigationMenu) {
+        BeaconReportPage beaconReportPage = navigationMenu.clickBeaconReportLink();
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.beaconReportsUrl, webDriver.getCurrentUrl());
+        return beaconReportPage;
+    }
+
+    CategoryReportPage accessCategoryReportPage(NavigationMenu navigationMenu) {
+        CategoryReportPage categoryReportPage = navigationMenu.clickCategoryReportLink();
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.categoryReportsUrl, webDriver.getCurrentUrl());
+        return categoryReportPage;
+
+    }
 
 }
