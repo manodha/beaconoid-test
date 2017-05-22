@@ -20,6 +20,10 @@
     <parameter name="storeUniqueCode" value="HJ001"/>
     <parameter name="imgUrl" value="https://beaconoid.me/test.jpg"/>
 
+    <!-- Category Details -->
+    <parameter name="categoryName" value="Health/Life Style"/>
+    <parameter name="categoryDescription" value="Vitamins/Proteins/Supplements"/>
+
 
     <!--Beacons Details-->
     <parameter name="uniqueRef1" value="TGI003"/>

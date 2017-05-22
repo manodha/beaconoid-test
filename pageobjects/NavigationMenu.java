@@ -131,4 +131,25 @@ public class NavigationMenu extends PageObject {
             return null;
     }
 
+    public WebElement getCategoriesLink() {
+        if (webDriver.findElements(By.xpath("//a[@href='/categories']")).size() != 0)
+            return categoriesLink;
+        else
+            return null;
+    }
+
+    public WebElement getBeaconsLink() {
+        if (webDriver.findElements(By.xpath("//a[@href='/beacons']")).size() != 0)
+            return beaconsLink;
+        else
+            return null;
+    }
+
+    public WebElement getAdvertisementsLink() {
+        if (webDriver.findElements(By.xpath("//a[@href='/advertisements']")).size() != 0)
+            return advertisementsLink;
+        else
+            return null;
+    }
+
 }

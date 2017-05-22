@@ -68,7 +68,7 @@ public class FunctionalTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
+        //assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
     static void deleteAdvertisement(AdvertisementsPage advertisementsPage, Advertisement advertisement) {
@@ -170,6 +170,19 @@ public class FunctionalTest {
         categoryPage.clickNewCategoryBtn();
         assertEquals(Constants.addCategoryUrl, webDriver.getCurrentUrl());
         categoryPage.createUpdateCategory(category);
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
+    }
+
+    void updateCategory(CategoryPage categoryPage, Category oldCategory, Category newCategory) {
+        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
+        categoryPage.clickEditCategoryBtn(oldCategory.getEditButton());
+        assertEquals(oldCategory.getEditButton().getAttribute("href"), webDriver.getCurrentUrl());
+        categoryPage.createUpdateCategory(newCategory);
         try {
             Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {

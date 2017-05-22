@@ -80,7 +80,7 @@ public class CategoriesPageTest extends FunctionalTest {
             categoryPage = accessCategoriesPage(navigationMenu);
 
         Category category = categoryPage.getCategory(categoryPage.getAllCategories(), categoryName, categoryDescription);
-        updateCategory(category, new Category(categoryNameNew, categoryDescriptionNew));
+        updateCategory(categoryPage, category, new Category(categoryNameNew, categoryDescriptionNew));
 
         allCategories = categoryPage.getAllCategories();
 
@@ -173,18 +173,5 @@ public class CategoriesPageTest extends FunctionalTest {
         // Deleting the Test Store that was created in the @BeforeTest Method
         storesPage = accessStoresPage(navigationMenu);
         deleteStore(storesPage, Constants.defaultTestStore);
-    }
-
-    private void updateCategory(Category oldCategory, Category newCategory) {
-        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
-        categoryPage.clickEditCategoryBtn(oldCategory.getEditButton());
-        assertEquals(oldCategory.getEditButton().getAttribute("href"), webDriver.getCurrentUrl());
-        categoryPage.createUpdateCategory(newCategory);
-        try {
-            Thread.sleep(Constants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
     }
 }
