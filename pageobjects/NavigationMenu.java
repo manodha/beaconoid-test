@@ -47,9 +47,6 @@ public class NavigationMenu extends PageObject {
     @FindBy(xpath = "//a[@href='/report/store']")
     private WebElement storeReportLink;
 
-    @FindBy(xpath = "//a[@href='/report/beacon']")
-    private WebElement beaconReportLink;
-
     @FindBy(xpath = "//a[@href='/report/category']")
     private WebElement categoryReportLink;
 
@@ -110,11 +107,6 @@ public class NavigationMenu extends PageObject {
         return new StoreReportPage(webDriver);
     }
 
-    public BeaconReportPage clickBeaconReportLink() {
-        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", storeReportLink);
-        return new BeaconReportPage(webDriver);
-    }
-
     public CategoryReportPage clickCategoryReportLink() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", categoryReportLink);
         return new CategoryReportPage(webDriver);
@@ -145,13 +137,6 @@ public class NavigationMenu extends PageObject {
     public WebElement getStoreReportLink() {
         if (webDriver.findElements(By.xpath("//a[@href='/report/store']")).size() != 0)
             return storeReportLink;
-        else
-            return null;
-    }
-
-    public WebElement getBeaconReportLink() {
-        if (webDriver.findElements(By.xpath("//a[@href='/report/beacon']")).size() != 0)
-            return beaconReportLink;
         else
             return null;
     }

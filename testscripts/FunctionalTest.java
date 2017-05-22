@@ -346,18 +346,6 @@ public class FunctionalTest {
         }
         assertEquals(Constants.storeReportsUrl, webDriver.getCurrentUrl());
         return storeReportPage;
-
-    }
-
-    BeaconReportPage accessBeaconReportPage(NavigationMenu navigationMenu) {
-        BeaconReportPage beaconReportPage = navigationMenu.clickBeaconReportLink();
-        try {
-            Thread.sleep(Constants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(Constants.beaconReportsUrl, webDriver.getCurrentUrl());
-        return beaconReportPage;
     }
 
     CategoryReportPage accessCategoryReportPage(NavigationMenu navigationMenu) {
@@ -369,7 +357,7 @@ public class FunctionalTest {
         }
         assertEquals(Constants.categoryReportsUrl, webDriver.getCurrentUrl());
         return categoryReportPage;
-
     }
+
 
 }

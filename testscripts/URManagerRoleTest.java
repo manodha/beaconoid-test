@@ -20,7 +20,6 @@ public class URManagerRoleTest extends FunctionalTest {
     private ReportPage reportPage;
     private StoreReportPage storeReportPage;
     private CategoryReportPage categoryReportPage;
-    private BeaconReportPage beaconReportPage;
 
     @BeforeTest
     @Parameters({"email", "password", "name5", "email5", "nickname5", "password5", "confirmPassword5", "user_report_manager_role"})
@@ -110,9 +109,6 @@ public class URManagerRoleTest extends FunctionalTest {
 
         assertNotNull(navigationMenu.getStoreReportLink());
         storeReportPage = accessStoreReportPage(navigationMenu);
-
-        assertNotNull(navigationMenu.getBeaconReportLink());
-        beaconReportPage = accessBeaconReportPage(navigationMenu);
 
         assertNotNull(navigationMenu.getCategoryReportLink());
         categoryReportPage = accessCategoryReportPage(navigationMenu);
