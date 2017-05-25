@@ -10,16 +10,18 @@ public class Advertisement {
     private String beacon;
     private String category;
     private String description;
+    private String image;
     private String price;
     private WebElement viewLink;
     private WebElement editLink;
     private WebElement deleteBtn;
 
-    public Advertisement(String name, String beacon, String category, String description, String price) {
+    public Advertisement(String name, String beacon, String category, String description, String image, String price) {
         this.name = name;
         this.beacon = beacon;
         this.category = category;
         this.description = description;
+        this.image = image;
         this.price = price;
         this.viewLink = null;
         this.editLink = null;
@@ -99,5 +101,13 @@ public class Advertisement {
 
     public void setDeleteBtn(WebElement deleteBtn) {
         this.deleteBtn = deleteBtn;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

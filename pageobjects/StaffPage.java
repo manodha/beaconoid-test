@@ -18,6 +18,8 @@ public class StaffPage extends PageObject {
 
     private WebDriver webDriver;
 
+    /* TestNG references to the Web Elements in the Staff Page */
+
     @FindBy(css = "table.table-bordered.table-striped > tbody")
     private WebElement staffsTable;
 
@@ -49,6 +51,8 @@ public class StaffPage extends PageObject {
         super(webDriver);
         this.webDriver = webDriver;
     }
+
+    /* Methods to mimic user actions on the Staff Page */
 
     public void enterName(String name) {
         nameTxt.clear();
@@ -103,6 +107,8 @@ public class StaffPage extends PageObject {
         webDriver.switchTo().alert().accept();
     }
 
+
+    /* Other methods */
     public List<Staff> getAllStaff() {
         List<Staff> staffs = new ArrayList<>();
         List<WebElement> staffRows = staffsTable.findElements(By.tagName("tr"));

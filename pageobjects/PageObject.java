@@ -10,7 +10,9 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class PageObject {
 
-    protected WebDriver driver;
+    String projectpath = System.getProperty("user.dir");
+    private WebDriver driver;
+    /* TestNG reference to the Successful and Error message */
     @FindBy(css = "div.alert.alert-success")
     private WebElement succesAlert;
     @FindBy(css = "div.alert.alert-danger")
@@ -20,6 +22,8 @@ public class PageObject {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
+
+    /* Methods to get the Success and Erro messages */
 
     public String getSucessAlert() {
         return succesAlert.getText();

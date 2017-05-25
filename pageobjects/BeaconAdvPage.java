@@ -23,6 +23,9 @@ public class BeaconAdvPage extends AdvertisementsPage {
     @FindBy(id = "page-wrapper")
     private WebElement mainContainer;
 
+    @FindBy(partialLinkText = "Back")
+    private WebElement backLink;
+
     public BeaconAdvPage(WebDriver webDriver) {
         super(webDriver);
         this.webDriver = webDriver;
@@ -35,6 +38,9 @@ public class BeaconAdvPage extends AdvertisementsPage {
         int numRows, numColumns;
         numRows = advertisementRows.size();
         numColumns = advertisementRows.get(0).findElements(By.tagName("td")).size();
+
+        if (numColumns <= 1)
+            return null;
 
         for (int i = 0; i < numRows; i++) {
             Advertisement advertisement = new Advertisement();
@@ -51,9 +57,9 @@ public class BeaconAdvPage extends AdvertisementsPage {
         return advertisements;
     }
 
-    public void clickBackLink() {
-        WebElement backLink = mainContainer.findElement(By.xpath("div[1]/div[1]/a"));
+    public BeaconsPage clickBackLink() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", backLink);
+        return new BeaconsPage(webDriver);
     }
 
     public String getBeaconName() {

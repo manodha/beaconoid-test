@@ -16,8 +16,10 @@ import java.util.List;
  */
 public class AdvertisementsPage extends PageObject {
     @FindBy(css = "table.table-bordered.table-striped > tbody")
-    protected WebElement advertisementsTable;
+    WebElement advertisementsTable;
     private WebDriver webDriver;
+    @FindBy(tagName = "h1")
+    private WebElement title;
     @FindBy(partialLinkText = "New Advertisement")
     private WebElement newAdvertisementBtn;
 
@@ -32,6 +34,9 @@ public class AdvertisementsPage extends PageObject {
 
     @FindBy(id = "description")
     private WebElement adverDescriptionTxt;
+
+    @FindBy(id = "image")
+    private WebElement imageSelect;
 
     @FindBy(id = "price")
     private WebElement adverPriceTxt;
@@ -78,6 +83,12 @@ public class AdvertisementsPage extends PageObject {
         adverDescriptionTxt.sendKeys(adverDescription);
     }
 
+    private void selectImage(String image) {
+        imageSelect.clear();
+        if (!image.equals(""))
+            imageSelect.sendKeys(projectpath + image);
+    }
+
     private void enterAdvPrice(String adverPrice) {
         adverPriceTxt.clear();
         adverPriceTxt.sendKeys(adverPrice);
@@ -98,6 +109,10 @@ public class AdvertisementsPage extends PageObject {
 
     public void clickViewAdverBtn(WebElement editAdverBtn) {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", editAdverBtn);
+    }
+
+    public String getTitle() {
+        return title.getText();
     }
 
 
@@ -150,6 +165,7 @@ public class AdvertisementsPage extends PageObject {
             selectAdverCategoryByName(advertisement.getCategory());
         }
         enterAdvDescription(advertisement.getDescription());
+        selectImage(advertisement.getImage());
         enterAdvPrice(advertisement.getPrice());
         clickCreateUpdateAdverBtn();
     }

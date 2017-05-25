@@ -112,7 +112,6 @@ public class URManagerRoleTest extends FunctionalTest {
 
         assertNotNull(navigationMenu.getCategoryReportLink());
         categoryReportPage = accessCategoryReportPage(navigationMenu);
-
     }
 
 

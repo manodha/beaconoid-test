@@ -11,6 +11,8 @@ public class LoginPage extends PageObject {
 
     private WebDriver webDriver;
 
+    /* TestNG references for the Web Elements in the Login Page */
+
     @FindBy(tagName = "h3")
     private WebElement titleH3;
 
@@ -29,10 +31,11 @@ public class LoginPage extends PageObject {
         this.webDriver = webDriver;
     }
 
+
+    /* Methods to handle Web Elements in the Login Page */
     public void enterEmail(String email) {
         this.emailTextField.clear();
         this.emailTextField.sendKeys(email);
-
     }
 
     public void enterPassword(String password) {
@@ -40,15 +43,18 @@ public class LoginPage extends PageObject {
         this.passwordTextField.sendKeys(password);
     }
 
-    public Boolean isPassword() {
-        return passwordTextField.getAttribute("type").equals("password");
-    }
-
     public NavigationMenu login() {
         loginButton.click();
         return new NavigationMenu(webDriver);
     }
 
+
+    // Method to check if the Password is masked
+    public Boolean isPassword() {
+        return passwordTextField.getAttribute("type").equals("password");
+    }
+
+    // Method to get the Title of the Login Page
     public String getTitleText() {
         return titleH3.getText();
     }

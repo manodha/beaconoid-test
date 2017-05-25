@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import java.util.concurrent.TimeUnit;
@@ -21,9 +20,6 @@ public class FunctionalTest {
 
     protected static WebDriver webDriver;
 
-
-    //protected static String settingsUrl = baseUrl + ""
-
     @BeforeSuite
     public static void setUp() {
         System.setProperty("webdriver.gecko.driver", "/Users/manodha/Selenium Web Driver/geckodriver");
@@ -31,7 +27,7 @@ public class FunctionalTest {
         webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterSuite
+    //@AfterSuite
     public static void tearDown() {
         webDriver.manage().deleteAllCookies();
         webDriver.close();
@@ -59,6 +55,8 @@ public class FunctionalTest {
         }
     }
 
+    /* Stores Page */
+
     static void deleteBeacon(BeaconsPage beaconsPage, Beacons beacon) {
         Beacons testBeacon = beaconsPage.getBeacon(beaconsPage.getAllBeacons(), beacon.getUniqueRef(),
                 beacon.getName());
@@ -68,7 +66,6 @@ public class FunctionalTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
     static void deleteAdvertisement(AdvertisementsPage advertisementsPage, Advertisement advertisement) {
@@ -117,6 +114,8 @@ public class FunctionalTest {
         return navigationMenu;
     }
 
+    /* Categories Page */
+
     StoresPage accessStoresPage(NavigationMenu navigationMenu) {
         StoresPage storesPage = navigationMenu.clickStoresLink();
         try {
@@ -164,6 +163,8 @@ public class FunctionalTest {
         assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
         return categoryPage;
     }
+
+    /* Beacons Page */
 
     void createCategory(CategoryPage categoryPage, Category category) {
         assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
@@ -228,6 +229,8 @@ public class FunctionalTest {
         assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
+    /* Advertisement Page */
+
     BeaconAdvPage viewBeaconAdvertisements(BeaconsPage beaconsPage, Beacons beacon) {
         assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
         BeaconAdvPage beaconAdvPage = beaconsPage.clickViewAdvertisementsLink(beacon.getAdvertisementsLink());
@@ -257,27 +260,45 @@ public class FunctionalTest {
         assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
         advertisementsPage.clickNewAdvertisementBtn();
         assertEquals(Constants.addAdvertisementUrl, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         advertisementsPage.createUpdateAdvertisement(advertisement);
         try {
             Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(Constants.editAdverTitle, advertisementsPage.getTitle());
     }
 
     void updateAdvertisement(AdvertisementsPage advertisementsPage, Advertisement oldAdvertisement, Advertisement newAdvertisement) {
+        String editLink = oldAdvertisement.getEditLink().getAttribute("href");
         assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
         advertisementsPage.clickEditAdverBtn(oldAdvertisement.getEditLink());
-        assertEquals(oldAdvertisement.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
+        assertEquals(editLink, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         advertisementsPage.createUpdateAdvertisement(newAdvertisement);
         try {
             Thread.sleep(Constants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(editLink, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(Constants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
+    /* Staff Page */
 
     StaffPage accessStaffPage(NavigationMenu navigationMenu) {
         StaffPage staffPage = navigationMenu.clickStaffLink();
@@ -315,6 +336,8 @@ public class FunctionalTest {
         assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
     }
 
+    /* Dashboard Page */
+
     DashboardPage accessDashboardPage(NavigationMenu navigationMenu) {
         DashboardPage dashboardPage = navigationMenu.clickDashboardLink();
         try {
@@ -325,6 +348,8 @@ public class FunctionalTest {
         assertEquals(Constants.dashboardUrl, webDriver.getCurrentUrl());
         return dashboardPage;
     }
+
+    /* Reports Page */
 
     ReportPage accessReportPage(NavigationMenu navigationMenu) {
         ReportPage reportPage = navigationMenu.clickReportLink();

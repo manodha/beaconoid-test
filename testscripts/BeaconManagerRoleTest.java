@@ -246,6 +246,10 @@ public class BeaconManagerRoleTest extends FunctionalTest {
     @Test(priority = 18, testName = "TC091", groups = "BeaconManager")
     public void checkIfBMCanCreaNewAdvertisement() {
         createAdvertisement(advertisementsPage, Constants.defaultTestAdvertisement);
+
+        if (!webDriver.getCurrentUrl().equals(Constants.addAdvertisementUrl))
+            advertisementsPage = accessAdvertisementsPage(navigationMenu);
+
         assertThat(advertisementsPage.getAllAdvertisements(), hasItem(allOf(
                 hasProperty("name", equalTo(Constants.defaultTestAdvertisement.getName())),
                 hasProperty("beacon", equalTo(Constants.defaultTestBeacon.getName()))
@@ -259,13 +263,16 @@ public class BeaconManagerRoleTest extends FunctionalTest {
     }
 
     @Test(priority = 20, testName = "TC093", groups = "BeaconManager")
-    @Parameters({"adverName", "adverDescription", "adverPrice"})
-    public void checkIfBMCanUpdateAdvertisement(String name, String description, String price) {
+    @Parameters({"adverName", "adverDescription", "adverImage", "adverPrice"})
+    public void checkIfBMCanUpdateAdvertisement(String name, String description, String image, String price) {
         Advertisement advertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(),
                 Constants.defaultTestAdvertisement.getName(), Constants.defaultTestBeacon.getName());
 
         updateAdvertisement(advertisementsPage, advertisement, new Advertisement(name, Constants.defaultTestBeacon.getName(),
-                Constants.defaultTestCategory.getCategoryName(), description, price));
+                Constants.defaultTestCategory.getCategoryName(), description, image, price));
+
+        if (!webDriver.getCurrentUrl().equals(Constants.addAdvertisementUrl))
+            advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
         List<Advertisement> allAdvertisements = advertisementsPage.getAllAdvertisements();
 

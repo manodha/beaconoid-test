@@ -29,6 +29,9 @@ public class StoresPage extends PageObject {
     @FindBy(id = "store_unique_id")
     private WebElement storeUniqueIdTxt;
 
+    @FindBy(id = "store_sales")
+    private WebElement storeSalesTxt;
+
     @FindBy(id = "store_image_url")
     private WebElement storeImgUrlTxt;
 

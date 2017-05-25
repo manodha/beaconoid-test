@@ -6,10 +6,12 @@
 
     <parameter name="adverName" value="50% Discount, Great Deal!!"/>
     <parameter name="adverDescription" value="A great deal for the Super Saver. 50% of on all women clothings"/>
+    <parameter name="adverImage" value="/res/sale_sign.jpg"/>
     <parameter name="adverPrice" value="5.00"/>
 
     <parameter name="adverNameNew" value="85% Discount, Great Deal!!"/>
     <parameter name="adverDescriptionNew" value="A great deal for the Super Saver. 85% of on all women/men clothings"/>
+    <parameter name="adverImageNew" value="/res/sale_sign.jpg"/>
     <parameter name="adverPriceNew" value="4.00"/>
 
     <test name="test">
@@ -18,3 +20,4 @@
         </classes>
     </test>
 </suite>
+

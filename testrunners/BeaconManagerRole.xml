@@ -25,6 +25,7 @@
     <!-- Advertisements Details -->
     <parameter name="adverName" value="50% Discount, Great Deal!!"/>
     <parameter name="adverDescription" value="A great deal for the Super Saver. 50% of on all women clothings"/>
+    <parameter name="adverImage" value=""/>
     <parameter name="adverPrice" value="5.00"/>
 
     <test name="test">

@@ -42,7 +42,7 @@ public class CategoriesPageTest extends FunctionalTest {
 
     @Test(priority = 1, testName = "TC023")
     @Parameters({"categoryName", "categoryDescription"})
-    public void createCategoryTC023(String categoryName, String categoryDescription) {
+    public void checkIfCateCanBeCreaWAF(String categoryName, String categoryDescription) {
 
         // Creating a new category.
         createCategory(categoryPage, new Category(categoryName, categoryDescription));
@@ -55,7 +55,7 @@ public class CategoriesPageTest extends FunctionalTest {
 
     @Test(priority = 2, testName = "TC024")
     @Parameters({"categoryName", "categoryDescription"})
-    public void createCategoryTC024(String categoryName, String categoryDescription) {
+    public void checkIfCateCanBeCreaWORF(String categoryName, String categoryDescription) {
         assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
         categoryPage.clickNewCategoryBtn();
 
@@ -73,8 +73,8 @@ public class CategoriesPageTest extends FunctionalTest {
 
     @Test(priority = 3, testName = "TC025")
     @Parameters({"categoryName", "categoryDescription", "categoryNameNew", "categoryDescriptionNew"})
-    public void updateCategoryTC025(String categoryName, String categoryDescription, String categoryNameNew,
-                                    String categoryDescriptionNew) {
+    public void checkIfCateCanBeUpda(String categoryName, String categoryDescription, String categoryNameNew,
+                                     String categoryDescriptionNew) {
         // Accessing the Categories Page
         if (!webDriver.getCurrentUrl().equals(Constants.categoriesUrl))
             categoryPage = accessCategoriesPage(navigationMenu);
@@ -95,7 +95,7 @@ public class CategoriesPageTest extends FunctionalTest {
 
     @Test(priority = 4, testName = "TC026")
     @Parameters({"categoryNameNew", "categoryDescriptionNew"})
-    public void deleteCategoryTC026(String categoryName, String categoryDescription) {
+    public void checkIfCateCanBeDel(String categoryName, String categoryDescription) {
         AdvertisementsPage advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
         List<Advertisement> allAdvertisements = advertisementsPage.getAllAdvertisements();
@@ -122,30 +122,33 @@ public class CategoriesPageTest extends FunctionalTest {
     }
 
     @Test(priority = 6, testName = "TC030")
-    public void checkIfAdvertisementBeCreated() {
+    public void checkIfCateCanBeAssiToAdver() {
         beaconsPage = accessBeaconsPage(navigationMenu);
         createBeacon(beaconsPage, Constants.defaultTestBeacon);
 
         advertisementsPage = accessAdvertisementsPage(navigationMenu);
         createAdvertisement(advertisementsPage, Constants.defaultTestAdvertisement);
 
-        assertThat(advertisementsPage.getAllAdvertisements(), hasItem(hasProperty("category",
-                equalTo(Constants.defaultTestAdvertisement.getCategory()))));
+        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl))
+            advertisementsPage = accessAdvertisementsPage(navigationMenu);
+
+        assertThat(advertisementsPage.getAllAdvertisements(), allOf(hasItem(
+                hasProperty("category", equalTo(Constants.defaultTestAdvertisement.getCategory()))
+        )));
     }
 
-    // @Test(priority = 7, testName = "TC027")
-    public void checkIfCategoryAssiToAdvBeDeleted() {
-        if (webDriver.getCurrentUrl().equals(Constants.categoriesUrl)) {
+    @Test(priority = 7, testName = "TC027")
+    public void checkIfCateAssiToAdverBeDel() {
+        if (!webDriver.getCurrentUrl().equals(Constants.categoriesUrl))
             categoryPage = accessCategoriesPage(navigationMenu);
-        }
         assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
         deleteCategory(categoryPage, Constants.defaultTestCategory);
-        allCategories = categoryPage.getAllCategories();
-        assertThat(allCategories, hasItem(allOf(hasProperty("categoryName", equalTo(Constants.defaultTestCategory.getCategoryName())),
+        assertEquals(Constants.defaultTestCategory.getCategoryName() + Constants.cantDelCateMsg, categoryPage.getDangerAlert());
+        assertThat(categoryPage.getAllCategories(), hasItem(allOf(hasProperty("categoryName", equalTo(Constants.defaultTestCategory.getCategoryName())),
                 hasProperty("categoryDescription", equalTo(Constants.defaultTestCategory.getCategoryDescription())))));
     }
 
-    //@Test(priority = 8, testName = "TC029")
+    @Test(priority = 8, testName = "TC029")
     public void checkIfCateCreaWithSameName() {
         assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
         createCategory(categoryPage, Constants.defaultTestCategory);
