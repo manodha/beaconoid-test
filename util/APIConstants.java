@@ -21,5 +21,4 @@ public class APIConstants {
     public static String noBeacon = "beacon not found";
     public static String wrongParameters = "please pass the right parameters";
 
-
 }
