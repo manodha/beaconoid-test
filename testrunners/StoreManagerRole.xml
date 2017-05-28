@@ -18,7 +18,7 @@
     <!-- Store Details -->
     <parameter name="storeName" value="Hungry Jacks Hallam"/>
     <parameter name="storeUniqueCode" value="HJ001"/>
-    <parameter name="imgUrl" value="https://beaconoid.me/test.jpg"/>
+    <parameter name="sales" value="https://beaconoid.me/test.jpg"/>
 
     <!-- Category Details -->
     <parameter name="categoryName" value="Health/Life Style"/>

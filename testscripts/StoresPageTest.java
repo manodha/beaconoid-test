@@ -5,7 +5,7 @@ import com.company.model.Stores;
 import com.company.pageobjects.BeaconsPage;
 import com.company.pageobjects.NavigationMenu;
 import com.company.pageobjects.StoresPage;
-import com.company.util.Constants;
+import com.company.util.WebConstants;
 import org.testng.annotations.*;
 
 import java.util.ArrayList;
@@ -33,25 +33,18 @@ public class StoresPageTest extends FunctionalTest {
     public void accessStoresPage(String email, String password) {
         navigationMenu = loginToBeaconoid(email, password);
 
-        beaconsPage = navigationMenu.clickBeconsLink();
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
-        try {
-            Thread.sleep(Constants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        beacons = beaconsPage.getAllBeacons();
+        beaconsPage = accessBeaconsPage(navigationMenu);
+        beacons = beaconsPage.getOtherBeaconsList();
 
         storesPage = navigationMenu.clickStoresLink();
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
     }
 
     @Test(testName = "TC017", priority = 1)
-    @Parameters({"storeName", "storeUniqueCode", "imgUrl"})
-    public void createNewStoreTC017(String storeName, String storeUniqueCode, String imgUrl) {
+    @Parameters({"storeName", "storeUniqueCode", "sales"})
+    public void checkIfStoreCanBeCreaWAF(String storeName, String storeUniqueCode, String sales) {
 
-        createStore(storesPage, new Stores(storeName, storeUniqueCode, imgUrl));
+        createStore(storesPage, new Stores(storeName, storeUniqueCode, sales));
         allStores = storesPage.getAllStores();
 
         /*Checking if the Store has been successfully created by checking if the list of stores contains the newly
@@ -62,14 +55,14 @@ public class StoresPageTest extends FunctionalTest {
                 ))));
     }
 
-    @Test(testName = "TC022", priority = 2)
-    @Parameters({"storeName", "storeUniqueCode", "storeNameNew", "storeUniqueCodeNew", "imgUrlNew"})
-    public void updateStoreDetails(String storeName, String storeUniqueCode, String storeNameNew,
-                                   String storeUniqueCodeNew, String imgUrlNew) {
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
+    //@Test(testName = "TC022", priority = 2)
+    @Parameters({"storeName", "storeUniqueCode", "storeNameNew", "storeUniqueCodeNew", "salesNew"})
+    public void checkIfStoreCanBeUpda(String storeName, String storeUniqueCode, String storeNameNew,
+                                      String storeUniqueCodeNew, String salesNew) {
+        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
         allStores = storesPage.getAllStores();
         Stores store = storesPage.getStore(allStores, storeName, storeUniqueCode);
-        updateStore(storesPage, store, new Stores(storeNameNew, storeUniqueCodeNew, imgUrlNew));
+        updateStore(storesPage, store, new Stores(storeNameNew, storeUniqueCodeNew, salesNew));
 
         allStores = storesPage.getAllStores();
         assertThat(allStores, hasItem(allOf(
@@ -80,9 +73,9 @@ public class StoresPageTest extends FunctionalTest {
 
     @Test(testName = "TC019", priority = 3)
     @Parameters({"storeNameNew", "storeUniqueCodeNew"})
-    public void deleteStoreTC019(String storeName, String storeUniqueCode) {
+    public void checkIfStoreWithNoBeaCanBeDel(String storeName, String storeUniqueCode) {
         //checking if the webdriver is in the Stores Page
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
         //checking if this store is not assigned to any beacons
         assertThat(beacons, not(hasItem(hasProperty("storeName", equalTo(storeName)))));
         //Deleting the Store
@@ -97,72 +90,69 @@ public class StoresPageTest extends FunctionalTest {
     }
 
     @Test(testName = "TC018", priority = 4)
-    @Parameters({"storeName", "storeUniqueCode", "imgUrl"})
-    public void createNewStoreTC018(String storeName, String storeUniqueCode, String imgUrl) {
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
+    @Parameters({"storeName", "storeUniqueCode"})
+    public void checkIfStoreCanBeCreaWORF(String storeName, String storeUniqueCode) {
+        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
         storesPage.clickNewStore();
-        assertEquals(Constants.addStoreUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addStoreUrl, webDriver.getCurrentUrl());
 
-        //Checking if a store can be created with only Store Unique Code and Image Url
-        storesPage.createUpdateStore(new Stores("", storeUniqueCode, imgUrl));
-        assertEquals(Constants.addStoreUrl, webDriver.getCurrentUrl());
+
+        storesPage.createUpdateStore(new Stores("", "", ""));
+        assertEquals(WebConstants.addStoreUrl, webDriver.getCurrentUrl());
 
         //Checking if a store can be created with only Image Url
-        storesPage.createUpdateStore(new Stores("", "", imgUrl));
-        assertEquals(Constants.addStoreUrl, webDriver.getCurrentUrl());
+        storesPage.createUpdateStore(new Stores(storeName, "", ""));
+        assertEquals(WebConstants.addStoreUrl, webDriver.getCurrentUrl());
 
-        //Checking if a store can be created with only Store Unique Code
         storesPage.createUpdateStore(new Stores("", storeUniqueCode, ""));
-        assertEquals(Constants.addStoreUrl, webDriver.getCurrentUrl());
-
-        //Checking if a store can be created with empty fields
-        storesPage.createUpdateStore(new Stores("", storeUniqueCode, ""));
-        assertEquals(Constants.addStoreUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addStoreUrl, webDriver.getCurrentUrl());
     }
 
     @BeforeGroups("AssignedStore")
-    public void createDefaultStoreAndBeacon() {
-        storesPage.createUpdateStore(Constants.defaultTestStore);
+    public void createDefStoreAndBeacon() {
+        storesPage.createUpdateStore(WebConstants.defaultTestStore);
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
-        testStores.add(Constants.defaultTestStore);
+        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
+        testStores.add(WebConstants.defaultTestStore);
 
         beaconsPage = accessBeaconsPage(navigationMenu);
-        createBeacon(beaconsPage, Constants.defaultTestBeacon);
+        createBeacon(beaconsPage, WebConstants.defaultTestBeacon);
 
         storesPage = accessStoresPage(navigationMenu);
     }
 
     @Test(priority = 5, testName = "TC020", groups = "AssignedStore")
-    public void deleteStoreTC020() {
-        Stores store = storesPage.getStore(storesPage.getAllStores(), Constants.defaultTestStore.getName(),
-                Constants.defaultTestStore.getStoreCode());
+    public void checkIfStoreWithBeaconCanBeDel() {
+        Stores store = storesPage.getStore(storesPage.getAllStores(), WebConstants.defaultTestStore.getName(),
+                WebConstants.defaultTestStore.getStoreCode());
 
         deleteStore(storesPage, store);
-        //checking if the store hasn't been deleted and still exists.
 
-        assertEquals(store.getName() + Constants.cantDelStoreMsg, storesPage.getSucessAlert());
+        // Checking the error message
+        assertEquals(store.getName() + WebConstants.delStoreError, storesPage.getDangerAlert());
+
+        //Checking if the store still exists in the Stores Page
         assertThat(storesPage.getAllStores(), hasItem(allOf(
-                hasProperty("name", equalTo(Constants.defaultTestStore.getName())),
-                hasProperty("storeCode", equalTo(Constants.defaultTestStore.getStoreCode()))
+                hasProperty("name", equalTo(WebConstants.defaultTestStore.getName())),
+                hasProperty("storeCode", equalTo(WebConstants.defaultTestStore.getStoreCode()))
         )));
     }
 
     @AfterGroups("AssignedStore")
-    public void deleteDefaultBeacon() {
+    public void deleteDefBeacon() {
         beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, Constants.defaultTestBeacon);
+        deleteBeacon(beaconsPage, WebConstants.defaultTestBeacon);
         storesPage = accessStoresPage(navigationMenu);
     }
 
 
     @Test(testName = "TC021", priority = 6)
-    @Parameters({"storeName", "storeUniqueCode", "imgUrl"})
-    public void checkIfStoreCanBeCreWithRF(String storeName, String storeUniqueCode, String imgUrl) {
+    @Parameters({"storeName", "storeUniqueCode"})
+    public void checkIfStoreCanBeCreWRF(String storeName, String storeUniqueCode) {
         Stores store = new Stores(storeName, storeUniqueCode, "");
         testStores.add(store);
         createStore(storesPage, store);
@@ -171,9 +161,8 @@ public class StoresPageTest extends FunctionalTest {
 
     @AfterTest
     public void clearTestData() {
-        if (!webDriver.getCurrentUrl().equals(Constants.storesUrl))
-            webDriver.get(Constants.storesUrl);
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
+        if (!webDriver.getCurrentUrl().equals(WebConstants.storesUrl))
+            storesPage = accessStoresPage(navigationMenu);
         if (testStores != null) {
             for (Stores testStore : testStores) {
                 allStores = storesPage.getAllStores();

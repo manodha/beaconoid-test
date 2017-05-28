@@ -2,7 +2,7 @@ package com.company.testscripts;
 
 import com.company.pageobjects.LoginPage;
 import com.company.pageobjects.NavigationMenu;
-import com.company.util.Constants;
+import com.company.util.WebConstants;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -22,7 +22,7 @@ public class NavigationMenuTest extends FunctionalTest {
     @Parameters({"email", "password"})
     public void isDashboard(String email, String password) {
         navigationMenu = loginToBeaconoid(email, password);
-        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNotNull(navigationMenu.getLogoutLink());
 
     }
@@ -30,46 +30,46 @@ public class NavigationMenuTest extends FunctionalTest {
     @Test(testName = "TC010", priority = 2)
     public void clickBeaconoid() {
         navigationMenu.clickBeconsWebConsole();
-        assertEquals(Constants.dashboardUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
 
     }
 
     @Test(testName = "TC011", priority = 3)
     public void clickDashboard() {
         navigationMenu.clickDashboardLink();
-        assertEquals(Constants.dashboardUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
     }
 
     @Test(testName = "TC012", priority = 4)
     public void clickStores() {
         navigationMenu.clickStoresLink();
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
     }
 
     @Test(testName = "TC013", priority = 5)
     public void clickCatogories() {
         navigationMenu.clickCatogoriesLink();
-        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
     }
 
     @Test(testName = "TC014", priority = 6)
     public void clickBeacons() {
         navigationMenu.clickBeconsLink();
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
     @Test(testName = "TC015", priority = 7)
     public void clickAdvertisements() {
         navigationMenu.clickAdvertisementsLink();
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
     }
 
     @Test(testName = "TC016", priority = 8)
     public void clickStaff() {
         navigationMenu.clickStaffLink();
-        assertEquals(Constants.staffUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.staffUrl, webDriver.getCurrentUrl());
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -79,11 +79,11 @@ public class NavigationMenuTest extends FunctionalTest {
     public void clickLogout() {
         LoginPage loginPage = navigationMenu.clickLogoutLink();
         try {
-            Thread.sleep(Constants.waitMilliSeconds * 2);
+            Thread.sleep(WebConstants.waitMilliSeconds * 2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
-        assertEquals(Constants.loginTitle, loginPage.getTitleText());
+        assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.loginTitle, loginPage.getTitleText());
     }
 }

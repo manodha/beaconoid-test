@@ -8,20 +8,20 @@ import org.openqa.selenium.WebElement;
 public class Stores {
     private String name;
     private String storeCode;
-    private String imgUrl;
+    private String sales;
     private WebElement editLink;
     private WebElement deleteBtn;
 
-    public Stores(String name, String storeCode, String imgUrl) {
+    public Stores(String name, String storeCode, String sales) {
         this.name = name;
         this.storeCode = storeCode;
-        this.imgUrl = imgUrl;
+        this.sales = sales;
     }
 
     public Stores() {
         this.name = "";
         this.storeCode = "";
-        this.imgUrl = "";
+        this.sales = "";
     }
 
 
@@ -41,12 +41,12 @@ public class Stores {
         this.storeCode = storeCode;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getSales() {
+        return sales;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setSales(String sales) {
+        this.sales = sales;
     }
 
     public WebElement getEditLink() {

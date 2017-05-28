@@ -32,9 +32,6 @@ public class StoresPage extends PageObject {
     @FindBy(id = "store_sales")
     private WebElement storeSalesTxt;
 
-    @FindBy(id = "store_image_url")
-    private WebElement storeImgUrlTxt;
-
     @FindBy(name = "commit")
     private WebElement createUpdateStoreBtn;
 
@@ -61,8 +58,9 @@ public class StoresPage extends PageObject {
             Stores store = new Stores();
             store.setName(storeRows.get(i).findElement(By.xpath("td[2]")).getText());
             store.setStoreCode(storeRows.get(i).findElement(By.xpath("td[3]")).getText());
-            store.setEditLink(storeRows.get(i).findElement(By.xpath("td[4]/a")));
-            store.setDeleteBtn(storeRows.get(i).findElement(By.xpath("td[5]/form/input[@type='submit']")));
+            store.setSales(storeRows.get(i).findElement(By.xpath("td[4]")).getText());
+            store.setEditLink(storeRows.get(i).findElement(By.xpath("td[5]/a")));
+            store.setDeleteBtn(storeRows.get(i).findElement(By.xpath("td[6]/form/input[@type='submit']")));
             stores.add(store);
         }
         return stores;
@@ -93,9 +91,10 @@ public class StoresPage extends PageObject {
         storeUniqueIdTxt.sendKeys(storeUniqueId);
     }
 
-    public void enterImgUrl(String imgUrl) {
-        storeImgUrlTxt.clear();
-        storeImgUrlTxt.sendKeys(imgUrl);
+    public void enterStoreSales(String sales) {
+        storeSalesTxt.clear();
+        storeSalesTxt.sendKeys(sales);
+
     }
 
     public void clickCreateUpdateStore() {
@@ -114,7 +113,7 @@ public class StoresPage extends PageObject {
     public void createUpdateStore(Stores store) {
         enterStoreName(store.getName());
         enterStoreUniqueId(store.getStoreCode());
-        enterImgUrl(store.getImgUrl());
+        enterStoreSales(store.getSales());
         clickCreateUpdateStore();
     }
 

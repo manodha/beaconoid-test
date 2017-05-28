@@ -12,7 +12,6 @@ public class Advertisement {
     private String description;
     private String image;
     private String price;
-    private WebElement viewLink;
     private WebElement editLink;
     private WebElement deleteBtn;
 
@@ -23,7 +22,6 @@ public class Advertisement {
         this.description = description;
         this.image = image;
         this.price = price;
-        this.viewLink = null;
         this.editLink = null;
         this.deleteBtn = null;
     }
@@ -34,7 +32,6 @@ public class Advertisement {
         this.category = "";
         this.description = "";
         this.price = "";
-        this.viewLink = null;
         this.editLink = null;
         this.deleteBtn = null;
     }
@@ -77,14 +74,6 @@ public class Advertisement {
 
     public void setPrice(String price) {
         this.price = price;
-    }
-
-    public WebElement getViewLink() {
-        return viewLink;
-    }
-
-    public void setViewLink(WebElement viewLink) {
-        this.viewLink = viewLink;
     }
 
     public WebElement getEditLink() {

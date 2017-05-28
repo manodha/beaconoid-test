@@ -3,7 +3,7 @@ package com.company.testscripts;
 import com.company.model.Advertisement;
 import com.company.model.Category;
 import com.company.pageobjects.*;
-import com.company.util.Constants;
+import com.company.util.WebConstants;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -35,7 +35,7 @@ public class CategoriesPageTest extends FunctionalTest {
         navigationMenu = loginToBeaconoid(email, password);
 
         storesPage = accessStoresPage(navigationMenu);
-        createStore(storesPage, Constants.defaultTestStore);
+        createStore(storesPage, WebConstants.defaultTestStore);
 
         categoryPage = accessCategoriesPage(navigationMenu);
     }
@@ -56,19 +56,19 @@ public class CategoriesPageTest extends FunctionalTest {
     @Test(priority = 2, testName = "TC024")
     @Parameters({"categoryName", "categoryDescription"})
     public void checkIfCateCanBeCreaWORF(String categoryName, String categoryDescription) {
-        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
         categoryPage.clickNewCategoryBtn();
 
         /*To create a category it is required to enter both category name and the category description.*/
 
         categoryPage.createUpdateCategory(new Category("", categoryDescription));
-        assertEquals(Constants.addCategoryUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addCategoryUrl, webDriver.getCurrentUrl());
 
         categoryPage.createUpdateCategory(new Category(categoryName, ""));
-        assertEquals(Constants.addCategoryUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addCategoryUrl, webDriver.getCurrentUrl());
 
         categoryPage.createUpdateCategory(new Category("", ""));
-        assertEquals(Constants.addCategoryUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addCategoryUrl, webDriver.getCurrentUrl());
     }
 
     @Test(priority = 3, testName = "TC025")
@@ -76,7 +76,7 @@ public class CategoriesPageTest extends FunctionalTest {
     public void checkIfCateCanBeUpda(String categoryName, String categoryDescription, String categoryNameNew,
                                      String categoryDescriptionNew) {
         // Accessing the Categories Page
-        if (!webDriver.getCurrentUrl().equals(Constants.categoriesUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
             categoryPage = accessCategoriesPage(navigationMenu);
 
         Category category = categoryPage.getCategory(categoryPage.getAllCategories(), categoryName, categoryDescription);
@@ -106,7 +106,7 @@ public class CategoriesPageTest extends FunctionalTest {
         // Deleting the category
         deleteCategory(categoryPage, new Category(categoryName, categoryDescription));
 
-        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
         allCategories = categoryPage.getAllCategories();
         // Checking that the category has been deleted successfully.
         assertThat(allCategories, not(hasItem(allOf(hasProperty("categoryName", equalTo(categoryName)),
@@ -115,8 +115,8 @@ public class CategoriesPageTest extends FunctionalTest {
 
     @Test(priority = 5, testName = "TC028")
     public void getListOfCategories() {
-        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
-        createCategory(categoryPage, Constants.defaultTestCategory);
+        assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
+        createCategory(categoryPage, WebConstants.defaultTestCategory);
         allCategories = categoryPage.getAllCategories();
         assertNotNull(allCategories);
     }
@@ -124,34 +124,34 @@ public class CategoriesPageTest extends FunctionalTest {
     @Test(priority = 6, testName = "TC030")
     public void checkIfCateCanBeAssiToAdver() {
         beaconsPage = accessBeaconsPage(navigationMenu);
-        createBeacon(beaconsPage, Constants.defaultTestBeacon);
+        createBeacon(beaconsPage, WebConstants.defaultTestBeacon);
 
         advertisementsPage = accessAdvertisementsPage(navigationMenu);
-        createAdvertisement(advertisementsPage, Constants.defaultTestAdvertisement);
+        createAdvertisement(advertisementsPage, WebConstants.defaultTestAdvertisement);
 
-        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
         assertThat(advertisementsPage.getAllAdvertisements(), allOf(hasItem(
-                hasProperty("category", equalTo(Constants.defaultTestAdvertisement.getCategory()))
+                hasProperty("category", equalTo(WebConstants.defaultTestAdvertisement.getCategory()))
         )));
     }
 
     @Test(priority = 7, testName = "TC027")
     public void checkIfCateAssiToAdverBeDel() {
-        if (!webDriver.getCurrentUrl().equals(Constants.categoriesUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
             categoryPage = accessCategoriesPage(navigationMenu);
-        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
-        deleteCategory(categoryPage, Constants.defaultTestCategory);
-        assertEquals(Constants.defaultTestCategory.getCategoryName() + Constants.cantDelCateMsg, categoryPage.getDangerAlert());
-        assertThat(categoryPage.getAllCategories(), hasItem(allOf(hasProperty("categoryName", equalTo(Constants.defaultTestCategory.getCategoryName())),
-                hasProperty("categoryDescription", equalTo(Constants.defaultTestCategory.getCategoryDescription())))));
+        assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
+        deleteCategory(categoryPage, WebConstants.defaultTestCategory);
+        assertEquals(WebConstants.defaultTestCategory.getCategoryName() + WebConstants.cantDelCateMsg, categoryPage.getDangerAlert());
+        assertThat(categoryPage.getAllCategories(), hasItem(allOf(hasProperty("categoryName", equalTo(WebConstants.defaultTestCategory.getCategoryName())),
+                hasProperty("categoryDescription", equalTo(WebConstants.defaultTestCategory.getCategoryDescription())))));
     }
 
     @Test(priority = 8, testName = "TC029")
     public void checkIfCateCreaWithSameName() {
-        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
-        createCategory(categoryPage, Constants.defaultTestCategory);
+        assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
+        createCategory(categoryPage, WebConstants.defaultTestCategory);
 
 
     }
@@ -159,22 +159,22 @@ public class CategoriesPageTest extends FunctionalTest {
     @AfterTest
     public void clearAllTestData() {
         // Deleting the Test Advertisement that was created for the Test Case TC030
-        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl)) {
+        if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl)) {
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
         }
-        deleteAdvertisement(advertisementsPage, Constants.defaultTestAdvertisement);
+        deleteAdvertisement(advertisementsPage, WebConstants.defaultTestAdvertisement);
 
         // Deleting the Test Category that was created for the test case TC028
         categoryPage = accessCategoriesPage(navigationMenu);
-        deleteCategory(categoryPage, Constants.defaultTestCategory);
+        deleteCategory(categoryPage, WebConstants.defaultTestCategory);
 
 
         // Deleting the Test Beacon that was created for the test case TC030
         beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, Constants.defaultTestBeacon);
+        deleteBeacon(beaconsPage, WebConstants.defaultTestBeacon);
 
         // Deleting the Test Store that was created in the @BeforeTest Method
         storesPage = accessStoresPage(navigationMenu);
-        deleteStore(storesPage, Constants.defaultTestStore);
+        deleteStore(storesPage, WebConstants.defaultTestStore);
     }
 }

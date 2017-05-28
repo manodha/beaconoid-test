@@ -2,7 +2,7 @@ package com.company.testscripts;
 
 import com.company.model.Beacons;
 import com.company.pageobjects.*;
-import com.company.util.Constants;
+import com.company.util.WebConstants;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -32,40 +32,40 @@ public class BeaconsPageTest extends FunctionalTest {
     public void accessBeaconsPage(String email, String password) {
         navigationMenu = loginToBeaconoid(email, password);
         storesPage = navigationMenu.clickStoresLink();
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        createStore(storesPage, Constants.defaultTestStore);
+        createStore(storesPage, WebConstants.defaultTestStore);
 
         categoryPage = navigationMenu.clickCatogoriesLink();
-        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        createCategory(categoryPage, Constants.defaultTestCategory);
+        createCategory(categoryPage, WebConstants.defaultTestCategory);
 
         beaconsPage = navigationMenu.clickBeconsLink();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
 
     }
 
     @Test(priority = 1, testName = "TC032")
     @Parameters({"uniqueRef", "beaconName", "currentStatus", "latitude", "longitude"})
     public void checkIfBeaconBeCreaWRF(String uniqueRef, String beaconName, String currentStatus, String latitude, String longitude) {
-        Beacons beacon = new Beacons(uniqueRef, beaconName, Constants.defaultTestStore.getName(), currentStatus, latitude, longitude);
+        Beacons beacon = new Beacons(uniqueRef, beaconName, WebConstants.defaultTestStore.getName(), currentStatus, latitude, longitude);
         createBeacon(beaconsPage, beacon);
-        allBeacons = beaconsPage.getAllBeacons();
+        allBeacons = beaconsPage.getOtherBeaconsList();
         assertThat(allBeacons, hasItem(allOf(hasProperty("uniqueRef", equalTo(uniqueRef)),
                 hasProperty("name", equalTo(beaconName)))));
     }
@@ -73,7 +73,7 @@ public class BeaconsPageTest extends FunctionalTest {
     @Test(priority = 2, testName = "TC031")
     @Parameters({"uniqueRef", "beaconName",})
     public void checkIfUCanSeeAListOfBeacon(String uniqueRef, String beaconName) {
-        allBeacons = beaconsPage.getAllBeacons();
+        allBeacons = beaconsPage.getOtherBeaconsList();
         assertThat(allBeacons, hasItem(allOf(hasProperty("uniqueRef", equalTo(uniqueRef)),
                 hasProperty("name", equalTo(beaconName)))));
     }
@@ -82,10 +82,10 @@ public class BeaconsPageTest extends FunctionalTest {
     @Parameters({"uniqueRef", "beaconName", "uniqueRefNew", "beaconNameNew", "currentStatusNew", "latitudeNew", "longitudeNew"})
     public void checkIfBeaconCanBeUpda(String uniqueRef, String beaconName, String uniqueRefNew, String beaconNameNew,
                                        String currentStatusNew, String latitudeNew, String longitudeNew) {
-        allBeacons = beaconsPage.getAllBeacons();
+        allBeacons = beaconsPage.getOtherBeaconsList();
         Beacons beacon = beaconsPage.getBeacon(allBeacons, uniqueRef, beaconName);
-        updateBeacon(beaconsPage, beacon, new Beacons(uniqueRefNew, beaconNameNew, Constants.defaultTestStore.getName(), currentStatusNew, latitudeNew, longitudeNew));
-        allBeacons = beaconsPage.getAllBeacons();
+        updateBeacon(beaconsPage, beacon, new Beacons(uniqueRefNew, beaconNameNew, WebConstants.defaultTestStore.getName(), currentStatusNew, latitudeNew, longitudeNew));
+        allBeacons = beaconsPage.getOtherBeaconsList();
         assertThat(allBeacons, hasItem(allOf(hasProperty("uniqueRef", equalTo(uniqueRefNew)),
                 hasProperty("name", equalTo(beaconNameNew)))));
     }
@@ -93,7 +93,7 @@ public class BeaconsPageTest extends FunctionalTest {
     @Test(priority = 4, testName = "TC039")
     @Parameters({"uniqueRefNew", "beaconNameNew"})
     public void checkIfUCanSeeBeaconAdver(String uniqueRefNew, String beaconNameNew) {
-        allBeacons = beaconsPage.getAllBeacons();
+        allBeacons = beaconsPage.getOtherBeaconsList();
         Beacons beacon = beaconsPage.getBeacon(allBeacons, uniqueRefNew, beaconNameNew);
         viewBeaconAdvertisements(beaconsPage, beacon);
     }
@@ -101,7 +101,7 @@ public class BeaconsPageTest extends FunctionalTest {
     @Test(priority = 5, testName = "TC034")
     @Parameters({"uniqueRefNew", "beaconNameNew"})
     public void checkIfBeaconCanBeDel(String uniqueRefNew, String beaconNameNew) {
-        if (!webDriver.getCurrentUrl().equals(Constants.beaconsUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
         assertThat(advertisementsPage.getAllAdvertisements(), not(hasItem(
@@ -111,10 +111,10 @@ public class BeaconsPageTest extends FunctionalTest {
         beaconsPage = accessBeaconsPage(navigationMenu);
         deleteBeacon(beaconsPage, new Beacons(uniqueRefNew, beaconNameNew));
 
-        if (!webDriver.getCurrentUrl().equals(Constants.beaconsUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
             beaconsPage = accessBeaconsPage(navigationMenu);
 
-        assertThat(beaconsPage.getAllBeacons(), not(hasItem(allOf(
+        assertThat(beaconsPage.getOtherBeaconsList(), not(hasItem(allOf(
                 hasProperty("uniqueRef", equalTo(uniqueRefNew)),
                 hasProperty("name", equalTo(beaconNameNew))
         ))));
@@ -124,87 +124,87 @@ public class BeaconsPageTest extends FunctionalTest {
     @Parameters({"uniqueRef", "beaconName", "currentStatus", "latitude", "longitude"})
     public void checkIfBeaconBeCreaWORF(String uniqueRef, String beaconName, String currentStatus, String latitude,
                                         String longitude) {
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
         beaconsPage.clickNewBeaconBtn();
-        assertEquals(Constants.addBeaconUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addBeaconUrl, webDriver.getCurrentUrl());
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         beaconsPage.createUpdateBeacon(new Beacons("", "", "", "", "", ""));
-        assertEquals(Constants.addBeaconUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addBeaconUrl, webDriver.getCurrentUrl());
 
         beaconsPage.createUpdateBeacon(new Beacons(uniqueRef, "", "", "", "", ""));
-        assertEquals(Constants.addBeaconUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addBeaconUrl, webDriver.getCurrentUrl());
 
         beaconsPage.createUpdateBeacon(new Beacons(uniqueRef, beaconName, "", "", "", ""));
-        assertEquals(Constants.addBeaconUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addBeaconUrl, webDriver.getCurrentUrl());
 
-        beaconsPage.createUpdateBeacon(new Beacons(uniqueRef, beaconName, Constants.defaultTestStore.getName(), "", "", ""));
-        assertEquals(Constants.addBeaconUrl, webDriver.getCurrentUrl());
+        beaconsPage.createUpdateBeacon(new Beacons(uniqueRef, beaconName, WebConstants.defaultTestStore.getName(), "", "", ""));
+        assertEquals(WebConstants.addBeaconUrl, webDriver.getCurrentUrl());
 
-        beaconsPage.createUpdateBeacon(new Beacons(uniqueRef, beaconName, Constants.defaultTestStore.getName(), currentStatus, "", ""));
-        assertEquals(Constants.addBeaconUrl, webDriver.getCurrentUrl());
+        beaconsPage.createUpdateBeacon(new Beacons(uniqueRef, beaconName, WebConstants.defaultTestStore.getName(), currentStatus, "", ""));
+        assertEquals(WebConstants.addBeaconUrl, webDriver.getCurrentUrl());
 
-        beaconsPage.createUpdateBeacon(new Beacons(uniqueRef, beaconName, Constants.defaultTestStore.getName(), currentStatus, latitude, ""));
-        assertEquals(Constants.addBeaconUrl, webDriver.getCurrentUrl());
+        beaconsPage.createUpdateBeacon(new Beacons(uniqueRef, beaconName, WebConstants.defaultTestStore.getName(), currentStatus, latitude, ""));
+        assertEquals(WebConstants.addBeaconUrl, webDriver.getCurrentUrl());
 
     }
 
     @Test(priority = 7, testName = "TC037")
     public void checkIfBeaconCanBeCreaWF() {
-        assertEquals(Constants.addBeaconUrl, webDriver.getCurrentUrl());
-        beaconsPage.createUpdateBeacon(Constants.defaultTestBeacon);
+        assertEquals(WebConstants.addBeaconUrl, webDriver.getCurrentUrl());
+        beaconsPage.createUpdateBeacon(WebConstants.defaultTestBeacon);
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
-        allBeacons = beaconsPage.getAllBeacons();
+        assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
+        allBeacons = beaconsPage.getOtherBeaconsList();
         assertThat(allBeacons, hasItem(allOf(
-                hasProperty("uniqueRef", equalTo(Constants.defaultTestBeacon.getUniqueRef())),
-                hasProperty("name", equalTo(Constants.defaultTestBeacon.getName()
+                hasProperty("uniqueRef", equalTo(WebConstants.defaultTestBeacon.getUniqueRef())),
+                hasProperty("name", equalTo(WebConstants.defaultTestBeacon.getName()
                 )))));
     }
 
     @Test(priority = 8, testName = "TC038")
     @Parameters({"uniqueRef", "currentStatus", "latitude", "longitude"})
     public void checkIfBeaconBeCreaWSN(String uniqueRef, String currentStatus, String latitude, String longitude) {
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
         beaconsPage.clickNewBeaconBtn();
-        assertEquals(Constants.addBeaconUrl, webDriver.getCurrentUrl());
-        beaconsPage.createUpdateBeacon(new Beacons(uniqueRef, Constants.defaultTestBeacon.getName(), Constants.defaultTestBeacon.getStoreName(),
+        assertEquals(WebConstants.addBeaconUrl, webDriver.getCurrentUrl());
+        beaconsPage.createUpdateBeacon(new Beacons(uniqueRef, WebConstants.defaultTestBeacon.getName(), WebConstants.defaultTestBeacon.getStoreName(),
                 currentStatus, latitude, longitude));
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.duplicateBeaconDanger, beaconsPage.getDangerAlert());
+        assertEquals(WebConstants.duplicateBeaconDanger, beaconsPage.getDangerAlert());
 
         beaconsPage = accessBeaconsPage(navigationMenu);
 
-        assertThat(beaconsPage.getAllBeacons(), not(hasItem(allOf(
+        assertThat(beaconsPage.getOtherBeaconsList(), not(hasItem(allOf(
                 hasProperty("uniqueRef", equalTo(uniqueRef)),
-                hasProperty("name", equalTo(Constants.defaultTestBeacon.getName()))
+                hasProperty("name", equalTo(WebConstants.defaultTestBeacon.getName()))
         ))));
     }
 
     @Test(priority = 9, testName = "TC040")
     public void checkIfBeaconBeAssiAdver() {
-        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
-        createAdvertisement(advertisementsPage, Constants.defaultTestAdvertisement);
+        createAdvertisement(advertisementsPage, WebConstants.defaultTestAdvertisement);
 
-        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
         assertThat(advertisementsPage.getAllAdvertisements(), hasItem(
-                hasProperty("beacon", equalTo(Constants.defaultTestBeacon.getName()
+                hasProperty("beacon", equalTo(WebConstants.defaultTestBeacon.getName()
                 ))));
 
     }
@@ -212,23 +212,23 @@ public class BeaconsPageTest extends FunctionalTest {
     //@Test(priority = 10, testName = "TC035")
     public void checkIfBeaconBeDelAssiToAdv() {
         beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, Constants.defaultTestBeacon);
+        deleteBeacon(beaconsPage, WebConstants.defaultTestBeacon);
 
     }
 
     @AfterTest
     public void clearAllTestData() {
         advertisementsPage = accessAdvertisementsPage(navigationMenu);
-        deleteAdvertisement(advertisementsPage, Constants.defaultTestAdvertisement);
+        deleteAdvertisement(advertisementsPage, WebConstants.defaultTestAdvertisement);
 
         beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, Constants.defaultTestBeacon);
+        deleteBeacon(beaconsPage, WebConstants.defaultTestBeacon);
 
         categoryPage = accessCategoriesPage(navigationMenu);
-        deleteCategory(categoryPage, Constants.defaultTestCategory);
+        deleteCategory(categoryPage, WebConstants.defaultTestCategory);
 
         storesPage = accessStoresPage(navigationMenu);
-        deleteStore(storesPage, Constants.defaultTestStore);
+        deleteStore(storesPage, WebConstants.defaultTestStore);
     }
 
 }

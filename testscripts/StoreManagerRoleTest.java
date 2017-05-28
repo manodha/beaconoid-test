@@ -2,7 +2,7 @@ package com.company.testscripts;
 
 import com.company.model.*;
 import com.company.pageobjects.*;
-import com.company.util.Constants;
+import com.company.util.WebConstants;
 import org.testng.annotations.*;
 
 import static org.hamcrest.Matchers.*;
@@ -33,7 +33,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
         createStaff(staffPage, new Staff(name, email, nickname, password, confirmPassword, role));
         navigationMenu.clickLogoutLink();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -49,7 +49,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
     public void logoutStoreManager() {
         navigationMenu.clickLogoutLink();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -59,18 +59,18 @@ public class StoreManagerRoleTest extends FunctionalTest {
     public void checkIfSMCanAccessDasboard() {
         assertNotNull(navigationMenu.getDashboardLink());
         dashboardPage = accessDashboardPage(navigationMenu);
-        assertEquals(Constants.dashboardUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
     }
 
     @Test(priority = 2, testName = "TC097", groups = "stores_categories")
     public void checkIfSMCanAccessReports() {
-        assertEquals(Constants.dashboardUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getReportLink());
     }
 
     @Test(priority = 3, testName = "TC098", groups = "stores_categories")
     public void checkIfSMCanAccessStaffPage() {
-        assertEquals(Constants.dashboardUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getReportLink());
     }
 
@@ -80,14 +80,14 @@ public class StoreManagerRoleTest extends FunctionalTest {
     public void checkIfSMCanAccessStorePage() {
         assertNotNull(navigationMenu.getStoresLink());
         storesPage = accessStoresPage(navigationMenu);
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
     }
 
     @Test(priority = 5, testName = "TC100", groups = "stores_categories")
-    @Parameters({"storeName", "storeUniqueCode", "imgUrl"})
-    public void checkIfSMCanCreaNewStore(String name, String uniqueCode, String imgUrl) {
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
-        createStore(storesPage, new Stores(name, uniqueCode, imgUrl));
+    @Parameters({"storeName", "storeUniqueCode", "sales"})
+    public void checkIfSMCanCreaNewStore(String name, String uniqueCode, String sales) {
+        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
+        createStore(storesPage, new Stores(name, uniqueCode, sales));
 
         assertThat(storesPage.getAllStores(), hasItem(allOf(
                 hasProperty("name", equalTo(name)),
@@ -97,7 +97,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
 
     @Test(priority = 6, testName = "TC101", groups = "stores_categories")
     public void checkIfSMCanSeeAListOfStores() {
-        assertEquals(Constants.storesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
         assertNotNull(storesPage.getAllStores());
     }
 
@@ -105,7 +105,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
     @Parameters({"storeName", "storeUniqueCode"})
     public void checkIfSMCanUpdaStore(String name, String code) {
         Stores store = storesPage.getStore(storesPage.getAllStores(), name, code);
-        updateStore(storesPage, store, Constants.defaultTestStore);
+        updateStore(storesPage, store, WebConstants.defaultTestStore);
 
         assertThat(storesPage.getAllStores(), not(hasItem(allOf(
                 hasProperty("name", equalTo(name)),
@@ -113,22 +113,22 @@ public class StoreManagerRoleTest extends FunctionalTest {
         ))));
 
         assertThat(storesPage.getAllStores(), hasItem(allOf(
-                hasProperty("name", equalTo(Constants.defaultTestStore.getName())),
-                hasProperty("storeCode", equalTo(Constants.defaultTestStore.getStoreCode()))
+                hasProperty("name", equalTo(WebConstants.defaultTestStore.getName())),
+                hasProperty("storeCode", equalTo(WebConstants.defaultTestStore.getStoreCode()))
         )));
     }
 
     @Test(priority = 23, testName = "TC103", groups = "delete_category_store")
     public void checkIfSMCanDeleteStore() {
-        if (!webDriver.getCurrentUrl().equals(Constants.storesUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.storesUrl))
             storesPage = accessStoresPage(navigationMenu);
-        Stores store = storesPage.getStore(storesPage.getAllStores(), Constants.defaultTestStore.getName(),
-                Constants.defaultTestStore.getStoreCode());
+        Stores store = storesPage.getStore(storesPage.getAllStores(), WebConstants.defaultTestStore.getName(),
+                WebConstants.defaultTestStore.getStoreCode());
         deleteStore(storesPage, store);
 
         assertThat(storesPage.getAllStores(), not(hasItem(allOf(
-                hasProperty("name", equalTo(Constants.defaultTestStore.getName())),
-                hasProperty("storeCode", equalTo(Constants.defaultTestStore.getStoreCode()))
+                hasProperty("name", equalTo(WebConstants.defaultTestStore.getName())),
+                hasProperty("storeCode", equalTo(WebConstants.defaultTestStore.getStoreCode()))
         ))));
     }
 
@@ -139,7 +139,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
     public void checkIfSMCanAccessCategoPage() {
         assertNotNull(navigationMenu.getCategoriesLink());
         categoryPage = accessCategoriesPage(navigationMenu);
-        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
     }
 
     @Test(priority = 9, testName = "TC105", groups = "stores_categories")
@@ -154,7 +154,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
 
     @Test(priority = 10, testName = "TC106", groups = "stores_categories")
     public void checkIfSMCanSeeListOfCatego() {
-        assertEquals(Constants.categoriesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
         assertNotNull(categoryPage.getAllCategories());
     }
 
@@ -162,7 +162,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
     @Parameters({"categoryName", "categoryDescription"})
     public void checkIfSMCanUpdaCatego(String name, String desc) {
         Category category = categoryPage.getCategory(categoryPage.getAllCategories(), name, desc);
-        updateCategory(categoryPage, category, Constants.defaultTestCategory);
+        updateCategory(categoryPage, category, WebConstants.defaultTestCategory);
 
         assertThat(categoryPage.getAllCategories(), not(hasItem(allOf(
                 hasProperty("categoryName", equalTo(name)),
@@ -170,23 +170,23 @@ public class StoreManagerRoleTest extends FunctionalTest {
         ))));
 
         assertThat(categoryPage.getAllCategories(), hasItem(allOf(
-                hasProperty("categoryName", equalTo(Constants.defaultTestCategory.getCategoryName())),
-                hasProperty("categoryDescription", equalTo(Constants.defaultTestCategory.getCategoryDescription()))
+                hasProperty("categoryName", equalTo(WebConstants.defaultTestCategory.getCategoryName())),
+                hasProperty("categoryDescription", equalTo(WebConstants.defaultTestCategory.getCategoryDescription()))
         )));
     }
 
     @Test(priority = 22, testName = "TC108", groups = "delete_category_store")
     public void checkIfSMCanDeleteCatego() {
-        if (!webDriver.getCurrentUrl().equals(Constants.categoriesUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
             accessCategoriesPage(navigationMenu);
-        Category category = categoryPage.getCategory(categoryPage.getAllCategories(), Constants.defaultTestCategory.getCategoryName(),
-                Constants.defaultTestCategory.getCategoryDescription());
+        Category category = categoryPage.getCategory(categoryPage.getAllCategories(), WebConstants.defaultTestCategory.getCategoryName(),
+                WebConstants.defaultTestCategory.getCategoryDescription());
 
         deleteCategory(categoryPage, category);
 
         assertThat(categoryPage.getAllCategories(), not(hasItem(allOf(
-                hasProperty("categoryName", equalTo(Constants.defaultTestCategory.getCategoryName())),
-                hasProperty("categoryDescription", equalTo(Constants.defaultTestCategory.getCategoryDescription()))
+                hasProperty("categoryName", equalTo(WebConstants.defaultTestCategory.getCategoryName())),
+                hasProperty("categoryDescription", equalTo(WebConstants.defaultTestCategory.getCategoryDescription()))
         ))));
     }
 
@@ -195,14 +195,14 @@ public class StoreManagerRoleTest extends FunctionalTest {
     public void createDefBeaconAndAdver(String sAEmail, String sAPassword, String sMEmail, String sMPassword) {
         navigationMenu = loginToBeaconoid(sAEmail, sAPassword);
         beaconsPage = accessBeaconsPage(navigationMenu);
-        createBeacon(beaconsPage, Constants.defaultTestBeacon);
+        createBeacon(beaconsPage, WebConstants.defaultTestBeacon);
 
         advertisementsPage = accessAdvertisementsPage(navigationMenu);
-        createAdvertisement(advertisementsPage, Constants.defaultTestAdvertisement);
+        createAdvertisement(advertisementsPage, WebConstants.defaultTestAdvertisement);
 
         navigationMenu.clickLogoutLink();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -216,56 +216,56 @@ public class StoreManagerRoleTest extends FunctionalTest {
     public void checkIfSMCanAccessBeaconsPage() {
         assertNotNull(navigationMenu.getBeaconsLink());
         beaconsPage = accessBeaconsPage(navigationMenu);
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
     @Test(priority = 13, testName = "TC110", groups = "beacons_advertisements")
     public void checkIfSMCanSeeListOfBeacons() {
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
-        assertNotNull(beaconsPage.getAllBeacons());
+        assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
+        assertNotNull(beaconsPage.getOtherBeaconsList());
     }
 
     @Test(priority = 14, testName = "TC111", groups = "beacons_advertisements")
     public void checkIfSMCanCreaBeacons() {
         beaconsPage.clickNewBeaconBtn();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
-        assertEquals(Constants.notAuthorisedMsg, beaconsPage.getDangerAlert());
+        assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.notAuthorisedMsg, beaconsPage.getDangerAlert());
     }
 
     @Test(priority = 15, testName = "TC112", groups = "beacons_advertisements")
     public void checkIfSMCanUpdaBeacon() {
-        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getAllBeacons(), Constants.defaultTestBeacon.getUniqueRef(),
-                Constants.defaultTestBeacon.getName());
+        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getOtherBeaconsList(), WebConstants.defaultTestBeacon.getUniqueRef(),
+                WebConstants.defaultTestBeacon.getName());
         beaconsPage.clickEditBeaconBtn(beacon.getEditLink());
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
-        assertEquals(Constants.notAuthorisedMsg, beaconsPage.getDangerAlert());
+        assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.notAuthorisedMsg, beaconsPage.getDangerAlert());
     }
 
     @Test(priority = 16, testName = "TC113", groups = "beacons_advertisements")
     public void checkIfSMCanDelBeacon() {
-        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getAllBeacons(), Constants.defaultTestBeacon.getUniqueRef(),
-                Constants.defaultTestBeacon.getName());
+        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getOtherBeaconsList(), WebConstants.defaultTestBeacon.getUniqueRef(),
+                WebConstants.defaultTestBeacon.getName());
         beaconsPage.clickDeleteBeaconBtn(beacon.getDeleteLink());
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.beaconsUrl, webDriver.getCurrentUrl());
-        assertEquals(Constants.notAuthorisedMsg, beaconsPage.getDangerAlert());
-        assertThat(beaconsPage.getAllBeacons(), hasItem(allOf(
-                hasProperty("uniqueRef", equalTo(Constants.defaultTestBeacon.getUniqueRef())),
-                hasProperty("name", equalTo(Constants.defaultTestBeacon.getName()))
+        assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.notAuthorisedMsg, beaconsPage.getDangerAlert());
+        assertThat(beaconsPage.getOtherBeaconsList(), hasItem(allOf(
+                hasProperty("uniqueRef", equalTo(WebConstants.defaultTestBeacon.getUniqueRef())),
+                hasProperty("name", equalTo(WebConstants.defaultTestBeacon.getName()))
         )));
 
     }
@@ -276,59 +276,59 @@ public class StoreManagerRoleTest extends FunctionalTest {
     public void checkIfSMCanAccessAdverPage() {
         assertNotNull(navigationMenu.getAdvertisementsLink());
         advertisementsPage = accessAdvertisementsPage(navigationMenu);
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
     }
 
     @Test(priority = 18, testName = "TC115", groups = "beacons_advertisements")
     public void checkIfSMCanSeeListOfAdver() {
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
         assertNotNull(advertisementsPage.getAllAdvertisements());
     }
 
     @Test(priority = 19, testName = "TC116", groups = "beacons_advertisements")
     public void checkIfSMCanCreaAdver() {
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
         advertisementsPage.clickNewAdvertisementBtn();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
-        assertEquals(Constants.notAuthorisedMsg, advertisementsPage.getDangerAlert());
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.notAuthorisedMsg, advertisementsPage.getDangerAlert());
     }
 
     @Test(priority = 20, testName = "TC117", groups = "beacons_advertisements")
     public void checkIfSMCanUpdaAdver() {
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
         Advertisement advertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(),
-                Constants.defaultTestAdvertisement.getName(), Constants.defaultTestAdvertisement.getBeacon());
+                WebConstants.defaultTestAdvertisement.getName(), WebConstants.defaultTestAdvertisement.getBeacon());
         advertisementsPage.clickEditAdverBtn(advertisement.getEditLink());
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
-        assertEquals(Constants.notAuthorisedMsg, advertisementsPage.getDangerAlert());
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.notAuthorisedMsg, advertisementsPage.getDangerAlert());
     }
 
     @Test(priority = 21, testName = "TC118", groups = "beacons_advertisements")
     public void checkIfSMCanDelAdver() {
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
         Advertisement advertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(),
-                Constants.defaultTestAdvertisement.getName(), Constants.defaultTestAdvertisement.getBeacon());
+                WebConstants.defaultTestAdvertisement.getName(), WebConstants.defaultTestAdvertisement.getBeacon());
         advertisementsPage.clickDeleteAdvBtn(advertisement.getDeleteBtn());
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
-        assertEquals(Constants.notAuthorisedMsg, advertisementsPage.getDangerAlert());
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.notAuthorisedMsg, advertisementsPage.getDangerAlert());
         assertThat(advertisementsPage.getAllAdvertisements(), hasItem(allOf(
-                hasProperty("name", equalTo(Constants.defaultTestAdvertisement.getName())),
-                hasProperty("beacon", equalTo(Constants.defaultTestAdvertisement.getBeacon()))
+                hasProperty("name", equalTo(WebConstants.defaultTestAdvertisement.getName())),
+                hasProperty("beacon", equalTo(WebConstants.defaultTestAdvertisement.getBeacon()))
         )));
     }
 
@@ -337,20 +337,20 @@ public class StoreManagerRoleTest extends FunctionalTest {
     public void deleteDefBeaconAndAdver(String email, String password) {
         navigationMenu.clickLogoutLink();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         navigationMenu = loginToBeaconoid(email, password);
         advertisementsPage = accessAdvertisementsPage(navigationMenu);
-        deleteAdvertisement(advertisementsPage, Constants.defaultTestAdvertisement);
+        deleteAdvertisement(advertisementsPage, WebConstants.defaultTestAdvertisement);
 
         beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, Constants.defaultTestBeacon);
+        deleteBeacon(beaconsPage, WebConstants.defaultTestBeacon);
 
         navigationMenu.clickLogoutLink();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

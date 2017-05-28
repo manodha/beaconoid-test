@@ -3,7 +3,7 @@ package com.company.testscripts;
 
 import com.company.pageobjects.LoginPage;
 import com.company.pageobjects.NavigationMenu;
-import com.company.util.Constants;
+import com.company.util.WebConstants;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -21,7 +21,7 @@ public class LoginPageTest extends FunctionalTest {
 
     @BeforeTest
     public void accessLoginPage() {
-        webDriver.get(Constants.loginUrl);
+        webDriver.get(WebConstants.loginUrl);
         loginPage = new LoginPage(webDriver);
     }
 
@@ -33,7 +33,7 @@ public class LoginPageTest extends FunctionalTest {
         loginPage.enterPassword(password);
         navigationMenu = loginPage.login();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -47,11 +47,11 @@ public class LoginPageTest extends FunctionalTest {
         loginPage.enterPassword(password);
         loginPage.login();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.loginUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.loginUrl, webDriver.getCurrentUrl());
     }
 
     // TC.OO3
@@ -62,11 +62,11 @@ public class LoginPageTest extends FunctionalTest {
         loginPage.enterPassword(password);
         loginPage.login();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.loginUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.loginUrl, webDriver.getCurrentUrl());
     }
 
     // TC.OO4
@@ -77,11 +77,11 @@ public class LoginPageTest extends FunctionalTest {
         loginPage.enterPassword(password);
         loginPage.login();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.loginUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.loginUrl, webDriver.getCurrentUrl());
     }
 
     // TC.OO5
@@ -92,11 +92,11 @@ public class LoginPageTest extends FunctionalTest {
         loginPage.enterPassword(password);
         loginPage.login();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.loginUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.loginUrl, webDriver.getCurrentUrl());
     }
 
     // TC.OO6
@@ -110,15 +110,15 @@ public class LoginPageTest extends FunctionalTest {
     // TC.OO7
     @Test(testName = "TC007- Check on selecting back button (after logging out) if the user is not signed in", priority = 7)
     public void loginTC007() {
-        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         navigationMenu.clickLogoutLink();
         try {
-            Thread.sleep(Constants.waitMilliSeconds * 2);
+            Thread.sleep(WebConstants.waitMilliSeconds * 2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
-        assertEquals(Constants.loginTitle, loginPage.getTitleText());
+        assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.loginTitle, loginPage.getTitleText());
         /*webDriver.navigate().back();
         assertEquals(loginUrl, webDriver.getCurrentUrl());*/
     }

@@ -2,7 +2,7 @@ package com.company.testscripts;
 
 import com.company.model.Advertisement;
 import com.company.pageobjects.*;
-import com.company.util.Constants;
+import com.company.util.WebConstants;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -34,15 +34,15 @@ public class AdvertisementsPageTest extends FunctionalTest {
 
         // Creating the default store that is required to create the default Beacon
         storesPage = accessStoresPage(navigationMenu);
-        createStore(storesPage, Constants.defaultTestStore);
+        createStore(storesPage, WebConstants.defaultTestStore);
 
         // Creating the default category that is required to create advertisements
         categoryPage = accessCategoriesPage(navigationMenu);
-        createCategory(categoryPage, Constants.defaultTestCategory);
+        createCategory(categoryPage, WebConstants.defaultTestCategory);
 
         // Creating the default beacon that is required to create the advertisement
         beaconsPage = accessBeaconsPage(navigationMenu);
-        createBeacon(beaconsPage, Constants.defaultTestBeacon);
+        createBeacon(beaconsPage, WebConstants.defaultTestBeacon);
 
         // Accessing the Advertisements Page
         advertisementsPage = accessAdvertisementsPage(navigationMenu);
@@ -52,35 +52,35 @@ public class AdvertisementsPageTest extends FunctionalTest {
     public void checkNoAdvertisementMsgTC041() {
         allAdvertisements = advertisementsPage.getAllAdvertisements();
         if (allAdvertisements == null) {
-            assertEquals(advertisementsPage.getNoAdvertisementsTXT(), Constants.noAdvertisementTxt);
+            assertEquals(advertisementsPage.getNoAdvertisementsTXT(), WebConstants.noAdvertisementTxt);
         }
     }
 
     @Test(priority = 2, testName = "TC042")
     @Parameters({"adverName", "adverDescription", "adverImage", "adverPrice"})
     public void createAdverWithAFTC042(String adverName, String adverDescription, String image, String adverPrice) {
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
-        createAdvertisement(advertisementsPage, new Advertisement(adverName, Constants.defaultTestBeacon.getName(),
-                Constants.defaultTestCategory.getCategoryName(), adverDescription, image, adverPrice));
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
+        createAdvertisement(advertisementsPage, new Advertisement(adverName, WebConstants.defaultTestBeacon.getName(),
+                WebConstants.defaultTestCategory.getCategoryName(), adverDescription, image, adverPrice));
 
-        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
         allAdvertisements = advertisementsPage.getAllAdvertisements();
         assertThat(allAdvertisements, hasItem(allOf(hasProperty("name", equalTo(adverName)),
-                hasProperty("beacon", equalTo(Constants.defaultTestBeacon.getName())))));
+                hasProperty("beacon", equalTo(WebConstants.defaultTestBeacon.getName())))));
     }
 
     @Test(priority = 3, testName = "TC043")
     @Parameters({"adverName"})
     public void getListOfAdvertisementsTC043(String adverName) {
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
         allAdvertisements = advertisementsPage.getAllAdvertisements();
         assertThat(allAdvertisements, hasItem(allOf(hasProperty("name", equalTo(adverName)),
-                hasProperty("beacon", equalTo(Constants.defaultTestBeacon.getName())))));
+                hasProperty("beacon", equalTo(WebConstants.defaultTestBeacon.getName())))));
     }
 
-    //@Test(priority = 4, testName = "TC044")
+    /*//@Test(priority = 4, testName = "TC044")
     @Parameters({"adverName"})
     public void canViewAdvertisementTC044(String adverName) {
         assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
@@ -93,26 +93,26 @@ public class AdvertisementsPageTest extends FunctionalTest {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     @Test(priority = 5, testName = "TC045")
     @Parameters({"adverName", "adverNameNew", "adverDescriptionNew", "adverImageNew", "adverPriceNew"})
     public void updateAdvertisementTC045(String adverName, String adverNameNew, String adverDescriptionNew, String image, String adverPriceNew) {
-        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
         Advertisement oldAdvertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(),
-                adverName, Constants.defaultTestBeacon.getName());
+                adverName, WebConstants.defaultTestBeacon.getName());
 
         // Updating the advertisement
-        updateAdvertisement(advertisementsPage, oldAdvertisement, new Advertisement(adverNameNew, Constants.defaultTestBeacon.getName(),
-                Constants.defaultTestCategory.getCategoryName(), adverDescriptionNew, image, adverPriceNew));
+        updateAdvertisement(advertisementsPage, oldAdvertisement, new Advertisement(adverNameNew, WebConstants.defaultTestBeacon.getName(),
+                WebConstants.defaultTestCategory.getCategoryName(), adverDescriptionNew, image, adverPriceNew));
 
-        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -121,13 +121,13 @@ public class AdvertisementsPageTest extends FunctionalTest {
         // Asserting that there are no advertisements with the old name details
         assertThat(allAdvertisements, not(hasItem(allOf(
                 hasProperty("name", equalTo(adverName)),
-                hasProperty("beacon", equalTo(Constants.defaultTestBeacon.getName()))))));
+                hasProperty("beacon", equalTo(WebConstants.defaultTestBeacon.getName()))))));
 
         // Asserting that the details are updated in the old Advertisement
         assertThat(allAdvertisements, hasItem(allOf(
                 hasProperty("name", equalTo(adverNameNew)),
-                hasProperty("beacon", equalTo(Constants.defaultTestBeacon.getName())),
-                hasProperty("category", equalTo(Constants.defaultTestCategory.getCategoryName())))));
+                hasProperty("beacon", equalTo(WebConstants.defaultTestBeacon.getName())),
+                hasProperty("category", equalTo(WebConstants.defaultTestCategory.getCategoryName())))));
 
     }
 
@@ -135,65 +135,65 @@ public class AdvertisementsPageTest extends FunctionalTest {
     @Parameters({"adverNameNew"})
     public void deleteAdvertisementTC046(String adverNameNew) {
 
-        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
         // Checking that Advertisement to be deleted is there in the Advertisement List
         assertThat(advertisementsPage.getAllAdvertisements(), hasItem(allOf(
                 hasProperty("name", equalTo(adverNameNew)),
-                hasProperty("beacon", equalTo(Constants.defaultTestBeacon.getName())),
-                hasProperty("category", equalTo(Constants.defaultTestCategory.getCategoryName()))
+                hasProperty("beacon", equalTo(WebConstants.defaultTestBeacon.getName())),
+                hasProperty("category", equalTo(WebConstants.defaultTestCategory.getCategoryName()))
         )));
         // Deleting the advertisement
         Advertisement advertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(),
-                adverNameNew, Constants.defaultTestBeacon.getName());
+                adverNameNew, WebConstants.defaultTestBeacon.getName());
         deleteAdvertisement(advertisementsPage, advertisement);
 
         // Checking that the deleted advertisement is no longer there in the advertisements list
         assertThat(advertisementsPage.getAllAdvertisements(), not(hasItem(allOf(
                 hasProperty("name", equalTo(adverNameNew)),
-                hasProperty("beacon", equalTo(Constants.defaultTestBeacon.getName())),
-                hasProperty("category", equalTo(Constants.defaultTestCategory.getCategoryName()))
+                hasProperty("beacon", equalTo(WebConstants.defaultTestBeacon.getName())),
+                hasProperty("category", equalTo(WebConstants.defaultTestCategory.getCategoryName()))
         ))));
     }
 
     @Test(priority = 7, testName = "TC047")
     @Parameters({"adverName", "adverDescription", "adverImage", "adverPrice"})
     public void canAdverBeCreaWithOutRFTC047(String adverName, String adverDescription, String image, String adverPrice) {
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
         advertisementsPage.clickNewAdvertisementBtn();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(Constants.addAdvertisementUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addAdvertisementUrl, webDriver.getCurrentUrl());
 
         advertisementsPage.createUpdateAdvertisement(new Advertisement("", "", "", "", "", ""));
-        assertEquals(Constants.addAdvertisementUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addAdvertisementUrl, webDriver.getCurrentUrl());
 
         advertisementsPage.createUpdateAdvertisement(new Advertisement(adverName, "", "", "", "", ""));
-        assertEquals(Constants.addAdvertisementUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addAdvertisementUrl, webDriver.getCurrentUrl());
 
-        advertisementsPage.createUpdateAdvertisement(new Advertisement(adverName, Constants.defaultTestBeacon.getName(), "", "", "", ""));
-        assertEquals(Constants.addAdvertisementUrl, webDriver.getCurrentUrl());
+        advertisementsPage.createUpdateAdvertisement(new Advertisement(adverName, WebConstants.defaultTestBeacon.getName(), "", "", "", ""));
+        assertEquals(WebConstants.addAdvertisementUrl, webDriver.getCurrentUrl());
 
-        advertisementsPage.createUpdateAdvertisement(new Advertisement(adverName, Constants.defaultTestBeacon.getName(), Constants.defaultTestCategory.getCategoryName(), "", "", ""));
-        assertEquals(Constants.addAdvertisementUrl, webDriver.getCurrentUrl());
+        advertisementsPage.createUpdateAdvertisement(new Advertisement(adverName, WebConstants.defaultTestBeacon.getName(), WebConstants.defaultTestCategory.getCategoryName(), "", "", ""));
+        assertEquals(WebConstants.addAdvertisementUrl, webDriver.getCurrentUrl());
 
-        advertisementsPage.createUpdateAdvertisement(new Advertisement(adverName, Constants.defaultTestBeacon.getName(), Constants.defaultTestCategory.getCategoryName(), adverDescription, "", ""));
-        assertEquals(Constants.addAdvertisementUrl, webDriver.getCurrentUrl());
+        advertisementsPage.createUpdateAdvertisement(new Advertisement(adverName, WebConstants.defaultTestBeacon.getName(), WebConstants.defaultTestCategory.getCategoryName(), adverDescription, "", ""));
+        assertEquals(WebConstants.addAdvertisementUrl, webDriver.getCurrentUrl());
 
-        advertisementsPage.createUpdateAdvertisement(new Advertisement(adverName, Constants.defaultTestBeacon.getName(), Constants.defaultTestCategory.getCategoryName(), adverDescription, image, ""));
-        assertEquals(Constants.addAdvertisementUrl, webDriver.getCurrentUrl());
+        advertisementsPage.createUpdateAdvertisement(new Advertisement(adverName, WebConstants.defaultTestBeacon.getName(), WebConstants.defaultTestCategory.getCategoryName(), adverDescription, image, ""));
+        assertEquals(WebConstants.addAdvertisementUrl, webDriver.getCurrentUrl());
 
-        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
         assertThat(advertisementsPage.getAllAdvertisements(), not(hasItem(allOf(
                 hasProperty("name", equalTo(adverName)),
-                hasProperty("beacon", equalTo(Constants.defaultTestAdvertisement.getBeacon())),
-                hasProperty("category", equalTo(Constants.defaultTestCategory.getCategoryName()))
+                hasProperty("beacon", equalTo(WebConstants.defaultTestAdvertisement.getBeacon())),
+                hasProperty("category", equalTo(WebConstants.defaultTestCategory.getCategoryName()))
         ))));
 
 
@@ -201,16 +201,16 @@ public class AdvertisementsPageTest extends FunctionalTest {
 
     @Test(priority = 8, testName = "TC048")
     public void checkIfAdverBeCreaWithRFTC048() {
-        assertEquals(Constants.advertisementsUrl, webDriver.getCurrentUrl());
-        createAdvertisement(advertisementsPage, Constants.defaultTestAdvertisement);
+        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
+        createAdvertisement(advertisementsPage, WebConstants.defaultTestAdvertisement);
 
-        if (!webDriver.getCurrentUrl().equals(Constants.advertisementsUrl))
+        if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(navigationMenu);
 
         assertThat(advertisementsPage.getAllAdvertisements(), hasItem(allOf(
-                hasProperty("name", equalTo(Constants.defaultTestAdvertisement.getName())),
-                hasProperty("beacon", equalTo(Constants.defaultTestAdvertisement.getBeacon())),
-                hasProperty("category", equalTo(Constants.defaultTestCategory.getCategoryName()))
+                hasProperty("name", equalTo(WebConstants.defaultTestAdvertisement.getName())),
+                hasProperty("beacon", equalTo(WebConstants.defaultTestAdvertisement.getBeacon())),
+                hasProperty("category", equalTo(WebConstants.defaultTestCategory.getCategoryName()))
         )));
     }
 
@@ -223,13 +223,13 @@ public class AdvertisementsPageTest extends FunctionalTest {
     @AfterTest
     public void clearAllTestData() {
         beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, Constants.defaultTestBeacon);
+        deleteBeacon(beaconsPage, WebConstants.defaultTestBeacon);
 
         categoryPage = accessCategoriesPage(navigationMenu);
-        deleteCategory(categoryPage, Constants.defaultTestCategory);
+        deleteCategory(categoryPage, WebConstants.defaultTestCategory);
 
         storesPage = accessStoresPage(navigationMenu);
-        deleteStore(storesPage, Constants.defaultTestStore);
+        deleteStore(storesPage, WebConstants.defaultTestStore);
 
     }
 

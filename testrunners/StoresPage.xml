@@ -3,10 +3,11 @@
     <parameter name="password" value="password"/>
     <parameter name="storeName" value="Hungry Jacks Hallam"/>
     <parameter name="storeUniqueCode" value="HJ001"/>
-    <parameter name="imgUrl" value="https://beaconoid.me/test.jpg"/>
+    <parameter name="sales" value="2000"/>
+
     <parameter name="storeNameNew" value="Hungry Jacks Dandenong"/>
     <parameter name="storeUniqueCodeNew" value="HJ002"/>
-    <parameter name="imgUrlNew" value="https://beaconoid.me/test1.jpg"/>
+    <parameter name="salesNew" value="100"/>
     <test name="test">
         <classes>
             <class name="com.company.testscripts.StoresPageTest"/>

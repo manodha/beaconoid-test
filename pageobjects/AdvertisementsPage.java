@@ -132,9 +132,8 @@ public class AdvertisementsPage extends PageObject {
             advertisement.setName(advertisementRows.get(i).findElement(By.xpath("td[1]")).getText());
             advertisement.setBeacon(advertisementRows.get(i).findElement(By.xpath("td[2]")).getText());
             advertisement.setCategory(advertisementRows.get(i).findElement(By.xpath("td[3]")).getText());
-            advertisement.setViewLink(advertisementRows.get(i).findElement(By.xpath("td[4]/a")));
-            advertisement.setEditLink(advertisementRows.get(i).findElement(By.xpath("td[5]/a")));
-            advertisement.setDeleteBtn(advertisementRows.get(i).findElement(By.xpath("td[6]/form/input[@value='Delete']")));
+            advertisement.setEditLink(advertisementRows.get(i).findElement(By.xpath("td[4]/a")));
+            advertisement.setDeleteBtn(advertisementRows.get(i).findElement(By.xpath("td[5]/form/input[@value='Delete']")));
 
 
             advertisements.add(advertisement);
@@ -187,6 +186,13 @@ public class AdvertisementsPage extends PageObject {
         System.out.print(" Category- " + advertisement.getCategory());
         System.out.print(" Description - " + advertisement.getDescription());
         System.out.println(" Price - " + advertisement.getPrice());
+    }
+
+    public String getAdvertisementID(String editLink) {
+        String advertisementID = editLink.replace("/edit", "");
+        advertisementID = advertisementID.replace(advertisementID.substring(0, advertisementID.indexOf("advertisements/")), "");
+        advertisementID = advertisementID.replace("advertisements/", "");
+        return advertisementID;
     }
 
 

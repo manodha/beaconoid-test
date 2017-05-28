@@ -2,7 +2,7 @@ package com.company.testscripts;
 
 import com.company.model.Staff;
 import com.company.pageobjects.*;
-import com.company.util.Constants;
+import com.company.util.WebConstants;
 import org.testng.annotations.*;
 
 import static org.junit.Assert.assertNotNull;
@@ -31,7 +31,7 @@ public class URManagerRoleTest extends FunctionalTest {
 
         navigationMenu.clickLogoutLink();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -57,7 +57,7 @@ public class URManagerRoleTest extends FunctionalTest {
     public void logoutURManager() {
         navigationMenu.clickLogoutLink();
         try {
-            Thread.sleep(Constants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -66,40 +66,40 @@ public class URManagerRoleTest extends FunctionalTest {
 
     @Test(priority = 1, testName = "TC119", groups = "URManager")
     public void checkIfURMCantAcessStoresPage() {
-        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getStoresLink());
     }
 
     @Test(priority = 2, testName = "TC120", groups = "URManager")
     public void checkIfURMCantAccessCategoPage() {
-        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getCategoriesLink());
     }
 
     @Test(priority = 3, testName = "TC121", groups = "URManager")
     public void checkIfURMCantAccessBeaconPage() {
-        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getBeaconsLink());
     }
 
     @Test(priority = 4, testName = "TC122", groups = "URManager")
     public void checkIfURMCantAccessAdverPage() {
-        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getAdvertisementsLink());
     }
 
     @Test(priority = 5, testName = "TC123", groups = "URManager")
     public void checkIfURMCantAccessStaffPage() {
-        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getStaffLink());
     }
 
     @Test(priority = 6, testName = "TC124", groups = "URManager")
     public void checkIfURMCanAccessDashboard() {
-        assertEquals(Constants.baseUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNotNull(navigationMenu.getDashboardLink());
         dashboardPage = accessDashboardPage(navigationMenu);
-        assertEquals(Constants.dashboardUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
     }
 
     @Test(priority = 7, testName = "TC125", groups = "URManager")

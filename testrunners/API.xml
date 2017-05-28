@@ -1,0 +1,13 @@
+<suite name="api_test_scripts">
+    <parameter name="email" value="antodoms@gmail.com"/>
+    <parameter name="password" value="password"/>
+
+    <parameter name="clientEmail" value="manodha@yahoo.com"/>
+
+    <test name="test">
+        <classes>
+            <class name="com.company.testscripts.APITest"/>
+        </classes>
+    </test>
+</suite>
+

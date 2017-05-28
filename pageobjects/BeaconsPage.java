@@ -24,6 +24,9 @@ public class BeaconsPage extends PageObject {
     @FindBy(css = "div.alert.alert-danger")
     private WebElement errorAlert;
 
+    @FindBy(id = "other-list")
+    private WebElement otherBeaconList;
+
     @FindBy(css = "table.table-bordered.table-striped > tbody")
     private WebElement beaconsTable;
 
@@ -57,9 +60,10 @@ public class BeaconsPage extends PageObject {
         this.webDriver = webDriver;
     }
 
-    public List<Beacons> getAllBeacons() {
+    public List<Beacons> getOtherBeaconsList() {
         List<Beacons> beacons = new ArrayList<>();
-        List<WebElement> beaconRows = beaconsTable.findElements(By.tagName("tr"));
+        WebElement otherBeaconsTable = otherBeaconList.findElement(By.tagName("tbody"));
+        List<WebElement> beaconRows = otherBeaconsTable.findElements(By.xpath("tr"));
         int numRows, numColumns;
         numRows = beaconRows.size();
         numColumns = beaconRows.get(0).findElements(By.tagName("td")).size();
