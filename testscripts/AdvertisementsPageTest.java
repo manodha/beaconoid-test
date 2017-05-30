@@ -208,6 +208,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
 
+        // Checking if the Advertisement has been created successfully.
         assertThat(advertisementsPage.getAllAdvertisements(), hasItem(allOf(
                 hasProperty("name", equalTo(WebConstants.defaultTestAdvertisement.getName())),
                 hasProperty("beacon", equalTo(WebConstants.defaultTestAdvertisement.getBeacon())),
