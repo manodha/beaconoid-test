@@ -30,7 +30,7 @@ public class BeaconsPageTest extends FunctionalTest {
     @BeforeTest
     @Parameters({"email", "password"})
     public void accessBeaconsPage(String email, String password) {
-        navigationMenu = loginToBeaconoid(email, password);
+        navigationMenu = loginToBeaconoid(webDriver, email, password);
         storesPage = navigationMenu.clickStoresLink();
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
         try {
@@ -38,7 +38,7 @@ public class BeaconsPageTest extends FunctionalTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        createStore(storesPage, WebConstants.defaultTestStore);
+        createStore(webDriver, storesPage, WebConstants.defaultTestStore);
 
         categoryPage = navigationMenu.clickCatogoriesLink();
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
@@ -48,7 +48,7 @@ public class BeaconsPageTest extends FunctionalTest {
             e.printStackTrace();
         }
 
-        createCategory(categoryPage, WebConstants.defaultTestCategory);
+        createCategory(webDriver, categoryPage, WebConstants.defaultTestCategory);
 
         beaconsPage = navigationMenu.clickBeconsLink();
         try {
@@ -64,7 +64,7 @@ public class BeaconsPageTest extends FunctionalTest {
     @Parameters({"uniqueRef", "beaconName", "currentStatus", "latitude", "longitude"})
     public void checkIfBeaconBeCreaWRF(String uniqueRef, String beaconName, String currentStatus, String latitude, String longitude) {
         Beacons beacon = new Beacons(uniqueRef, beaconName, WebConstants.defaultTestStore.getName(), currentStatus, latitude, longitude);
-        createBeacon(beaconsPage, beacon);
+        createBeacon(webDriver, beaconsPage, beacon);
         allBeacons = beaconsPage.getOtherBeaconsList();
         assertThat(allBeacons, hasItem(allOf(hasProperty("uniqueRef", equalTo(uniqueRef)),
                 hasProperty("name", equalTo(beaconName)))));
@@ -84,7 +84,7 @@ public class BeaconsPageTest extends FunctionalTest {
                                        String currentStatusNew, String latitudeNew, String longitudeNew) {
         allBeacons = beaconsPage.getOtherBeaconsList();
         Beacons beacon = beaconsPage.getBeacon(allBeacons, uniqueRef, beaconName);
-        updateBeacon(beaconsPage, beacon, new Beacons(uniqueRefNew, beaconNameNew, WebConstants.defaultTestStore.getName(), currentStatusNew, latitudeNew, longitudeNew));
+        updateBeacon(webDriver, beaconsPage, beacon, new Beacons(uniqueRefNew, beaconNameNew, WebConstants.defaultTestStore.getName(), currentStatusNew, latitudeNew, longitudeNew));
         allBeacons = beaconsPage.getOtherBeaconsList();
         assertThat(allBeacons, hasItem(allOf(hasProperty("uniqueRef", equalTo(uniqueRefNew)),
                 hasProperty("name", equalTo(beaconNameNew)))));
@@ -102,17 +102,17 @@ public class BeaconsPageTest extends FunctionalTest {
     @Parameters({"uniqueRefNew", "beaconNameNew"})
     public void checkIfBeaconCanBeDel(String uniqueRefNew, String beaconNameNew) {
         if (!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
-            advertisementsPage = accessAdvertisementsPage(navigationMenu);
+            advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
 
         assertThat(advertisementsPage.getAllAdvertisements(), not(hasItem(
                 hasProperty("beacon", equalTo(beaconNameNew))
         )));
 
-        beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, new Beacons(uniqueRefNew, beaconNameNew));
+        beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
+        deleteBeacon(webDriver, beaconsPage, new Beacons(uniqueRefNew, beaconNameNew));
 
         if (!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
-            beaconsPage = accessBeaconsPage(navigationMenu);
+            beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
 
         assertThat(beaconsPage.getOtherBeaconsList(), not(hasItem(allOf(
                 hasProperty("uniqueRef", equalTo(uniqueRefNew)),
@@ -185,7 +185,7 @@ public class BeaconsPageTest extends FunctionalTest {
         }
         assertEquals(WebConstants.duplicateBeaconDanger, beaconsPage.getDangerAlert());
 
-        beaconsPage = accessBeaconsPage(navigationMenu);
+        beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
 
         assertThat(beaconsPage.getOtherBeaconsList(), not(hasItem(allOf(
                 hasProperty("uniqueRef", equalTo(uniqueRef)),
@@ -196,12 +196,12 @@ public class BeaconsPageTest extends FunctionalTest {
     @Test(priority = 9, testName = "TC040")
     public void checkIfBeaconBeAssiAdver() {
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
-            advertisementsPage = accessAdvertisementsPage(navigationMenu);
+            advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
 
-        createAdvertisement(advertisementsPage, WebConstants.defaultTestAdvertisement);
+        createAdvertisement(webDriver, advertisementsPage, WebConstants.defaultTestAdvertisement);
 
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
-            advertisementsPage = accessAdvertisementsPage(navigationMenu);
+            advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
 
         assertThat(advertisementsPage.getAllAdvertisements(), hasItem(
                 hasProperty("beacon", equalTo(WebConstants.defaultTestBeacon.getName()
@@ -211,24 +211,24 @@ public class BeaconsPageTest extends FunctionalTest {
 
     //@Test(priority = 10, testName = "TC035")
     public void checkIfBeaconBeDelAssiToAdv() {
-        beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, WebConstants.defaultTestBeacon);
+        beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
+        deleteBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
 
     }
 
     @AfterTest
     public void clearAllTestData() {
-        advertisementsPage = accessAdvertisementsPage(navigationMenu);
-        deleteAdvertisement(advertisementsPage, WebConstants.defaultTestAdvertisement);
+        advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
+        deleteAdvertisement(webDriver, advertisementsPage, WebConstants.defaultTestAdvertisement);
 
-        beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, WebConstants.defaultTestBeacon);
+        beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
+        deleteBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
 
-        categoryPage = accessCategoriesPage(navigationMenu);
-        deleteCategory(categoryPage, WebConstants.defaultTestCategory);
+        categoryPage = accessCategoriesPage(webDriver, navigationMenu);
+        deleteCategory(webDriver, categoryPage, WebConstants.defaultTestCategory);
 
-        storesPage = accessStoresPage(navigationMenu);
-        deleteStore(storesPage, WebConstants.defaultTestStore);
+        storesPage = accessStoresPage(webDriver, navigationMenu);
+        deleteStore(webDriver, storesPage, WebConstants.defaultTestStore);
     }
 
 }

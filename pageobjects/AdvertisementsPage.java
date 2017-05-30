@@ -1,6 +1,9 @@
 package com.company.pageobjects;
 
 import com.company.model.Advertisement;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -193,6 +196,29 @@ public class AdvertisementsPage extends PageObject {
         advertisementID = advertisementID.replace(advertisementID.substring(0, advertisementID.indexOf("advertisements/")), "");
         advertisementID = advertisementID.replace("advertisements/", "");
         return advertisementID;
+    }
+
+    public List<Advertisement> getBeaconAdvers(JSONArray jsonArray) throws JSONException {
+        if (jsonArray == null)
+            return null;
+
+        if (jsonArray.length() == 0)
+            return null;
+
+        List<Advertisement> beaconAdvers = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            Advertisement advertisement = new Advertisement();
+            advertisement.setName(jsonObject.getString("name"));
+            advertisement.setBeacon(jsonObject.getString("beacon_id"));
+            advertisement.setCategory(jsonObject.getString("category_id"));
+            advertisement.setDescription(jsonObject.getString("description"));
+            advertisement.setImage(jsonObject.getString("image"));
+            //advertisement.setPrice(jsonObject.getString("price"));
+            beaconAdvers.add(advertisement);
+        }
+
+        return beaconAdvers;
     }
 
 

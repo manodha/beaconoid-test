@@ -39,17 +39,17 @@ public class BeaconsAdvPageTest extends FunctionalTest {
     @BeforeTest
     @Parameters({"emailAdmin", "passwordAdmin"})
     public void accessBeaconsAdvPage(String emailAdmin, String passwordAdmin) {
-        navigationMenu = loginToBeaconoid(emailAdmin, passwordAdmin);
+        navigationMenu = loginToBeaconoid(webDriver, emailAdmin, passwordAdmin);
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
 
-        storesPage = accessStoresPage(navigationMenu);
-        createStore(storesPage, WebConstants.defaultTestStore);
+        storesPage = accessStoresPage(webDriver, navigationMenu);
+        createStore(webDriver, storesPage, WebConstants.defaultTestStore);
 
-        categoryPage = accessCategoriesPage(navigationMenu);
-        createCategory(categoryPage, WebConstants.defaultTestCategory);
+        categoryPage = accessCategoriesPage(webDriver, navigationMenu);
+        createCategory(webDriver, categoryPage, WebConstants.defaultTestCategory);
 
-        beaconsPage = accessBeaconsPage(navigationMenu);
-        createBeacon(beaconsPage, WebConstants.defaultTestBeacon);
+        beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
+        createBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
 
         testBeacon = beaconsPage.getBeacon(beaconsPage.getOtherBeaconsList(), WebConstants.defaultTestBeacon.getUniqueRef(), WebConstants.defaultTestBeacon.getName());
         beaconUrl = testBeacon.getAdvertisementsLink().getAttribute("href");
@@ -179,13 +179,13 @@ public class BeaconsAdvPageTest extends FunctionalTest {
 
     @AfterTest
     public void clearAllTestData() {
-        beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, WebConstants.defaultTestBeacon);
+        beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
+        deleteBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
 
-        categoryPage = accessCategoriesPage(navigationMenu);
-        deleteCategory(categoryPage, WebConstants.defaultTestCategory);
+        categoryPage = accessCategoriesPage(webDriver, navigationMenu);
+        deleteCategory(webDriver, categoryPage, WebConstants.defaultTestCategory);
 
-        storesPage = accessStoresPage(navigationMenu);
-        deleteStore(storesPage, WebConstants.defaultTestStore);
+        storesPage = accessStoresPage(webDriver, navigationMenu);
+        deleteStore(webDriver, storesPage, WebConstants.defaultTestStore);
     }
 }

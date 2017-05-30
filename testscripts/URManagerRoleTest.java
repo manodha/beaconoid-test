@@ -25,7 +25,7 @@ public class URManagerRoleTest extends FunctionalTest {
     @Parameters({"email", "password", "name5", "email5", "nickname5", "password5", "confirmPassword5", "user_report_manager_role"})
     public void createURManager(String loginEmail, String loginPassword, String name, String email, String nickname, String password,
                                 String confirmPassword, String role) {
-        navigationMenu = loginToBeaconoid(loginEmail, loginPassword);
+        navigationMenu = loginToBeaconoid(webDriver, loginEmail, loginPassword);
         staffPage = accessStaffPage(navigationMenu);
         createStaff(staffPage, new Staff(name, email, nickname, password, confirmPassword, role));
 
@@ -40,7 +40,7 @@ public class URManagerRoleTest extends FunctionalTest {
     @AfterTest
     @Parameters({"email", "password", "user_report_manager_role"})
     public void deleteURManager(String email, String password, String role) {
-        navigationMenu = loginToBeaconoid(email, password);
+        navigationMenu = loginToBeaconoid(webDriver, email, password);
         staffPage = accessStaffPage(navigationMenu);
         Staff staff = staffPage.getStaffByRole(role);
         deleteStaff(staffPage, staff);
@@ -50,7 +50,7 @@ public class URManagerRoleTest extends FunctionalTest {
     @BeforeGroups("URManager")
     @Parameters({"email5", "password5"})
     public void loginURManager(String email, String password) {
-        navigationMenu = loginToBeaconoid(email, password);
+        navigationMenu = loginToBeaconoid(webDriver, email, password);
     }
 
     @AfterGroups("URManager")
@@ -105,7 +105,7 @@ public class URManagerRoleTest extends FunctionalTest {
     @Test(priority = 7, testName = "TC125", groups = "URManager")
     public void checkIfURMCanAccessReports() {
         assertNotNull(navigationMenu.getReportLink());
-        reportPage = accessReportPage(navigationMenu);
+        reportPage = accessReportPage(webDriver, navigationMenu);
 
         assertNotNull(navigationMenu.getStoreReportLink());
         storeReportPage = accessStoreReportPage(navigationMenu);

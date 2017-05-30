@@ -30,7 +30,7 @@ public class StaffPageTest extends FunctionalTest {
     @BeforeGroups("SuperAdmin")
     @Parameters({"email", "password"})
     public void loginBySuperAdmin(String email, String password) {
-        navigationMenu = loginToBeaconoid(email, password);
+        navigationMenu = loginToBeaconoid(webDriver, email, password);
 
     }
 
@@ -118,7 +118,7 @@ public class StaffPageTest extends FunctionalTest {
     @Parameters({"userEmail", "userPassword"})
     public void checkIfAddedUserCanLogin(String email, String password) {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
-        navigationMenu = loginToBeaconoid(email, password);
+        navigationMenu = loginToBeaconoid(webDriver, email, password);
     }
 
     @Test(priority = 9, testName = "TC050", groups = "Admin")
@@ -217,7 +217,7 @@ public class StaffPageTest extends FunctionalTest {
     @BeforeGroups("General")
     @Parameters({"email", "password"})
     public void accessStaffPage(String email, String password) {
-        navigationMenu = loginToBeaconoid(email, password);
+        navigationMenu = loginToBeaconoid(webDriver, email, password);
         staffPage = accessStaffPage(navigationMenu);
     }
 
@@ -358,7 +358,7 @@ public class StaffPageTest extends FunctionalTest {
     public void createBeaconManager(String loginEmail, String loginPassword, String name, String email, String nickname,
                                     String password, String confirmPassword, String role) {
         if (navigationMenu.getLogoutLink() == null)
-            navigationMenu = loginToBeaconoid(loginEmail, loginPassword);
+            navigationMenu = loginToBeaconoid(webDriver, loginEmail, loginPassword);
         staffPage = accessStaffPage(navigationMenu);
         createStaff(staffPage, new Staff(name, email, nickname, password, confirmPassword, role));
         navigationMenu.clickLogoutLink();
@@ -372,7 +372,7 @@ public class StaffPageTest extends FunctionalTest {
     @Test(priority = 22, testName = "TC052", groups = "BeaconManager")
     @Parameters({"userEmailNew", "userPasswordNew"})
     public void checkIfStaffLinkIsVisibleForBM(String email, String password) {
-        navigationMenu = loginToBeaconoid(email, password);
+        navigationMenu = loginToBeaconoid(webDriver, email, password);
         assertNull(navigationMenu.getStaffLink());
     }
 
@@ -390,7 +390,7 @@ public class StaffPageTest extends FunctionalTest {
     @Parameters({"email", "password", "name3", "email3", "nickname3", "password3", "confirmPassword3", "store_manager_role", "beacon_manager_role"})
     public void createStoreManager(String loginEmail, String loginPassword, String name, String email, String nickname,
                                    String password, String confirmPassword, String storeMRole, String beaconMRole) {
-        navigationMenu = loginToBeaconoid(loginEmail, loginPassword);
+        navigationMenu = loginToBeaconoid(webDriver, loginEmail, loginPassword);
         staffPage = accessStaffPage(navigationMenu);
         Staff staff = staffPage.getStaffByRole(beaconMRole);
         updateStaff(staff, new Staff(name, email, nickname, password, confirmPassword, storeMRole));
@@ -405,7 +405,7 @@ public class StaffPageTest extends FunctionalTest {
     @Test(priority = 23, testName = "TC054", groups = "StoreManager")
     @Parameters({"email3", "password3"})
     public void checkIfStaffLinkIsVisibleForSM(String email, String password) {
-        navigationMenu = loginToBeaconoid(email, password);
+        navigationMenu = loginToBeaconoid(webDriver, email, password);
         assertNull(navigationMenu.getStaffLink());
     }
 
@@ -423,7 +423,7 @@ public class StaffPageTest extends FunctionalTest {
     @Parameters({"email", "password", "name4", "email4", "nickname4", "password4", "confirmPassword4", "user_report_manager_role", "store_manager_role"})
     public void createUserReportManager(String loginEmail, String loginPassword, String name, String email, String nickname,
                                         String password, String confirmPassword, String userRMRole, String storeMRole) {
-        navigationMenu = loginToBeaconoid(loginEmail, loginPassword);
+        navigationMenu = loginToBeaconoid(webDriver, loginEmail, loginPassword);
         staffPage = accessStaffPage(navigationMenu);
         Staff staff = staffPage.getStaffByRole(storeMRole);
         updateStaff(staff, new Staff(name, email, nickname, password, confirmPassword, userRMRole));
@@ -438,7 +438,7 @@ public class StaffPageTest extends FunctionalTest {
     @Test(priority = 24, testName = "TC053", groups = "UserReportManager")
     @Parameters({"email4", "password4"})
     public void checkIfStaffLinkIsVisibleForURM(String email, String password) {
-        navigationMenu = loginToBeaconoid(email, password);
+        navigationMenu = loginToBeaconoid(webDriver, email, password);
         assertNull(navigationMenu.getStaffLink());
     }
 

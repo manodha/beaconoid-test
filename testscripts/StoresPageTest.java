@@ -31,9 +31,9 @@ public class StoresPageTest extends FunctionalTest {
     @BeforeTest(description = "Login in to the Beaconoid and accessing the stores page")
     @Parameters({"email", "password"})
     public void accessStoresPage(String email, String password) {
-        navigationMenu = loginToBeaconoid(email, password);
+        navigationMenu = loginToBeaconoid(webDriver, email, password);
 
-        beaconsPage = accessBeaconsPage(navigationMenu);
+        beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
         beacons = beaconsPage.getOtherBeaconsList();
 
         storesPage = navigationMenu.clickStoresLink();
@@ -44,7 +44,7 @@ public class StoresPageTest extends FunctionalTest {
     @Parameters({"storeName", "storeUniqueCode", "sales"})
     public void checkIfStoreCanBeCreaWAF(String storeName, String storeUniqueCode, String sales) {
 
-        createStore(storesPage, new Stores(storeName, storeUniqueCode, sales));
+        createStore(webDriver, storesPage, new Stores(storeName, storeUniqueCode, sales));
         allStores = storesPage.getAllStores();
 
         /*Checking if the Store has been successfully created by checking if the list of stores contains the newly
@@ -62,7 +62,7 @@ public class StoresPageTest extends FunctionalTest {
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
         allStores = storesPage.getAllStores();
         Stores store = storesPage.getStore(allStores, storeName, storeUniqueCode);
-        updateStore(storesPage, store, new Stores(storeNameNew, storeUniqueCodeNew, salesNew));
+        updateStore(webDriver, storesPage, store, new Stores(storeNameNew, storeUniqueCodeNew, salesNew));
 
         allStores = storesPage.getAllStores();
         assertThat(allStores, hasItem(allOf(
@@ -81,7 +81,7 @@ public class StoresPageTest extends FunctionalTest {
         //Deleting the Store
         allStores = storesPage.getAllStores();
         Stores store = storesPage.getStore(allStores, storeName, storeUniqueCode);
-        deleteStore(storesPage, store);
+        deleteStore(webDriver, storesPage, store);
         //checking if the store has been successfully deleted.
         allStores = storesPage.getAllStores();
         assertThat(allStores, not(hasItem(allOf(hasProperty("name", equalTo(storeName)),
@@ -119,10 +119,10 @@ public class StoresPageTest extends FunctionalTest {
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
         testStores.add(WebConstants.defaultTestStore);
 
-        beaconsPage = accessBeaconsPage(navigationMenu);
-        createBeacon(beaconsPage, WebConstants.defaultTestBeacon);
+        beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
+        createBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
 
-        storesPage = accessStoresPage(navigationMenu);
+        storesPage = accessStoresPage(webDriver, navigationMenu);
     }
 
     @Test(priority = 5, testName = "TC020", groups = "AssignedStore")
@@ -130,7 +130,7 @@ public class StoresPageTest extends FunctionalTest {
         Stores store = storesPage.getStore(storesPage.getAllStores(), WebConstants.defaultTestStore.getName(),
                 WebConstants.defaultTestStore.getStoreCode());
 
-        deleteStore(storesPage, store);
+        deleteStore(webDriver, storesPage, store);
 
         // Checking the error message
         assertEquals(store.getName() + WebConstants.delStoreError, storesPage.getDangerAlert());
@@ -144,9 +144,9 @@ public class StoresPageTest extends FunctionalTest {
 
     @AfterGroups("AssignedStore")
     public void deleteDefBeacon() {
-        beaconsPage = accessBeaconsPage(navigationMenu);
-        deleteBeacon(beaconsPage, WebConstants.defaultTestBeacon);
-        storesPage = accessStoresPage(navigationMenu);
+        beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
+        deleteBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
+        storesPage = accessStoresPage(webDriver, navigationMenu);
     }
 
 
@@ -155,20 +155,20 @@ public class StoresPageTest extends FunctionalTest {
     public void checkIfStoreCanBeCreWRF(String storeName, String storeUniqueCode) {
         Stores store = new Stores(storeName, storeUniqueCode, "");
         testStores.add(store);
-        createStore(storesPage, store);
+        createStore(webDriver, storesPage, store);
 
     }
 
     @AfterTest
     public void clearTestData() {
         if (!webDriver.getCurrentUrl().equals(WebConstants.storesUrl))
-            storesPage = accessStoresPage(navigationMenu);
+            storesPage = accessStoresPage(webDriver, navigationMenu);
         if (testStores != null) {
             for (Stores testStore : testStores) {
                 allStores = storesPage.getAllStores();
                 for (Stores store : allStores) {
                     if (testStore.getName().equals(store.getName()) && testStore.getStoreCode().equals(store.getStoreCode())) {
-                        deleteStore(storesPage, store);
+                        deleteStore(webDriver, storesPage, store);
                     }
                 }
             }

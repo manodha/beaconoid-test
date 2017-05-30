@@ -21,7 +21,7 @@ public class NavigationMenuTest extends FunctionalTest {
     @Test(testName = "TC008", priority = 1)
     @Parameters({"email", "password"})
     public void isDashboard(String email, String password) {
-        navigationMenu = loginToBeaconoid(email, password);
+        navigationMenu = loginToBeaconoid(webDriver, email, password);
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNotNull(navigationMenu.getLogoutLink());
 

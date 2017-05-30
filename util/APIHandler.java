@@ -1,5 +1,6 @@
 package com.company.util;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,7 +37,7 @@ public class APIHandler {
         return stream;
     }
 
-    public static String getJSONResponse(InputStream stream) throws IOException {
+    public static String readJsonResponse(InputStream stream) throws IOException {
         if (stream == null) {
             return null;
         }
@@ -60,4 +61,12 @@ public class APIHandler {
         JSONObject jsonResponse = new JSONObject(response);
         return jsonResponse.getString("reason");
     }
+
+    public static JSONArray getBeacAdversJson(String response) throws JSONException {
+        JSONObject jsonResponse = new JSONObject(response);
+        if (!jsonResponse.getString("status").equals(APIConstants.failedStatus))
+            return jsonResponse.getJSONArray("advertisements");
+        return null;
+    }
 }
+

@@ -1,0 +1,25 @@
+<suite name="report_page_test_scripts">
+    <parameter name="email" value="antodoms@gmail.com"/>
+    <parameter name="password" value="password"/>
+
+    <parameter name="clientEmail" value="manodha@yahoo.com"/>
+
+    <parameter name="storeName" value="Hungry Jacks Hallam"/>
+    <parameter name="storeUniqueCode" value="HJ001"/>
+    <parameter name="sales" value="2000"/>
+
+    <parameter name="categoryName" value="Health/Life Style"/>
+    <parameter name="categoryDescription" value="Vitamins/Proteins/Supplements"/>
+
+    <parameter name="adverName" value="50% Discount, Great Deal!!"/>
+    <parameter name="adverDescription" value="A great deal for the Super Saver. 50% of on all women clothings"/>
+    <parameter name="adverImage" value="/res/sale_sign.jpg"/>
+    <parameter name="adverPrice" value="5.00"/>
+
+    <test name="test">
+        <classes>
+            <class name="com.company.testscripts.ReportPageTest"/>
+        </classes>
+    </test>
+</suite>
+
