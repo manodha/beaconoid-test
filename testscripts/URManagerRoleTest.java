@@ -1,8 +1,8 @@
-package com.company.testscripts;
+package testscripts;
 
-import com.company.model.Staff;
-import com.company.pageobjects.*;
-import com.company.util.WebConstants;
+import model.Staff;
+import pageobjects.*;
+import util.WebConstants;
 import org.testng.annotations.*;
 
 import static org.junit.Assert.assertNotNull;

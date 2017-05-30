@@ -1,6 +1,6 @@
-package com.company.pageobjects;
+package pageobjects;
 
-import com.company.model.Stores;
+import model.Stores;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

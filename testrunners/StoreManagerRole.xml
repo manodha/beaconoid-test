@@ -26,7 +26,7 @@
 
     <test name="test">
         <classes>
-            <class name="com.company.testscripts.StoreManagerRoleTest"/>
+            <class name="testscripts.StoreManagerRoleTest"/>
         </classes>
     </test>
 </suite>

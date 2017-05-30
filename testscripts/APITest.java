@@ -1,10 +1,10 @@
-package com.company.testscripts;
+package testscripts;
 
-import com.company.model.Advertisement;
-import com.company.pageobjects.*;
-import com.company.util.APIConstants;
-import com.company.util.APIHandler;
-import com.company.util.WebConstants;
+import model.Advertisement;
+import pageobjects.*;
+import util.APIConstants;
+import util.APIHandler;
+import util.WebConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.openqa.selenium.WebDriver;

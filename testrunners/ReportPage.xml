@@ -18,7 +18,7 @@
 
     <test name="test">
         <classes>
-            <class name="com.company.testscripts.ReportPageTest"/>
+            <class name="testscripts.ReportPageTest"/>
         </classes>
     </test>
 </suite>

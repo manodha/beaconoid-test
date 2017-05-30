@@ -1,10 +1,10 @@
-package com.company.testscripts;
+package testscripts;
 
-import com.company.model.Advertisement;
-import com.company.model.Category;
-import com.company.model.Stores;
-import com.company.pageobjects.*;
-import com.company.util.WebConstants;
+import model.Advertisement;
+import model.Category;
+import model.Stores;
+import pageobjects.*;
+import util.WebConstants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;

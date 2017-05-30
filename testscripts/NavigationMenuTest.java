@@ -1,8 +1,8 @@
-package com.company.testscripts;
+package testscripts;
 
-import com.company.pageobjects.LoginPage;
-import com.company.pageobjects.NavigationMenu;
-import com.company.util.WebConstants;
+import pageobjects.LoginPage;
+import pageobjects.NavigationMenu;
+import util.WebConstants;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 

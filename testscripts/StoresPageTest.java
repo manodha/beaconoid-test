@@ -1,11 +1,11 @@
-package com.company.testscripts;
+package testscripts;
 
-import com.company.model.Beacons;
-import com.company.model.Stores;
-import com.company.pageobjects.BeaconsPage;
-import com.company.pageobjects.NavigationMenu;
-import com.company.pageobjects.StoresPage;
-import com.company.util.WebConstants;
+import model.Beacons;
+import model.Stores;
+import pageobjects.BeaconsPage;
+import pageobjects.NavigationMenu;
+import pageobjects.StoresPage;
+import util.WebConstants;
 import org.testng.annotations.*;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class StoresPageTest extends FunctionalTest {
                 ))));
     }
 
-    //@Test(testName = "TC022", priority = 2)
+    @Test(testName = "TC022", priority = 2)
     @Parameters({"storeName", "storeUniqueCode", "storeNameNew", "storeUniqueCodeNew", "salesNew"})
     public void checkIfStoreCanBeUpda(String storeName, String storeUniqueCode, String storeNameNew,
                                       String storeUniqueCodeNew, String salesNew) {

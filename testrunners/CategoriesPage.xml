@@ -9,7 +9,7 @@
     <parameter name="categoryDescriptionNew" value="Vitamins/Proteins"/>
     <test name="test">
         <classes>
-            <class name="com.company.testscripts.CategoriesPageTest"/>
+            <class name="testscripts.CategoriesPageTest"/>
         </classes>
     </test>
 </suite>

@@ -21,7 +21,7 @@
 
     <test name="test">
         <classes>
-            <class name="com.company.testscripts.BeaconsPageTest"/>
+            <class name="testscripts.BeaconsPageTest"/>
         </classes>
     </test>
 </suite>

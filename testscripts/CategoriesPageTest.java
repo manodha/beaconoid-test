@@ -1,9 +1,9 @@
-package com.company.testscripts;
+package testscripts;
 
-import com.company.model.Advertisement;
-import com.company.model.Category;
-import com.company.pageobjects.*;
-import com.company.util.WebConstants;
+import model.Advertisement;
+import model.Category;
+import pageobjects.*;
+import util.WebConstants;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;

@@ -1,4 +1,4 @@
-package com.company.model;
+package model;
 
 import org.openqa.selenium.WebElement;
 

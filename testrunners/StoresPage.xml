@@ -10,7 +10,7 @@
     <parameter name="salesNew" value="100"/>
     <test name="test">
         <classes>
-            <class name="com.company.testscripts.StoresPageTest"/>
+            <class name="testscripts.StoresPageTest"/>
         </classes>
     </test>
 </suite>

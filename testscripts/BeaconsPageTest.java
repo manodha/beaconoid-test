@@ -1,8 +1,8 @@
-package com.company.testscripts;
+package testscripts;
 
-import com.company.model.Beacons;
-import com.company.pageobjects.*;
-import com.company.util.WebConstants;
+import model.Beacons;
+import pageobjects.*;
+import util.WebConstants;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;

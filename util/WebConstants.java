@@ -1,9 +1,9 @@
-package com.company.util;
+package util;
 
-import com.company.model.Advertisement;
-import com.company.model.Beacons;
-import com.company.model.Category;
-import com.company.model.Stores;
+import model.Advertisement;
+import model.Beacons;
+import model.Category;
+import model.Stores;
 
 /**
  * Created by manodha on 18/5/17.

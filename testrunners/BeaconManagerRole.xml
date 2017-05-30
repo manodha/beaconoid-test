@@ -30,7 +30,7 @@
 
     <test name="test">
         <classes>
-            <class name="com.company.testscripts.BeaconManagerRoleTest"/>
+            <class name="testscripts.BeaconManagerRoleTest"/>
         </classes>
     </test>
 </suite>

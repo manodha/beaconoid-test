@@ -16,7 +16,7 @@
 
     <test name="test">
         <classes>
-            <class name="com.company.testscripts.URManagerRoleTest"/>
+            <class name="testscripts.URManagerRoleTest"/>
         </classes>
     </test>
 </suite>

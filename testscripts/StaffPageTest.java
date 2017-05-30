@@ -1,10 +1,10 @@
-package com.company.testscripts;
+package testscripts;
 
-import com.company.model.Staff;
-import com.company.pageobjects.LoginPage;
-import com.company.pageobjects.NavigationMenu;
-import com.company.pageobjects.StaffPage;
-import com.company.util.WebConstants;
+import model.Staff;
+import pageobjects.LoginPage;
+import pageobjects.NavigationMenu;
+import pageobjects.StaffPage;
+import util.WebConstants;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Parameters;

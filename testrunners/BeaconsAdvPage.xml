@@ -17,7 +17,7 @@
 
     <test name="test">
         <classes>
-            <class name="com.company.testscripts.BeaconsAdvPageTest"/>
+            <class name="testscripts.BeaconsAdvPageTest"/>
         </classes>
     </test>
 </suite>

@@ -1,4 +1,4 @@
-package com.company.util;
+package util;
 
 /**
  * Created by manodha on 28/5/17.
