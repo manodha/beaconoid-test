@@ -50,6 +50,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
 
     @Test(priority = 1, testName = "TC041")
     public void checkNoAdvertisementMsgTC041() {
+        // Getting all the advertisments
         allAdvertisements = advertisementsPage.getAllAdvertisements();
         if (allAdvertisements == null) {
             assertEquals(advertisementsPage.getNoAdvertisementsTXT(), WebConstants.noAdvertisementTxt);
