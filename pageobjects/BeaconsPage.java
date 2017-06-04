@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+import util.WebConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,11 @@ public class BeaconsPage extends PageObject {
     @FindBy(id = "other-list")
     private WebElement otherBeaconList;
 
-    @FindBy(css = "table.table-bordered.table-striped > tbody")
-    private WebElement beaconsTable;
+    @FindBy(id = "unregistered-list")
+    private WebElement unregisteredList;
+
+    @FindBy(id = "registered-list")
+    WebElement registeredList;
 
     @FindBy(xpath = "//a[@href='/beacons/new']")
     private WebElement newBeaconBtn;
@@ -54,22 +58,30 @@ public class BeaconsPage extends PageObject {
     @FindBy(name = "commit")
     private WebElement createUpdateBeaconBtn;
 
+    @FindBy(tagName = "h1")
+    private WebElement indexTitle;
 
     public BeaconsPage(WebDriver webDriver) {
         super(webDriver);
         this.webDriver = webDriver;
     }
 
-    public List<Beacons> getOtherBeaconsList() {
+    public List<Beacons> getRegOtherBeacons(String list) {
         List<Beacons> beacons = new ArrayList<>();
-        WebElement otherBeaconsTable = otherBeaconList.findElement(By.tagName("tbody"));
-        List<WebElement> beaconRows = otherBeaconsTable.findElements(By.xpath("tr"));
+        WebElement beaconsTable;
+
+        if(list.equals(WebConstants.otherBeaconTitle))
+            beaconsTable = otherBeaconList.findElement(By.tagName("tbody"));
+        else
+            beaconsTable = registeredList.findElement(By.tagName("tbody"));
+
+        List<WebElement> beaconRows = beaconsTable.findElements(By.xpath("tr"));
         int numRows, numColumns;
         numRows = beaconRows.size();
         numColumns = beaconRows.get(0).findElements(By.tagName("td")).size();
 
         if (numColumns <= 1)
-            return beacons;
+            return null;
 
         for (int i = 0; i < numRows; i++) {
             Beacons beacon = new Beacons();
@@ -84,6 +96,27 @@ public class BeaconsPage extends PageObject {
         }
         return beacons;
 
+    }
+
+    public List<Beacons> getUnregisteredList() {
+        List<Beacons> beacons = new ArrayList<>();
+        WebElement unregisteredBeaconsTable = unregisteredList.findElement(By.tagName("tbody"));
+        List<WebElement> beaconRows = unregisteredBeaconsTable.findElements(By.xpath("tr"));
+        int numRows, numColumns;
+        numRows = beaconRows.size();
+        numColumns = beaconRows.get(0).findElements(By.tagName("td")).size();
+
+        if (numColumns <= 1)
+            return null;
+
+        for (int i = 0; i < numRows; i++) {
+            Beacons beacon = new Beacons();
+            beacon.setUniqueRef(beaconRows.get(i).findElement(By.xpath("td[1]")).getText());
+            beacon.setName(beaconRows.get(i).findElement(By.xpath("td[2]")).getText());
+            beacon.setEditLink(beaconRows.get(i).findElement(By.xpath("td[3]/a")));
+            beacons.add(beacon);
+        }
+        return beacons;
     }
 
     public void clickNewBeaconBtn() {
@@ -138,7 +171,6 @@ public class BeaconsPage extends PageObject {
         webDriver.switchTo().alert().accept();
     }
 
-
     public BeaconAdvPage clickViewAdvertisementsLink(WebElement viewAdvertisementsLink) {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", viewAdvertisementsLink);
         return new BeaconAdvPage(webDriver);
@@ -181,6 +213,24 @@ public class BeaconsPage extends PageObject {
         System.out.print(" Status - " + beacon.getStatus());
         System.out.print(" Latitude - " + beacon.getLatitude());
         System.out.println(" Longitude - " + beacon.getLongitude());
+    }
+
+    public String getNoOtherBeaconTxt() {
+        WebElement otherBeaconsTable = otherBeaconList.findElement(By.tagName("tbody"));
+        return otherBeaconsTable.findElement(By.xpath("tr[1]/td[1]")).getText();
+    }
+    public String getNoUnregBeaconTxt() {
+        WebElement otherBeaconsTable = unregisteredList.findElement(By.tagName("tbody"));
+        return otherBeaconsTable.findElement(By.xpath("tr[1]/td[1]")).getText();
+    }
+
+    public String getNoRegBeaconTxt() {
+        WebElement otherBeaconsTable = registeredList.findElement(By.tagName("tbody"));
+        return otherBeaconsTable.findElement(By.xpath("tr[1]/td[1]")).getText();
+    }
+
+    public String getIndexTitle(){
+        return indexTitle.getText();
     }
 
 }

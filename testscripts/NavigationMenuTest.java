@@ -1,13 +1,13 @@
 package testscripts;
 
-import pageobjects.LoginPage;
-import pageobjects.NavigationMenu;
-import util.WebConstants;
+import model.Staff;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pageobjects.*;
+import util.WebConstants;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 
 /**
@@ -16,67 +16,85 @@ import static org.junit.Assert.assertNotNull;
 public class NavigationMenuTest extends FunctionalTest {
 
     private NavigationMenu navigationMenu;
+    private StaffPage staffPage;
 
-
-    @Test(testName = "TC008", priority = 1)
+    @BeforeTest
     @Parameters({"email", "password"})
-    public void isDashboard(String email, String password) {
+    public void setupTestData(String email, String password){
         navigationMenu = loginToBeaconoid(webDriver, email, password);
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
-        assertNotNull(navigationMenu.getLogoutLink());
-
     }
 
-    @Test(testName = "TC010", priority = 2)
-    public void clickBeaconoid() {
-        navigationMenu.clickBeconsWebConsole();
-        assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
-
-    }
-
-    @Test(testName = "TC011", priority = 3)
-    public void clickDashboard() {
-        navigationMenu.clickDashboardLink();
+    @Test(priority = 1, testName = "TC_NM_01")
+    public void chkIfDashOnClkBeaconoid() {
+        navigationMenu.clickBeconoid();
         assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(testName = "TC012", priority = 4)
-    public void clickStores() {
-        navigationMenu.clickStoresLink();
-        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
+    @Test(priority = 2, testName = "TC_NM_02")
+    public void chkIfDashOnClkDashboard() {
+        DashboardPage dashboardPage = accessDashboardPage(webDriver, navigationMenu);
+
     }
 
-    @Test(testName = "TC013", priority = 5)
-    public void clickCatogories() {
-        navigationMenu.clickCatogoriesLink();
-        assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
+    @Test(priority = 3, testName = "TC_NM_03")
+    public void chkIfRepOnClickReports(){
+        ReportPage reportPage = accessReportPage(webDriver, navigationMenu);
+
     }
 
-    @Test(testName = "TC014", priority = 6)
-    public void clickBeacons() {
-        navigationMenu.clickBeconsLink();
-        assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
+    @Test(priority = 4, testName = "TC_NM_04")
+    public void chkIFStrRepOnClickStore(){
+        StoreReportPage storeReportPage = accessStoreReportPage(webDriver, navigationMenu);
     }
 
-    @Test(testName = "TC015", priority = 7)
-    public void clickAdvertisements() {
-        navigationMenu.clickAdvertisementsLink();
-        assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
+    @Test(priority = 5, testName = "TC_NM_05")
+    public void chkIfSalRepOnClickSales(){
+        SalesReportPage salesReportPage = accessSalesReportPage(webDriver, navigationMenu);
     }
 
-    @Test(testName = "TC016", priority = 8)
-    public void clickStaff() {
-        navigationMenu.clickStaffLink();
-        assertEquals(WebConstants.staffUrl, webDriver.getCurrentUrl());
-        try {
-            Thread.sleep(WebConstants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    @Test(priority = 6, testName = "TC_NM_06")
+    public void chkIfCateRepOnClickCategory(){
+        CategoryReportPage categoryReportPage = accessCategoryReportPage(webDriver, navigationMenu);
     }
 
-    @Test(testName = "TC009", priority = 9)
-    public void clickLogout() {
+    @Test(priority = 7, testName = "TC_NM_07")
+    public void chkIfSPOnClickStores() {
+        StoresPage storesPage = accessStoresPage(webDriver, navigationMenu);
+    }
+
+    @Test(priority = 8, testName = "TC_NM_08")
+    public void chkIfCPOnClickCategories() {
+        CategoryPage categoryPage = accessCategoriesPage(webDriver, navigationMenu);
+    }
+
+    @Test(priority = 9, testName = "TC_NM_09")
+    public void chkIfBPOnClickBeacons() throws InterruptedException {
+        BeaconsPage beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
+    }
+
+    @Test(priority = 10, testName = "TC_NM_10")
+    public void chkIfAPOnClickAdvertisements() {
+        AdvertisementsPage advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
+    }
+
+    @Test(priority = 11, testName = "TC_NM_11")
+    public void chkIfSPOnClickStaffs() {
+        staffPage = accessStaffPage(webDriver, navigationMenu);
+    }
+
+    @Test(priority = 12, testName = "TC_NM_12")
+    @Parameters({"email"})
+    public void chkIfUNVisibleOnNav(String email){
+        if(!webDriver.getCurrentUrl().equals(WebConstants.staffUrl))
+            staffPage = accessStaffPage(webDriver, navigationMenu);
+        Staff staff = staffPage.getStaffByEmail(email);
+        assertEquals(staff.getName(), navigationMenu.getUserName());
+    }
+
+
+    @Test(priority = 12, testName = "TC_NM_13")
+    public void checkIfLPOnLogout() {
         LoginPage loginPage = navigationMenu.clickLogoutLink();
         try {
             Thread.sleep(WebConstants.waitMilliSeconds * 2);

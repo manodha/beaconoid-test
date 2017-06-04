@@ -30,7 +30,7 @@ public class ReportPageTest extends FunctionalTest {
 
     @BeforeTest
     @Parameters({"email", "password"})
-    public void setupTestEnv(String email, String password) {
+    public void setupTestData(String email, String password) {
         defNavMenu = loginToBeaconoid(webDriver, email, password);
 
         reportDriver = new FirefoxDriver();
@@ -39,7 +39,7 @@ public class ReportPageTest extends FunctionalTest {
         reportPage = accessReportPage(reportDriver, reportNavMenu);
     }
 
-    @Test(priority = 1, testName = "TC142")
+    @Test(priority = 1, testName = "TC_RP_01")
     @Parameters({"storeName", "storeUniqueCode", "sales"})
     public void checkIfCountIncreOnStoreCrea(String name, String uniqueCode, String sales) {
         int storeCount = reportPage.getTotalStores();
@@ -49,7 +49,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(++storeCount, reportPage.getTotalStores());
     }
 
-    @Test(priority = 2, testName = "TC143")
+    @Test(priority = 2, testName = "TC_RP_02")
     @Parameters({"storeName", "storeUniqueCode"})
     public void checkIfCountIncreOnStoreUpda(String name, String uniqueCode) {
         int storeCount = reportPage.getTotalStores();
@@ -58,7 +58,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(storeCount, reportPage.getTotalStores());
     }
 
-    @Test(priority = 3, testName = "TC144")
+    @Test(priority = 3, testName = "TC_RP_03")
     @Parameters({"categoryName", "categoryDescription"})
     public void checkIfCountIncreOnCateCrea(String name, String desc) {
         int cateCount = reportPage.getTotalCategories();
@@ -68,7 +68,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(++cateCount, reportPage.getTotalCategories());
     }
 
-    @Test(priority = 4, testName = "TC145")
+    @Test(priority = 4, testName = "TC_RP_04")
     @Parameters({"categoryName", "categoryDescription"})
     public void checkIfCountIncreOnCateUpda(String name, String desc) {
         int cateCount = reportPage.getTotalCategories();
@@ -78,13 +78,13 @@ public class ReportPageTest extends FunctionalTest {
     }
 
     @BeforeGroups("Advertisements")
-    public void creaDefBeacon() {
+    public void creaDefBeacon() throws InterruptedException {
         if (!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
             beaconsPage = accessBeaconsPage(webDriver, defNavMenu);
         createBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
     }
 
-    @Test(priority = 5, testName = "TC146", groups = "Advertisements")
+    @Test(priority = 5, testName = "TC_RP_05", groups = "Advertisements")
     @Parameters({"adverName", "adverDescription", "adverImage", "adverPrice"})
     public void checkIfCountIncreOnAdverCrea(String name, String desc, String image, String price) {
         int adverCount = reportPage.getTotalAdvertisements();
@@ -95,7 +95,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(++adverCount, reportPage.getTotalAdvertisements());
     }
 
-    @Test(priority = 6, testName = "TC147", groups = "Advertisements")
+    @Test(priority = 6, testName = "TC_RP_06", groups = "Advertisements")
     @Parameters({"adverName"})
     public void checkIfCountIncreOnAdverUpda(String name) {
         int adverCount = reportPage.getTotalAdvertisements();
@@ -108,7 +108,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(adverCount, reportPage.getTotalAdvertisements());
     }
 
-    @Test(priority = 7, testName = "TC148", groups = "Advertisements")
+    @Test(priority = 7, testName = "TC_RP_07", groups = "Advertisements")
     public void checkIfCountDecreOnDelAdver() {
         int adverCount = reportPage.getTotalAdvertisements();
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
@@ -118,14 +118,14 @@ public class ReportPageTest extends FunctionalTest {
     }
 
     @AfterGroups("Advertisements")
-    public void delDefBeacon() {
+    public void delDefBeacon() throws InterruptedException {
         if (!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
             beaconsPage = accessBeaconsPage(webDriver, defNavMenu);
         deleteBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
     }
 
 
-    @Test(priority = 8, testName = "TC149")
+    @Test(priority = 8, testName = "TC_RP_08")
     public void checkIfCountDecreOnDelCate() {
         int cateCount = reportPage.getTotalCategories();
         if (!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
@@ -134,7 +134,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(--cateCount, reportPage.getTotalCategories());
     }
 
-    @Test(priority = 9, testName = "TC150")
+    @Test(priority = 9, testName = "TC_RP_09")
     public void checkIfCountDecreOnDelStore() {
         int storeCount = reportPage.getTotalStores();
         if (!webDriver.getCurrentUrl().equals(WebConstants.storesUrl))

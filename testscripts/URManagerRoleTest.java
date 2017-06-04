@@ -26,7 +26,7 @@ public class URManagerRoleTest extends FunctionalTest {
     public void createURManager(String loginEmail, String loginPassword, String name, String email, String nickname, String password,
                                 String confirmPassword, String role) {
         navigationMenu = loginToBeaconoid(webDriver, loginEmail, loginPassword);
-        staffPage = accessStaffPage(navigationMenu);
+        staffPage = accessStaffPage(webDriver, navigationMenu);
         createStaff(staffPage, new Staff(name, email, nickname, password, confirmPassword, role));
 
         navigationMenu.clickLogoutLink();
@@ -41,9 +41,9 @@ public class URManagerRoleTest extends FunctionalTest {
     @Parameters({"email", "password", "user_report_manager_role"})
     public void deleteURManager(String email, String password, String role) {
         navigationMenu = loginToBeaconoid(webDriver, email, password);
-        staffPage = accessStaffPage(navigationMenu);
+        staffPage = accessStaffPage(webDriver, navigationMenu);
         Staff staff = staffPage.getStaffByRole(role);
-        deleteStaff(staffPage, staff);
+        deleteStaff(webDriver, staff, staffPage);
     }
 
 
@@ -64,55 +64,54 @@ public class URManagerRoleTest extends FunctionalTest {
     }
 
 
-    @Test(priority = 1, testName = "TC119", groups = "URManager")
+    @Test(priority = 1, testName = "TC_SR_47", groups = "URManager")
     public void checkIfURMCantAcessStoresPage() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getStoresLink());
     }
 
-    @Test(priority = 2, testName = "TC120", groups = "URManager")
+    @Test(priority = 2, testName = "TC_SR_48", groups = "URManager")
     public void checkIfURMCantAccessCategoPage() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getCategoriesLink());
     }
 
-    @Test(priority = 3, testName = "TC121", groups = "URManager")
+    @Test(priority = 3, testName = "TC_SR_49", groups = "URManager")
     public void checkIfURMCantAccessBeaconPage() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getBeaconsLink());
     }
 
-    @Test(priority = 4, testName = "TC122", groups = "URManager")
+    @Test(priority = 4, testName = "TC_SR_50", groups = "URManager")
     public void checkIfURMCantAccessAdverPage() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getAdvertisementsLink());
     }
 
-    @Test(priority = 5, testName = "TC123", groups = "URManager")
+    @Test(priority = 5, testName = "TC_SR_51", groups = "URManager")
     public void checkIfURMCantAccessStaffPage() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getStaffLink());
     }
 
-    @Test(priority = 6, testName = "TC124", groups = "URManager")
+    @Test(priority = 6, testName = "TC_SR_52", groups = "URManager")
     public void checkIfURMCanAccessDashboard() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNotNull(navigationMenu.getDashboardLink());
-        dashboardPage = accessDashboardPage(navigationMenu);
+        dashboardPage = accessDashboardPage(webDriver, navigationMenu);
         assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 7, testName = "TC125", groups = "URManager")
+    @Test(priority = 7, testName = "TC_SR_53", groups = "URManager")
     public void checkIfURMCanAccessReports() {
         assertNotNull(navigationMenu.getReportLink());
         reportPage = accessReportPage(webDriver, navigationMenu);
 
         assertNotNull(navigationMenu.getStoreReportLink());
-        storeReportPage = accessStoreReportPage(navigationMenu);
+        storeReportPage = accessStoreReportPage(webDriver, navigationMenu);
 
         assertNotNull(navigationMenu.getCategoryReportLink());
-        categoryReportPage = accessCategoryReportPage(navigationMenu);
+        categoryReportPage = accessCategoryReportPage(webDriver, navigationMenu);
     }
-
 
 }

@@ -39,7 +39,7 @@ public class APITest extends FunctionalTest {
 
     @BeforeTest
     @Parameters({"email", "password"})
-    public void setupTestEnv(String email, String password) {
+    public void setupTestData(String email, String password) throws InterruptedException {
         navigationMenu = loginToBeaconoid(webDriver, email, password);
 
         storesPage = accessStoresPage(webDriver, navigationMenu);
@@ -58,7 +58,7 @@ public class APITest extends FunctionalTest {
         reportPage = accessReportPage(webDriver, navigationMenu);
     }
 
-    @Test(priority = 1, testName = "TC132")
+    @Test(priority = 1, testName = "TC_API_01")
     public void checkIfUnUserCanFetchAdver() throws JSONException {
         numOfClients = reportPage.getTotalClients();
         numOfFetchesBefore = reportPage.getTotalFetches();
@@ -70,7 +70,7 @@ public class APITest extends FunctionalTest {
         assertEquals(numOfFetchesBefore, reportPage.getTotalFetches());
     }
 
-    @Test(priority = 2, testName = "TC133")
+    @Test(priority = 2, testName = "TC_API_02")
     public void checkIfUnUserCanClkAdver() throws JSONException {
         numOfClicksBefore = reportPage.getTotalClients();
         numOfClicksBefore = reportPage.getTotalClicks();
@@ -82,7 +82,7 @@ public class APITest extends FunctionalTest {
         assertEquals(numOfClicksBefore, reportPage.getTotalClicks());
     }
 
-    @Test(priority = 3, testName = "TC134")
+    @Test(priority = 3, testName = "TC_API_03")
     @Parameters({"clientEmail"})
     public void checkIfClientCountIncreOnNewUser(String email) throws JSONException {
         numOfClients = reportPage.getTotalClients();
@@ -94,7 +94,7 @@ public class APITest extends FunctionalTest {
         assertEquals(++numOfClients, reportPage.getTotalClients());
     }
 
-    @Test(priority = 4, testName = "TC135")
+    @Test(priority = 4, testName = "TC_API_04")
     @Parameters({"clientEmail"})
     public void checkIfClientCountIncreOnExistingUser(String email) throws JSONException {
         numOfClients = reportPage.getTotalClients();
@@ -106,7 +106,7 @@ public class APITest extends FunctionalTest {
         assertEquals(numOfClients, reportPage.getTotalClients());
     }
 
-    @Test(priority = 5, testName = "TC136")
+    @Test(priority = 5, testName = "TC_API_05")
     @Parameters({"clientEmail"})
     public void checkIfFetchCountIncreOnFetchAdver(String email) throws JSONException {
         numOfFetchesBefore = reportPage.getTotalFetches();
@@ -115,7 +115,7 @@ public class APITest extends FunctionalTest {
         assertEquals(++numOfFetchesBefore, reportPage.getTotalFetches());
     }
 
-    @Test(priority = 6, testName = "TC141")
+    @Test(priority = 6, testName = "TC_API_10")
     @Parameters({"clientEmail"})
     public void checkIfAdversAreFetchedOnFetchBeacon(String email) throws JSONException {
         numOfFetchesBefore = reportPage.getTotalFetches();
@@ -132,7 +132,7 @@ public class APITest extends FunctionalTest {
         assertEquals(++numOfFetchesBefore, reportPage.getTotalFetches());
     }
 
-    @Test(priority = 7, testName = "TC137")
+    @Test(priority = 7, testName = "TC_API_06")
     @Parameters({"clientEmail"})
     public void checkIfClkCountIncreOnClkAdver(String email) throws JSONException {
         numOfClicksBefore = reportPage.getTotalClicks();
@@ -141,7 +141,7 @@ public class APITest extends FunctionalTest {
         assertEquals(++numOfClicksBefore, reportPage.getTotalClicks());
     }
 
-    @Test(priority = 8, testName = "TC140")
+    @Test(priority = 8, testName = "TC_API_09")
     @Parameters({"clientEmail"})
     public void checkIncorrectParamsMessage(String email) throws JSONException {
         numOfFetchesBefore = reportPage.getTotalFetches();
@@ -183,7 +183,7 @@ public class APITest extends FunctionalTest {
     }
 
     @BeforeGroups("DelTestAdverAndBeacon")
-    public void delTestAdverAndBeacon() {
+    public void delTestAdverAndBeacon() throws InterruptedException {
         advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
         deleteAdvertisement(webDriver, advertisementsPage, WebConstants.defaultTestAdvertisement);
 
@@ -193,7 +193,7 @@ public class APITest extends FunctionalTest {
         reportPage = accessReportPage(webDriver, navigationMenu);
     }
 
-    @Test(priority = 9, testName = "TC138", groups = "DelTestAdverAndBeacon")
+    @Test(priority = 9, testName = "TC_API_07", groups = "DelTestAdverAndBeacon")
     @Parameters({"clientEmail"})
     public void checkIfDelAdverCanBeClicked(String email) throws JSONException {
         numOfClicksBefore = reportPage.getTotalClicks();
@@ -204,7 +204,7 @@ public class APITest extends FunctionalTest {
         assertEquals(numOfClicksBefore, reportPage.getTotalClicks());
     }
 
-    @Test(priority = 10, testName = "TC139", groups = "DelTestAdverAndBeacon")
+    @Test(priority = 10, testName = "TC_API_08", groups = "DelTestAdverAndBeacon")
     @Parameters({"clientEmail"})
     public void checkIfAdverCanBeFetched(String email) throws JSONException {
         numOfFetchesBefore = reportPage.getTotalFetches();
@@ -216,7 +216,7 @@ public class APITest extends FunctionalTest {
     }
 
     @AfterTest
-    public void clearTestEnv() {
+    public void clearTestData() {
         categoryPage = accessCategoriesPage(webDriver, navigationMenu);
         deleteCategory(webDriver, categoryPage, WebConstants.defaultTestCategory);
 

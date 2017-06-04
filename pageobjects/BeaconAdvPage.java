@@ -48,8 +48,8 @@ public class BeaconAdvPage extends AdvertisementsPage {
             advertisement.setCategory(advertisementRows.get(i).findElement(By.xpath("td[2]")).getText());
             advertisement.setDescription(advertisementRows.get(i).findElement(By.xpath("td[3]")).getText());
             advertisement.setPrice(advertisementRows.get(i).findElement(By.xpath("td[4]")).getText());
-            advertisement.setEditLink(advertisementRows.get(i).findElement(By.xpath("td[6]/a")));
-            advertisement.setDeleteBtn(advertisementRows.get(i).findElement(By.xpath("td[7]/form/input[@value='Delete']")));
+            advertisement.setEditLink(advertisementRows.get(i).findElement(By.xpath("td[5]/a")));
+            advertisement.setDeleteBtn(advertisementRows.get(i).findElement(By.xpath("td[6]/form/input[@value='Delete']")));
             advertisement.setBeacon(getBeaconName());
             advertisements.add(advertisement);
         }

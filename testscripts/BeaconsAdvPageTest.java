@@ -38,7 +38,7 @@ public class BeaconsAdvPageTest extends FunctionalTest {
 
     @BeforeTest
     @Parameters({"emailAdmin", "passwordAdmin"})
-    public void accessBeaconsAdvPage(String emailAdmin, String passwordAdmin) {
+    public void accessBeaconsAdvPage(String emailAdmin, String passwordAdmin) throws InterruptedException {
         navigationMenu = loginToBeaconoid(webDriver, emailAdmin, passwordAdmin);
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
 
@@ -51,22 +51,22 @@ public class BeaconsAdvPageTest extends FunctionalTest {
         beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
         createBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
 
-        testBeacon = beaconsPage.getBeacon(beaconsPage.getOtherBeaconsList(), WebConstants.defaultTestBeacon.getUniqueRef(), WebConstants.defaultTestBeacon.getName());
+        testBeacon = beaconsPage.getBeacon(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), WebConstants.defaultTestBeacon.getUniqueRef(), WebConstants.defaultTestBeacon.getName());
         beaconUrl = testBeacon.getAdvertisementsLink().getAttribute("href");
         addBeaconAdverUrl = beaconUrl + addBeaconAdverUrl;
 
-        beaconAdvPage = viewBeaconAdvertisements(beaconsPage, testBeacon);
+        beaconAdvPage = viewBeaconAdvertisements(webDriver, beaconsPage, testBeacon);
     }
 
-    @Test(priority = 1, testName = "TC126")
+    @Test(priority = 1, testName = "TC_BAP_01")
     public void checkIFNoAdverMsgIsShown() {
         assertEquals(beaconUrl, webDriver.getCurrentUrl());
         assertNull(beaconAdvPage.getAllAdvertisements());
-        assertEquals(WebConstants.noAdvertisementTxt, beaconAdvPage.getNoAdvertisementsTXT());
+        assertEquals(WebConstants.noAdverTxt, beaconAdvPage.getNoAdvertisementsTXT());
     }
 
 
-    @Test(priority = 2, testName = "TC127")
+    @Test(priority = 2, testName = "TC_BAP_02")
     @Parameters({"adverName", "adverDescription", "adverImage", "adverPrice"})
     public void checkIfBeaconAdverCanBeCrea(String name, String desc, String image, String price) {
         assertEquals(beaconUrl, webDriver.getCurrentUrl());
@@ -91,13 +91,13 @@ public class BeaconsAdvPageTest extends FunctionalTest {
 
     }
 
-    @Test(priority = 3, testName = "TC128")
+    @Test(priority = 3, testName = "TC_BAP_03")
     public void checkIfListBeaconAdverIsShown() {
         assertEquals(beaconUrl, webDriver.getCurrentUrl());
         assertNotNull(beaconAdvPage.getAllAdvertisements());
     }
 
-    @Test(priority = 4, testName = "TC129")
+    @Test(priority = 4, testName = "TC_BAP_04")
     @Parameters({"adverName", "adverNameNew", "adverDescriptionNew", "adverImageNew", "adverPriceNew"})
     public void checkIfBeaconAdverCanBeUpda(String adverName, String adverNameNew, String adverDescriptionNew, String image, String adverPriceNew) {
 
@@ -127,7 +127,7 @@ public class BeaconsAdvPageTest extends FunctionalTest {
         )));
     }
 
-    @Test(priority = 5, testName = "TC130")
+    @Test(priority = 5, testName = "TC_BAP_05")
     @Parameters({"adverNameNew"})
     public void checkIfBeaconAdverCanBeDel(String adverName) {
         assertEquals(beaconUrl, webDriver.getCurrentUrl());
@@ -157,7 +157,7 @@ public class BeaconsAdvPageTest extends FunctionalTest {
         ))));
     }
 
-    @Test(priority = 6, testName = "TC131")
+    @Test(priority = 6, testName = "TC_BAP_06")
     public void checkIfBeaconPageIsOnBack() {
         if (!webDriver.getCurrentUrl().equals(beaconUrl)) {
             webDriver.get(beaconUrl);
@@ -178,7 +178,7 @@ public class BeaconsAdvPageTest extends FunctionalTest {
     }
 
     @AfterTest
-    public void clearAllTestData() {
+    public void clearTestData() throws InterruptedException {
         beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
         deleteBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
 

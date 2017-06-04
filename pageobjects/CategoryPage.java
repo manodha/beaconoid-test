@@ -35,6 +35,9 @@ public class CategoryPage extends PageObject {
     @FindBy(name = "commit")
     private WebElement createCategoryBtn;
 
+    @FindBy(tagName = "h1")
+    private WebElement cateIndexTitle;
+
     public CategoryPage(WebDriver webDriver) {
         super(webDriver);
         this.webDriver = webDriver;
@@ -48,15 +51,15 @@ public class CategoryPage extends PageObject {
         numColumns = categoryRows.get(0).findElements(By.tagName("td")).size();
 
         if (numColumns <= 1)
-            return categories;
+            return null;
 
         for (int i = 0; i < numRows; i++) {
             Category category = new Category();
-            category.setCategoryId(categoryRows.get(i).findElement(By.xpath("td[1]")).getText());
-            category.setCategoryName(categoryRows.get(i).findElement(By.xpath("td[2]")).getText());
-            category.setCategoryDescription(categoryRows.get(i).findElement(By.xpath("td[3]")).getText());
-            category.setEditButton(categoryRows.get(i).findElement(By.xpath("td[4]/a")));
-            category.setDeleteButton(categoryRows.get(i).findElement(By.xpath("td[5]/form/input[@type='submit']")));
+            //category.setCategoryId(categoryRows.get(i).findElement(By.xpath("td[1]")).getText());
+            category.setCategoryName(categoryRows.get(i).findElement(By.xpath("td[1]")).getText());
+            category.setCategoryDescription(categoryRows.get(i).findElement(By.xpath("td[2]")).getText());
+            category.setEditButton(categoryRows.get(i).findElement(By.xpath("td[3]/a")));
+            category.setDeleteButton(categoryRows.get(i).findElement(By.xpath("td[4]/form/input[@type='submit']")));
             categories.add(category);
         }
         return categories;
@@ -117,5 +120,12 @@ public class CategoryPage extends PageObject {
         System.out.print("Category Id - " + category.getCategoryId());
         System.out.print(" Category Name - " + category.getCategoryName());
         System.out.println(" Category Name - " + category.getCategoryDescription());
+    }
+
+    public String getCateIndexTitle(){
+        return cateIndexTitle.getText();
+    }
+    public String getNoCateTxt() {
+        return categoriesTable.findElement(By.xpath("tr[1]/td[1]")).getText();
     }
 }

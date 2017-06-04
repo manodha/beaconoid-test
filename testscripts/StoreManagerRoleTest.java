@@ -29,7 +29,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
     public void setUpTestData(String loginEmail, String loginPassword, String name, String email, String nickname,
                               String password, String confirmPassword, String role) {
         navigationMenu = loginToBeaconoid(webDriver, loginEmail, loginPassword);
-        staffPage = accessStaffPage(navigationMenu);
+        staffPage = accessStaffPage(webDriver, navigationMenu);
         createStaff(staffPage, new Staff(name, email, nickname, password, confirmPassword, role));
         navigationMenu.clickLogoutLink();
         try {
@@ -58,7 +58,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
     @Test(priority = 1, testName = "TC096", groups = "stores_categories")
     public void checkIfSMCanAccessDasboard() {
         assertNotNull(navigationMenu.getDashboardLink());
-        dashboardPage = accessDashboardPage(navigationMenu);
+        dashboardPage = accessDashboardPage(webDriver, navigationMenu);
         assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
     }
 
@@ -192,7 +192,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
 
     @BeforeGroups("beacons_advertisements")
     @Parameters({"email", "password", "userEmail3", "userPassword3"})
-    public void createDefBeaconAndAdver(String sAEmail, String sAPassword, String sMEmail, String sMPassword) {
+    public void createDefBeaconAndAdver(String sAEmail, String sAPassword, String sMEmail, String sMPassword) throws InterruptedException {
         navigationMenu = loginToBeaconoid(webDriver, sAEmail, sAPassword);
         beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
         createBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
@@ -213,7 +213,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
     /* Store Manager - Beacons Page Test Cases */
 
     @Test(priority = 12, testName = "TC109", groups = "beacons_advertisements")
-    public void checkIfSMCanAccessBeaconsPage() {
+    public void checkIfSMCanAccessBeaconsPage() throws InterruptedException {
         assertNotNull(navigationMenu.getBeaconsLink());
         beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
@@ -222,7 +222,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
     @Test(priority = 13, testName = "TC110", groups = "beacons_advertisements")
     public void checkIfSMCanSeeListOfBeacons() {
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
-        assertNotNull(beaconsPage.getOtherBeaconsList());
+        assertNotNull(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle));
     }
 
     @Test(priority = 14, testName = "TC111", groups = "beacons_advertisements")
@@ -239,7 +239,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
 
     @Test(priority = 15, testName = "TC112", groups = "beacons_advertisements")
     public void checkIfSMCanUpdaBeacon() {
-        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getOtherBeaconsList(), WebConstants.defaultTestBeacon.getUniqueRef(),
+        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), WebConstants.defaultTestBeacon.getUniqueRef(),
                 WebConstants.defaultTestBeacon.getName());
         beaconsPage.clickEditBeaconBtn(beacon.getEditLink());
         try {
@@ -253,7 +253,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
 
     @Test(priority = 16, testName = "TC113", groups = "beacons_advertisements")
     public void checkIfSMCanDelBeacon() {
-        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getOtherBeaconsList(), WebConstants.defaultTestBeacon.getUniqueRef(),
+        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), WebConstants.defaultTestBeacon.getUniqueRef(),
                 WebConstants.defaultTestBeacon.getName());
         beaconsPage.clickDeleteBeaconBtn(beacon.getDeleteLink());
         try {
@@ -263,7 +263,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
         }
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
         assertEquals(WebConstants.notAuthorisedMsg, beaconsPage.getDangerAlert());
-        assertThat(beaconsPage.getOtherBeaconsList(), hasItem(allOf(
+        assertThat(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), hasItem(allOf(
                 hasProperty("uniqueRef", equalTo(WebConstants.defaultTestBeacon.getUniqueRef())),
                 hasProperty("name", equalTo(WebConstants.defaultTestBeacon.getName()))
         )));
@@ -334,7 +334,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
 
     @AfterGroups("beacons_advertisements")
     @Parameters({"email", "password"})
-    public void deleteDefBeaconAndAdver(String email, String password) {
+    public void deleteDefBeaconAndAdver(String email, String password) throws InterruptedException {
         navigationMenu.clickLogoutLink();
         try {
             Thread.sleep(WebConstants.waitMilliSeconds);
@@ -361,9 +361,9 @@ public class StoreManagerRoleTest extends FunctionalTest {
     @Parameters({"email", "password", "store_manager_role"})
     public void deleteStoreManager(String email, String password, String role) {
         navigationMenu = loginToBeaconoid(webDriver, email, password);
-        staffPage = accessStaffPage(navigationMenu);
+        staffPage = accessStaffPage(webDriver, navigationMenu);
         Staff beaconManager = staffPage.getStaffByRole(role);
-        deleteStaff(staffPage, beaconManager);
+        deleteStaff(webDriver, beaconManager, staffPage);
     }
 
 }

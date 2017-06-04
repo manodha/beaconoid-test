@@ -26,6 +26,9 @@ public class NavigationMenu extends PageObject {
     @FindBy(xpath = "//a[@href='/report/store']")
     private WebElement storeReportLink;
 
+    @FindBy(xpath = "//a[@href='/report/sales']")
+    private WebElement salesReportLink;
+
     @FindBy(xpath = "//a[@href='/report/category']")
     private WebElement categoryReportLink;
 
@@ -47,6 +50,9 @@ public class NavigationMenu extends PageObject {
     @FindBy(xpath = "//a[@href='/users/sign_out'][@data-method='delete']")
     private WebElement logoutLink;
 
+    @FindBy(id= "welcome_user")
+    private WebElement welUserName;
+
 
     public NavigationMenu(WebDriver webDriver) {
         super(webDriver);
@@ -57,7 +63,7 @@ public class NavigationMenu extends PageObject {
 
     /* Methods to click the links in the Navigation Menu*/
 
-    public void clickBeconsWebConsole() {
+    public void clickBeconoid() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", beconsWebConsoleLink);
     }
 
@@ -74,6 +80,11 @@ public class NavigationMenu extends PageObject {
     public StoreReportPage clickStoreReportLink() {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", storeReportLink);
         return new StoreReportPage(webDriver);
+    }
+
+    public SalesReportPage clickSalesReportLink() {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].click();", salesReportLink);
+        return new SalesReportPage(webDriver);
     }
 
     public CategoryReportPage clickCategoryReportLink() {
@@ -172,5 +183,11 @@ public class NavigationMenu extends PageObject {
         if (webDriver.findElements(By.xpath("//a[@href='/users/sign_out']")).size() != 0)
             return logoutLink;
         return null;
+    }
+
+    public String getUserName(){
+        String name = welUserName.getText().trim();
+        name = name.replace("Welcome ", "");
+        return name;
     }
 }

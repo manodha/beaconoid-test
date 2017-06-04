@@ -74,9 +74,17 @@ public class StaffPage extends PageObject {
         passwordTxt.sendKeys(password);
     }
 
+    public String getPasswordText(){
+        return passwordTxt.getText();
+    }
+
     public void enterConfirmPassword(String confirmPassword) {
         confirmPasswordTxt.clear();
         confirmPasswordTxt.sendKeys(confirmPassword);
+    }
+
+    public String getConfirmPasswordTxt(){
+        return confirmPasswordTxt.getText();
     }
 
     public void selectRoleByName(String role) {

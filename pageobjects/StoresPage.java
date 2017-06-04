@@ -35,6 +35,9 @@ public class StoresPage extends PageObject {
     @FindBy(name = "commit")
     private WebElement createUpdateStoreBtn;
 
+    @FindBy(tagName = "h1")
+    private WebElement indexTitle;
+
     public StoresPage(WebDriver webDriver) {
         super(webDriver);
         this.webDriver = webDriver;
@@ -52,15 +55,15 @@ public class StoresPage extends PageObject {
         numColumns = storeRows.get(0).findElements(By.tagName("td")).size();
 
         if (numColumns <= 1)
-            return stores;
+            return null;
 
         for (int i = 0; i < numRows; i++) {
             Stores store = new Stores();
-            store.setName(storeRows.get(i).findElement(By.xpath("td[2]")).getText());
-            store.setStoreCode(storeRows.get(i).findElement(By.xpath("td[3]")).getText());
-            store.setSales(storeRows.get(i).findElement(By.xpath("td[4]")).getText());
-            store.setEditLink(storeRows.get(i).findElement(By.xpath("td[5]/a")));
-            store.setDeleteBtn(storeRows.get(i).findElement(By.xpath("td[6]/form/input[@type='submit']")));
+            store.setName(storeRows.get(i).findElement(By.xpath("td[1]")).getText());
+            store.setStoreCode(storeRows.get(i).findElement(By.xpath("td[2]")).getText());
+            store.setSales(storeRows.get(i).findElement(By.xpath("td[3]")).getText());
+            store.setEditLink(storeRows.get(i).findElement(By.xpath("td[4]/a")));
+            store.setDeleteBtn(storeRows.get(i).findElement(By.xpath("td[5]/form/input[@type='submit']")));
             stores.add(store);
         }
         return stores;
@@ -118,7 +121,7 @@ public class StoresPage extends PageObject {
     }
 
     public Stores getStore(List<Stores> stores, String storeName, String storeUniqueCode) {
-        if (stores.size() == 0)
+        if (stores == null)
             return null;
         for (Stores store : stores) {
             if (store.getName().equals(storeName) && store.getStoreCode().equals(storeUniqueCode)) {
@@ -128,5 +131,12 @@ public class StoresPage extends PageObject {
         return null;
     }
 
+    public String getNoStoreTxt() {
+        return storesTable.findElement(By.xpath("tr[1]/td[1]")).getText();
+    }
+
+    public String getIndexTitle(){
+        return indexTitle.getText();
+    }
 
 }

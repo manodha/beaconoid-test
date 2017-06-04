@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by manodha on 27/3/17.
  */
-public class FunctionalTest {
+public class FunctionalTest{
 
     protected static WebDriver webDriver;
 
@@ -63,7 +63,7 @@ public class FunctionalTest {
     }
 
     static void deleteBeacon(WebDriver webDriver, BeaconsPage beaconsPage, Beacons beacon) {
-        Beacons testBeacon = beaconsPage.getBeacon(beaconsPage.getOtherBeaconsList(), beacon.getUniqueRef(),
+        Beacons testBeacon = beaconsPage.getBeacon(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), beacon.getUniqueRef(),
                 beacon.getName());
         beaconsPage.clickDeleteBeaconBtn(testBeacon.getDeleteLink());
         try {
@@ -148,8 +148,14 @@ public class FunctionalTest {
 
     void updateStore(WebDriver webDriver, StoresPage storesPage, Stores oldStore, Stores newStore) {
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
+        String editLink = oldStore.getEditLink().getAttribute("href");
         storesPage.clickEditButton(oldStore);
-        assertEquals(oldStore.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
+        assertEquals(editLink, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(WebConstants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         storesPage.createUpdateStore(newStore);
         try {
             Thread.sleep(WebConstants.waitMilliSeconds);
@@ -186,8 +192,14 @@ public class FunctionalTest {
 
     void updateCategory(WebDriver webDriver, CategoryPage categoryPage, Category oldCategory, Category newCategory) {
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
+        String editLink = oldCategory.getEditButton().getAttribute("href");
         categoryPage.clickEditCategoryBtn(oldCategory.getEditButton());
-        assertEquals(oldCategory.getEditButton().getAttribute("href"), webDriver.getCurrentUrl());
+        assertEquals(editLink, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(WebConstants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         categoryPage.createUpdateCategory(newCategory);
         try {
             Thread.sleep(WebConstants.waitMilliSeconds);
@@ -197,53 +209,41 @@ public class FunctionalTest {
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
     }
 
-    BeaconsPage accessBeaconsPage(WebDriver webDriver, NavigationMenu navigationMenu) {
+    BeaconsPage accessBeaconsPage(WebDriver webDriver, NavigationMenu navigationMenu) throws InterruptedException {
         BeaconsPage beaconsPage = navigationMenu.clickBeconsLink();
-        try {
-            Thread.sleep(WebConstants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(WebConstants.waitMilliSeconds);
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
         return beaconsPage;
     }
 
-    void createBeacon(WebDriver webDriver, BeaconsPage beaconsPage, Beacons newBeacon) {
+    void createBeacon(WebDriver webDriver, BeaconsPage beaconsPage, Beacons newBeacon) throws InterruptedException {
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
         beaconsPage.clickNewBeaconBtn();
         assertEquals(WebConstants.addBeaconUrl, webDriver.getCurrentUrl());
+        Thread.sleep(WebConstants.waitMilliSeconds);
         beaconsPage.createUpdateBeacon(newBeacon);
-        try {
-            Thread.sleep(WebConstants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(WebConstants.waitMilliSeconds);
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
-    void updateBeacon(WebDriver webDriver, BeaconsPage beaconsPage, Beacons beacon, Beacons newBeacon) {
+    void updateBeacon(WebDriver webDriver, BeaconsPage beaconsPage, Beacons beacon, Beacons newBeacon) throws InterruptedException {
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
+        String editLink = beacon.getEditLink().getAttribute("href");
         beaconsPage.clickEditBeaconBtn(beacon.getEditLink());
-        assertEquals(beacon.getEditLink().getAttribute("href"), webDriver.getCurrentUrl());
+        assertEquals(editLink, webDriver.getCurrentUrl());
+        Thread.sleep(WebConstants.waitMilliSeconds);
         beaconsPage.createUpdateBeacon(newBeacon);
-        try {
-            Thread.sleep(WebConstants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(WebConstants.waitMilliSeconds);
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
 
-    BeaconAdvPage viewBeaconAdvertisements(BeaconsPage beaconsPage, Beacons beacon) {
+    BeaconAdvPage viewBeaconAdvertisements(WebDriver webDriver, BeaconsPage beaconsPage, Beacons beacon) throws InterruptedException {
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
+        String viewLink =beacon.getAdvertisementsLink().getAttribute("href");
         BeaconAdvPage beaconAdvPage = beaconsPage.clickViewAdvertisementsLink(beacon.getAdvertisementsLink());
-        assertEquals(beacon.getAdvertisementsLink().getAttribute("href"), webDriver.getCurrentUrl());
-        try {
-            Thread.sleep(WebConstants.waitMilliSeconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        assertEquals(viewLink, webDriver.getCurrentUrl());
+        Thread.sleep(WebConstants.waitMilliSeconds);
         assertEquals(beaconAdvPage.getBeaconName(), beacon.getName());
         assertEquals(beaconAdvPage.getBeaconUniqueRef(), beacon.getUniqueRef());
         return beaconAdvPage;
@@ -272,7 +272,7 @@ public class FunctionalTest {
         assertEquals(WebConstants.newAdverTitle, advertisementsPage.getTitle());
         advertisementsPage.createUpdateAdvertisement(advertisement);
         try {
-            Thread.sleep(WebConstants.waitMilliSeconds);
+            Thread.sleep(WebConstants.waitMilliSeconds+1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -303,7 +303,7 @@ public class FunctionalTest {
         }
     }
 
-    StaffPage accessStaffPage(NavigationMenu navigationMenu) {
+    StaffPage accessStaffPage(WebDriver webDriver, NavigationMenu navigationMenu) {
         StaffPage staffPage = navigationMenu.clickStaffLink();
         try {
             Thread.sleep(WebConstants.waitMilliSeconds);
@@ -327,7 +327,7 @@ public class FunctionalTest {
         assertEquals(WebConstants.staffUrl, webDriver.getCurrentUrl());
     }
 
-    void deleteStaff(StaffPage staffPage, Staff staff) {
+    void deleteStaff(WebDriver webDriver, Staff staff, StaffPage staffPage) {
         assertEquals(WebConstants.staffUrl, webDriver.getCurrentUrl());
         staffPage.clickDeleteStaffBtn(staff.getDeleteBtn());
         try {
@@ -340,7 +340,7 @@ public class FunctionalTest {
     }
 
 
-    DashboardPage accessDashboardPage(NavigationMenu navigationMenu) {
+    DashboardPage accessDashboardPage(WebDriver webDriver, NavigationMenu navigationMenu) {
         DashboardPage dashboardPage = navigationMenu.clickDashboardLink();
         try {
             Thread.sleep(WebConstants.waitMilliSeconds);
@@ -363,7 +363,7 @@ public class FunctionalTest {
         return reportPage;
     }
 
-    StoreReportPage accessStoreReportPage(NavigationMenu navigationMenu) {
+    StoreReportPage accessStoreReportPage(WebDriver webDriver, NavigationMenu navigationMenu) {
         StoreReportPage storeReportPage = navigationMenu.clickStoreReportLink();
         try {
             Thread.sleep(WebConstants.waitMilliSeconds);
@@ -374,7 +374,18 @@ public class FunctionalTest {
         return storeReportPage;
     }
 
-    CategoryReportPage accessCategoryReportPage(NavigationMenu navigationMenu) {
+    SalesReportPage accessSalesReportPage(WebDriver webDriver, NavigationMenu navigationMenu) {
+        SalesReportPage salesReportPage = navigationMenu.clickSalesReportLink();
+        try {
+            Thread.sleep(WebConstants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(WebConstants.salesReportsUrl, webDriver.getCurrentUrl());
+        return salesReportPage;
+    }
+
+    CategoryReportPage accessCategoryReportPage(WebDriver webDriver, NavigationMenu navigationMenu) {
         CategoryReportPage categoryReportPage = navigationMenu.clickCategoryReportLink();
         try {
             Thread.sleep(WebConstants.waitMilliSeconds);

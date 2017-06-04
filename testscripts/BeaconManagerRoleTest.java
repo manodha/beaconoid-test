@@ -32,7 +32,7 @@ public class BeaconManagerRoleTest extends FunctionalTest {
 
     @BeforeTest
     @Parameters({"email", "password", "name4", "email4", "nickname4", "password4", "confirmPassword4", "beacon_manager_role"})
-    public void setUpTestData(String loginEmail, String loginPassword, String name, String email, String nickname,
+    public void setupTestData(String loginEmail, String loginPassword, String name, String email, String nickname,
                               String password, String confirmPassword, String role) {
         navigationMenu = loginToBeaconoid(webDriver, loginEmail, loginPassword);
 
@@ -45,7 +45,7 @@ public class BeaconManagerRoleTest extends FunctionalTest {
         createCategory(webDriver, categoryPage, WebConstants.defaultTestCategory);
 
         //Creating the user with the role BeaconManager
-        staffPage = accessStaffPage(navigationMenu);
+        staffPage = accessStaffPage(webDriver, navigationMenu);
         createStaff(staffPage, new Staff(name, email, nickname, password, confirmPassword, role));
 
         // Logging out the Super Admin
@@ -59,13 +59,13 @@ public class BeaconManagerRoleTest extends FunctionalTest {
         navigationMenu = loginToBeaconoid(webDriver, email, password);
     }
 
-    @Test(priority = 1, testName = "TC073", groups = "BeaconManager")
+    @Test(priority = 1, testName = "TC_SR_01", groups = "BeaconManager")
     public void checkIfBMCanAcessStaffPage() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getStaffLink());
     }
 
-    @Test(priority = 2, testName = "TC074", groups = "BeaconManager")
+    @Test(priority = 2, testName = "TC_SR_02", groups = "BeaconManager")
     public void checkIfBMCanAcessReports() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getReportLink());
@@ -73,19 +73,19 @@ public class BeaconManagerRoleTest extends FunctionalTest {
 
     /* Beacon Manager - Stores Page */
 
-    @Test(priority = 3, testName = "TC075", groups = "BeaconManager")
+    @Test(priority = 3, testName = "TC_SR_03", groups = "BeaconManager")
     public void checkIfBMCanAccessStoresPage() {
         storesPage = accessStoresPage(webDriver, navigationMenu);
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 4, testName = "TC076", groups = "BeaconManager")
+    @Test(priority = 4, testName = "TC_SR_04", groups = "BeaconManager")
     public void checkIfBMCanSeeAListOfStores() {
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
         assertNotNull(storesPage.getAllStores());
     }
 
-    @Test(priority = 5, testName = "TC077", groups = "BeaconManager")
+    @Test(priority = 5, testName = "TC_SR_05", groups = "BeaconManager")
     public void checkIfBMCanCreaNewStore() {
         storesPage.clickNewStore();
         try {
@@ -97,7 +97,7 @@ public class BeaconManagerRoleTest extends FunctionalTest {
         assertEquals(WebConstants.notAuthorisedMsg, storesPage.getDangerAlert());
     }
 
-    @Test(priority = 6, testName = "TC078", groups = "BeaconManager")
+    @Test(priority = 6, testName = "TC_SR_06", groups = "BeaconManager")
     public void checkIfBMCanUpdateStore() {
         Stores store = storesPage.getStore(storesPage.getAllStores(), WebConstants.defaultTestStore.getName(),
                 WebConstants.defaultTestStore.getStoreCode());
@@ -111,7 +111,7 @@ public class BeaconManagerRoleTest extends FunctionalTest {
         assertEquals(WebConstants.notAuthorisedMsg, storesPage.getDangerAlert());
     }
 
-    @Test(priority = 7, testName = "TC079", groups = "BeaconManager")
+    @Test(priority = 7, testName = "TC_SR_07", groups = "BeaconManager")
     public void checkIfBMCanDeleteStore() {
         Stores store = storesPage.getStore(storesPage.getAllStores(), WebConstants.defaultTestStore.getName(),
                 WebConstants.defaultTestStore.getStoreCode());
@@ -126,19 +126,19 @@ public class BeaconManagerRoleTest extends FunctionalTest {
 
     /* Beacon Manager - Category Page */
 
-    @Test(priority = 8, testName = "TC080", groups = "BeaconManager")
+    @Test(priority = 8, testName = "TC_SR_08", groups = "BeaconManager")
     public void checkIfBMCanAccessCategoryPage() {
         categoryPage = accessCategoriesPage(webDriver, navigationMenu);
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 9, testName = "TC081", groups = "BeaconManager")
+    @Test(priority = 9, testName = "TC_SR_09", groups = "BeaconManager")
     public void checkIfBMCanSeeAListOfCategories() {
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
         assertNotNull(categoryPage.getAllCategories());
     }
 
-    @Test(priority = 10, testName = "TC082", groups = "BeaconManager")
+    @Test(priority = 10, testName = "TC_SR_10", groups = "BeaconManager")
     public void checkIfBMCanCreaNewCategory() {
         categoryPage.clickNewCategoryBtn();
         try {
@@ -150,7 +150,7 @@ public class BeaconManagerRoleTest extends FunctionalTest {
         assertEquals(WebConstants.notAuthorisedMsg, categoryPage.getDangerAlert());
     }
 
-    @Test(priority = 11, testName = "TC083", groups = "BeaconManager")
+    @Test(priority = 11, testName = "TC_SR_11", groups = "BeaconManager")
     public void checkIfBMCanUpdateCategory() {
         Category category = categoryPage.getCategory(categoryPage.getAllCategories(), WebConstants.defaultTestCategory.getCategoryName(),
                 WebConstants.defaultTestCategory.getCategoryDescription());
@@ -164,7 +164,7 @@ public class BeaconManagerRoleTest extends FunctionalTest {
         assertEquals(WebConstants.notAuthorisedMsg, categoryPage.getDangerAlert());
     }
 
-    @Test(priority = 12, testName = "TC084", groups = "BeaconManager")
+    @Test(priority = 12, testName = "TC_SR_12", groups = "BeaconManager")
     public void checkIfBMCanDeleteCategory() {
         Category category = categoryPage.getCategory(categoryPage.getAllCategories(), WebConstants.defaultTestCategory.getCategoryName(),
                 WebConstants.defaultTestCategory.getCategoryDescription());
@@ -180,56 +180,56 @@ public class BeaconManagerRoleTest extends FunctionalTest {
 
     /* Beacon Manager - Beacons Page */
 
-    @Test(priority = 13, testName = "TC085", groups = "BeaconManager")
-    public void checkIfBMCanAccessBeaconsPage() {
+    @Test(priority = 13, testName = "TC_SR_13", groups = "BeaconManager")
+    public void checkIfBMCanAccessBeaconsPage() throws InterruptedException {
         beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 14, testName = "TC086", groups = "BeaconManager")
+    @Test(priority = 14, testName = "TC_SR_14", groups = "BeaconManager")
     @Parameters({"uniqueRef1", "beaconName1", "currentStatus1", "latitude1", "longitude1"})
     public void checkIfBMCanCreaNewBeacon(String uniqueRef, String beaconName, String status, String latitude,
-                                          String longitude) {
+                                          String longitude) throws InterruptedException {
         createBeacon(webDriver, beaconsPage, new Beacons(uniqueRef, beaconName, WebConstants.defaultTestStore.getName(), status,
                 latitude, longitude));
-        assertThat(beaconsPage.getOtherBeaconsList(), hasItem(allOf(
+        assertThat(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), hasItem(allOf(
                 hasProperty("uniqueRef", equalTo(uniqueRef)),
                 hasProperty("name", equalTo(beaconName)
                 ))));
     }
 
-    @Test(priority = 15, testName = "TC087", groups = "BeaconManager")
+    @Test(priority = 15, testName = "TC_SR_15", groups = "BeaconManager")
     public void checkIfBMCanSeeAListOfBeacons() {
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
-        assertNotNull(beaconsPage.getOtherBeaconsList());
+        assertNotNull(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle));
     }
 
-    @Test(priority = 16, testName = "TC088", groups = "BeaconManager")
+    @Test(priority = 16, testName = "TC_SR_16", groups = "BeaconManager")
     @Parameters({"uniqueRef1", "beaconName1"})
-    public void checkIfBMCanUpdateBeacon(String uniqueRef, String beaconName) {
-        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getOtherBeaconsList(), uniqueRef, beaconName);
+    public void checkIfBMCanUpdateBeacon(String uniqueRef, String beaconName) throws InterruptedException {
+        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), uniqueRef, beaconName);
         updateBeacon(webDriver, beaconsPage, beacon, WebConstants.defaultTestBeacon);
 
-        assertThat(beaconsPage.getOtherBeaconsList(), hasItem(allOf(
+        assertThat(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), hasItem(allOf(
                 hasProperty("uniqueRef", equalTo(WebConstants.defaultTestBeacon.getUniqueRef())),
                 hasProperty("name", equalTo(WebConstants.defaultTestBeacon.getName()))
         )));
 
-        assertThat(beaconsPage.getOtherBeaconsList(), not(hasItem(allOf(
+        assertThat(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), not(hasItem(allOf(
                 hasProperty("uniqueRef", equalTo(uniqueRef)),
                 hasProperty("name", equalTo(beaconName))
         ))));
     }
 
-    @Test(priority = 22, testName = "TC089", groups = "BeaconManager")
-    public void checkIfBMCanDeleteBeacon() {
+    @Test(priority = 22, testName = "TC_SR_17", groups = "BeaconManager")
+    public void checkIfBMCanDeleteBeacon() throws InterruptedException {
         if (!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
             beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
-        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getOtherBeaconsList(), WebConstants.defaultTestBeacon.getUniqueRef(),
+        Beacons beacon = beaconsPage.getBeacon(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), WebConstants.defaultTestBeacon.getUniqueRef(),
                 WebConstants.defaultTestBeacon.getName());
         deleteBeacon(webDriver, beaconsPage, beacon);
 
-        assertThat(beaconsPage.getOtherBeaconsList(), not(hasItem(allOf(
+        assertThat(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), not(hasItem(allOf(
                 hasProperty("uniqueRef", equalTo(WebConstants.defaultTestBeacon.getUniqueRef())),
                 hasProperty("name", equalTo(WebConstants.defaultTestBeacon.getName())
                 )))));
@@ -237,13 +237,13 @@ public class BeaconManagerRoleTest extends FunctionalTest {
 
     /* Beacon Manager - Advertisements Page */
 
-    @Test(priority = 17, testName = "TC090", groups = "BeaconManager")
+    @Test(priority = 17, testName = "TC_SR_18", groups = "BeaconManager")
     public void checkIfBMCanAccessAdvertisementPage() {
         advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
         assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 18, testName = "TC091", groups = "BeaconManager")
+    @Test(priority = 18, testName = "TC_SR_19", groups = "BeaconManager")
     public void checkIfBMCanCreaNewAdvertisement() {
         createAdvertisement(webDriver, advertisementsPage, WebConstants.defaultTestAdvertisement);
 
@@ -256,13 +256,13 @@ public class BeaconManagerRoleTest extends FunctionalTest {
         )));
     }
 
-    @Test(priority = 19, testName = "TC092", groups = "BeaconManager")
+    @Test(priority = 19, testName = "TC_SR_20", groups = "BeaconManager")
     public void checkIfBMCanSeeAListOfAdvertisement() {
         assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
         assertNotNull(advertisementsPage.getAllAdvertisements());
     }
 
-    @Test(priority = 20, testName = "TC093", groups = "BeaconManager")
+    @Test(priority = 20, testName = "TC_SR_21", groups = "BeaconManager")
     @Parameters({"adverName", "adverDescription", "adverImage", "adverPrice"})
     public void checkIfBMCanUpdateAdvertisement(String name, String description, String image, String price) {
         Advertisement advertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(),
@@ -290,7 +290,7 @@ public class BeaconManagerRoleTest extends FunctionalTest {
         )));
     }
 
-    @Test(priority = 21, testName = "TC094", groups = "BeaconManager")
+    @Test(priority = 21, testName = "TC_SR_22", groups = "BeaconManager")
     @Parameters({"adverName"})
     public void checkIfBMCanDeleteAdvertisement(String name) {
         Advertisement advertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(), name, WebConstants.defaultTestBeacon.getName());
@@ -302,9 +302,9 @@ public class BeaconManagerRoleTest extends FunctionalTest {
         ))));
     }
 
-    @Test(priority = 23, testName = "TC095", groups = "BeaconManager")
+    @Test(priority = 23, testName = "TC_SR_23", groups = "BeaconManager")
     public void checkIfBMCanAdcessDashboard() {
-        dashboardPage = accessDashboardPage(navigationMenu);
+        dashboardPage = accessDashboardPage(webDriver, navigationMenu);
         assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
     }
 
@@ -325,8 +325,8 @@ public class BeaconManagerRoleTest extends FunctionalTest {
         storesPage = accessStoresPage(webDriver, navigationMenu);
         deleteStore(webDriver, storesPage, WebConstants.defaultTestStore);
 
-        staffPage = accessStaffPage(navigationMenu);
-        deleteStaff(staffPage, staffPage.getStaffByRole(role));
+        staffPage = accessStaffPage(webDriver, navigationMenu);
+        deleteStaff(webDriver, staffPage.getStaffByRole(role), staffPage);
     }
 
 }
