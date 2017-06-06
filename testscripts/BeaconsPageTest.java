@@ -40,20 +40,20 @@ public class BeaconsPageTest extends FunctionalTest {
     }
 
 
-    @Test(priority = 1, testName = "TC_BP_01")
+    @Test(priority = 1, testName = "TC_BP_01", description = "Verify that user can see the title Beacons when the Beacons Page is accessed from the Navigation Menu")
     public void chkIfUserCanAccessBP() throws InterruptedException {
         beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
         assertEquals(WebConstants.beaconIndexTitle, beaconsPage.getIndexTitle());
     }
 
-    @Test(priority = 2, testName = "TC_BP_02")
+    @Test(priority = 2, testName = "TC_BP_02", description = "Verify that the message 'No other beacon found.'  is visible in the Other Beacons Table if there are no Other Beacons created.")
     public void chkIfNoOtherBeaconMsgIsShown(){
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
         assertEquals(WebConstants.noOtherBeaconTxt, beaconsPage.getNoOtherBeaconTxt());
     }
 
-    @Test(priority = 3, testName = "TC_BP_03")
+    @Test(priority = 3, testName = "TC_BP_03", description = "Verify that user can not create a Other Beacon if the required fields are not filled")
     @Parameters({"uniqueRef", "beaconName", "currentStatus", "latitude"})
     public void checkIfBeaconBeCreaWORF(String uniqueRef, String beaconName, String currentStatus, String latitude) throws InterruptedException {
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
@@ -94,7 +94,7 @@ public class BeaconsPageTest extends FunctionalTest {
 
     }
 
-    @Test(priority = 4, testName = "TC_BP_04")
+    @Test(priority = 4, testName = "TC_BP_04", description = "Verify that user can create a Other Beacon if all the required fields are filled")
     @Parameters({"uniqueRef", "beaconName", "currentStatus", "latitude", "longitude"})
     public void checkIfBeaconBeCreaWRF(String uniqueRef, String beaconName, String currentStatus, String latitude,
                                        String longitude) throws InterruptedException {
@@ -108,8 +108,8 @@ public class BeaconsPageTest extends FunctionalTest {
                 hasProperty("name", equalTo(beaconName)))));
     }
 
-    @Test(priority = 5, testName = "TC_BP_05")
-    @Parameters({"uniqueRef", "beaconName", "currentStatus", "latitude", "longitude"})
+    @Test(priority = 5, testName = "TC_BP_05", description = "Verify that user can not create a Other Beacon with the same name and/or unique reference")
+    @Parameters({"uniqueRefNew", "beaconName", "currentStatus", "latitude", "longitude"})
     public void checkIfBeaconBeCreaWSN(String uniqueRef, String beaconName, String currentStatus, String latitude,
                                        String longitude) throws InterruptedException {
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
@@ -122,10 +122,10 @@ public class BeaconsPageTest extends FunctionalTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(WebConstants.duplicateBeaconDanger, beaconsPage.getDangerAlert());
+        assertEquals(WebConstants.sameBeaconName, beaconsPage.getDangerAlert());
+        assertEquals(WebConstants.addBeaconUrl, webDriver.getCurrentUrl());
 
-        // TODO Uncomment below line when the issue get resolved
-        // if(!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
+        if(!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
             beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
 
         allBeacons = beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle);
@@ -138,7 +138,7 @@ public class BeaconsPageTest extends FunctionalTest {
         assertEquals(1, numOfBeaconWSN);
     }
 
-    @Test(priority = 6, testName = "TC_BP_06")
+    @Test(priority = 6, testName = "TC_BP_06", description = "Verify that the created Other Beacon in the Test Case TC_BP_04 will be in the Other Beacons Table")
     @Parameters({"uniqueRef", "beaconName",})
     public void chkIfOBeaconIsInOBeaconTable(String uniqueRef, String beaconName) throws InterruptedException {
         if(!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
@@ -148,7 +148,7 @@ public class BeaconsPageTest extends FunctionalTest {
                 hasProperty("name", equalTo(beaconName)))));
     }
 
-    @Test(priority = 7, testName = "TC_BP_07")
+    @Test(priority = 7, testName = "TC_BP_07", description = "Verify that user can not update a Other Beacon if the required fields are not filled")
     @Parameters({"uniqueRef", "beaconName", "uniqueRefNew", "beaconNameNew", "currentStatusNew", "latitudeNew", "longitudeNew"})
     public void chkIfBeaconBeUpdaWORF(String oldRef, String oldName, String ref, String name, String status, String latitude,
                                          String longitude) throws InterruptedException {
@@ -188,7 +188,7 @@ public class BeaconsPageTest extends FunctionalTest {
 
     }
 
-    @Test(priority = 8, testName = "TC_BP_08")
+    @Test(priority = 8, testName = "TC_BP_08", description = "Verify that user can update a Other Beacon successfully if the required fields are filled")
     @Parameters({"uniqueRef", "beaconName", "uniqueRefNew", "beaconNameNew", "currentStatusNew", "latitudeNew", "longitudeNew"})
     public void chkIfBeaconBeUpdaWRF(String uniqueRef, String beaconName, String uniqueRefNew, String beaconNameNew,
                                        String currentStatusNew, String latitudeNew, String longitudeNew) throws InterruptedException {
@@ -219,7 +219,7 @@ public class BeaconsPageTest extends FunctionalTest {
         createBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
     }
 
-    @Test(priority = 9, testName = "TC_BP_09", groups = "UpdateBeaconWSN")
+    @Test(priority = 9, testName = "TC_BP_09", groups = "UpdateBeaconWSN", description = "Verify that user can not update a Other Beacon with an existing Beacon name and/or unique reference")
     @Parameters({"uniqueRefNew", "beaconNameNew"})
     public void chkIfBeaconBeUpdaWSN(String ref, String name) throws InterruptedException {
         if(!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
@@ -233,11 +233,8 @@ public class BeaconsPageTest extends FunctionalTest {
         beaconsPage.createUpdateBeacon(WebConstants.defaultTestBeacon);
         Thread.sleep(WebConstants.waitMilliSeconds);
 
-        assertEquals(WebConstants.sameBeaconName, beaconsPage.getDangerAlert());
-        // TODO uncomment the below line when the issue is fixed.
-        //assertEquals(editLink, webDriver.getCurrentUrl());
-
-        assertEquals(WebConstants.sameBeaconName, beaconsPage.getDangerAlert());
+        assertEquals(editLink, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.sameBeaconName+"\n"+ WebConstants.sameUniqueRef, beaconsPage.getDangerAlert());
 
         if(!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
             beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
@@ -276,7 +273,7 @@ public class BeaconsPageTest extends FunctionalTest {
 
     }
 
-    @Test(priority = 10, testName = "TC_BP_10", groups = "DeleBeaconWithNoAdver")
+    @Test(priority = 10, testName = "TC_BP_10", groups = "DeleBeaconWithNoAdver", description = "Verify that Other Beacon can be deleted successfully if the Beacon is not assigned to an Advertisement")
     @Parameters({"uniqueRefNew", "beaconNameNew"})
     public void checkIfBeaconWOAdverCanBeDel(String uniqueRefNew, String beaconNameNew) throws InterruptedException {
         // Accessing the Beacons Page
@@ -295,7 +292,7 @@ public class BeaconsPageTest extends FunctionalTest {
     }
 
 
-    @Test(priority = 11, testName = "TC_BP_11")
+    @Test(priority = 11, testName = "TC_BP_11", description = "Verify that User can view the Advertisements of the specific Beacon")
     public void chkIfUCanViewBeaconAver() throws InterruptedException {
         // Accessing the Beacons Page
         if(!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
@@ -316,7 +313,7 @@ public class BeaconsPageTest extends FunctionalTest {
         ))));
     }
 
-    @Test(priority = 12, testName = "TC_BP_12")
+    @Test(priority = 12, testName = "TC_BP_12", description = "Verify that Beacon can not be deleted if the Beacon is assigned to an Advertisement and the user is prompted with an error message")
     public void chkIfBeaconWAdverCanBeDel() throws InterruptedException {
         if(!webDriver.getCurrentUrl().equals(WebConstants.beaconsUrl))
             beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
@@ -336,29 +333,24 @@ public class BeaconsPageTest extends FunctionalTest {
         )));
     }
 
-
-    @Test(priority = 13, testName = "TC_BP_13")
+    @Test(priority = 13, testName = "TC_BP_13", description = "Verify that unregistered Kontakt Beacons are listed in the 'Unregistered List from Kontakt' table")
     public void chkIfUnregBeaconsAreInURBL(){
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
         assertNotNull(beaconsPage.getUnregisteredList());
     }
 
-    @Test(priority = 14, testName = "TC_BP_14")
+    @Test(priority = 14, testName = "TC_BP_14", description = "Verify that the message 'No Registered beacon found.' is shown in the 'Registered List from Kontakt' table if there are no registered Knotakt Beacons")
     public void chkIfNoRegBeaconMsgIsShown(){
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
         assertEquals(WebConstants.noRegBeaconTxt, beaconsPage.getNoRegBeaconTxt());
     }
-
 
     // TODO Implement the Test Cases TC_BP_15 - Test Cases TC_BP_25
 
     @Test(priority = 15, testName = "TC_BP_15")
     @Parameters({"uniqueRef", "beaconName", "currentStatus", "latitude", "longitude"})
     public void chkIfUnregBeaconBeReg(String ref, String name, String status, String latitude, String longitude){
-
     }
-
-
 
     @AfterTest
     public void clearAllTestData() throws InterruptedException {
@@ -390,5 +382,4 @@ public class BeaconsPageTest extends FunctionalTest {
             deleteStore(webDriver, storesPage, store);
         }
     }
-
 }

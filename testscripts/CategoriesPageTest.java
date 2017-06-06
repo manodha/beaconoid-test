@@ -41,14 +41,14 @@ public class CategoriesPageTest extends FunctionalTest {
         createBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
     }
 
-    @Test(priority = 1, testName = "TC_CP_01")
+    @Test(priority = 1, testName = "TC_CP_01", description = "Verify that user can see the title Categories when the Categories Page is accessed from the Navigation Menu")
     public void chkIfUserCanAccessCatePage(){
         // Accessing the categories page.
         categoryPage = accessCategoriesPage(webDriver, navigationMenu);
         assertEquals(WebConstants.cateIndexTitle, categoryPage.getCateIndexTitle());
     }
 
-    @Test(priority = 2, testName = "TC_CP_02")
+    @Test(priority = 2, testName = "TC_CP_02", description = "Verify that the message 'No categories found.'  is visible in the Categories Table if there are no categories created.")
     public void  chkIfNoCateMsgIsShown(){
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
         // Verifying that there are no categories
@@ -57,7 +57,7 @@ public class CategoriesPageTest extends FunctionalTest {
         Assert.assertEquals(categoryPage.getNoCateTxt(), WebConstants.noCateTxt);
     }
 
-    @Test(priority = 3, testName = "TC_CP_03")
+    @Test(priority = 3, testName = "TC_CP_03", description = "Verify that user can not create a category if the required fields are not filled")
     @Parameters({"categoryName", "categoryDescription"})
     public void chkIfCateCanBeCreaWORF(String name, String desc){
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
@@ -74,7 +74,7 @@ public class CategoriesPageTest extends FunctionalTest {
         assertEquals(WebConstants.addCategoryUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 4, testName = "TC_CP_04")
+    @Test(priority = 4, testName = "TC_CP_04", description = "Verify that user can create a category if all the required fields are filled")
     @Parameters({"categoryName", "categoryDescription"})
     public void chkIfCateCanBeCreaWRF(String name, String desc) throws InterruptedException {
         assertEquals(WebConstants.addCategoryUrl, webDriver.getCurrentUrl());
@@ -91,7 +91,7 @@ public class CategoriesPageTest extends FunctionalTest {
         )));
     }
 
-    @Test(priority = 5, testName = "TC_CP_05")
+    @Test(priority = 5, testName = "TC_CP_05", description = "Verify that user can not create a category with the same name")
     @Parameters({"categoryName", "categoryDescription"})
     public void chkIfCateCanBeCreWSN(String name, String desc) throws InterruptedException {
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
@@ -102,7 +102,7 @@ public class CategoriesPageTest extends FunctionalTest {
 
         // Verifying that URL didn't changed and a Error message is shown to the user
         assertEquals(WebConstants.addCategoryUrl, webDriver.getCurrentUrl());
-        assertEquals(WebConstants.sameCreaCateName, categoryPage.getDangerAlert());
+        assertEquals(WebConstants.sameCateName, categoryPage.getDangerAlert());
 
         // Acessing the Categories Page
         if(!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
@@ -119,11 +119,10 @@ public class CategoriesPageTest extends FunctionalTest {
         assertEquals(1, numOfCateWSN);
     }
 
-    @Test(priority = 6, testName = "TC_CP_06")
+    @Test(priority = 6, testName = "TC_CP_06", description = "Verify that the created Category in the Test Case TC_CP_04 will be in the Categories Table")
     @Parameters({"categoryName", "categoryDescription"})
     public void chkIfCateIsInCateTable(String name, String desc){
-        // TODO Uncomment the below code.
-        //if(!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
+        if(!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
             categoryPage = accessCategoriesPage(webDriver, navigationMenu);
         // Check if Category Table has category which was created
         assertNotNull(categoryPage.getAllCategories());
@@ -134,7 +133,7 @@ public class CategoriesPageTest extends FunctionalTest {
                 ))));
     }
 
-    @Test(priority = 7, testName = "TC_CP_07")
+    @Test(priority = 7, testName = "TC_CP_07", description = "Verify that user can not update a category if the required fields are not filled")
     @Parameters({"categoryName", "categoryDescription", "categoryNameNew", "categoryDescriptionNew"})
     public void chkIfCateCanUpdaWORF(String oldName, String oldDesc, String newName, String newDesc){
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
@@ -162,7 +161,7 @@ public class CategoriesPageTest extends FunctionalTest {
     }
 
 
-    @Test(priority = 8, testName = "TC_CP_08")
+    @Test(priority = 8, testName = "TC_CP_08", description = "Verify that user can update a category successfully if the required fields are filled")
     @Parameters({"categoryName", "categoryDescription", "categoryNameNew", "categoryDescriptionNew"})
     public void chkIfCateCanBeUpdaWRF(String categoryName, String categoryDescription, String categoryNameNew,
                                      String categoryDescriptionNew) {
@@ -194,7 +193,7 @@ public class CategoriesPageTest extends FunctionalTest {
         createCategory(webDriver, categoryPage, WebConstants.defaultTestCategory);
     }
 
-    @Test(priority = 9, testName = "TC_CP_09", groups = "UpdaCateWSN")
+    @Test(priority = 9, testName = "TC_CP_09", groups = "UpdaCateWSN", description = "Verify that user can not update a category with an existing category name")
     @Parameters({"categoryNameNew", "categoryDescriptionNew"})
     public void chkIfCateCanBeUpdaWSN(String name, String desc) throws InterruptedException {
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
@@ -206,7 +205,7 @@ public class CategoriesPageTest extends FunctionalTest {
         categoryPage.createUpdateCategory(WebConstants.defaultTestCategory);
         Thread.sleep(WebConstants.waitMilliSeconds);
 
-        assertEquals(WebConstants.sameUpdaCateName, categoryPage.getDangerAlert());
+        assertEquals(WebConstants.sameCateName, categoryPage.getDangerAlert());
         assertEquals(editLink, webDriver.getCurrentUrl());
 
         if(!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
@@ -220,7 +219,6 @@ public class CategoriesPageTest extends FunctionalTest {
         }
         // Verifying that there is only one category with the same name.
         assertEquals(1, numOfCateWSN);
-
 
     }
 
@@ -237,7 +235,7 @@ public class CategoriesPageTest extends FunctionalTest {
     }
 
 
-    @Test(priority = 10, testName = "TC_CP_10", groups = "DelCate")
+    @Test(priority = 10, testName = "TC_CP_10", groups = "DelCate", description = "Verify that category can be deleted successfully if the category is not assigned to an advertisement")
     @Parameters({"categoryNameNew", "categoryDescriptionNew"})
     public void chkIfCateWithNoAdverCanBeDel(String categoryName, String categoryDescription) {
         if(!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
@@ -254,7 +252,7 @@ public class CategoriesPageTest extends FunctionalTest {
                 hasProperty("categoryDescription", equalTo(categoryDescription))))));
     }
 
-    @Test(priority = 11, testName = "TC_CP_11", groups = "DelCate")
+    @Test(priority = 11, testName = "TC_CP_11", groups = "DelCate", description = "Verify that category can not be deleted if the category is assigned to an Advertisement and the user is prompted with an error message")
     public void chkIfCateWithAdverCanBeDel() {
         if (!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
             categoryPage = accessCategoriesPage(webDriver, navigationMenu);

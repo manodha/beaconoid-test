@@ -53,15 +53,14 @@ public class WebConstants {
     public static String noRegBeaconTxt = "No Registered beacon found.";
     public static String noOtherBeaconTxt = "No other beacon found.";
     public static String sameBeaconName = "Name has already been taken";
+    public static String sameUniqueRef = "Unique reference has already been taken";
     public static String delBeaconError = " cannot be deleted. Active advertisements are assigned to this beacon";
 
     public static String cateIndexTitle = "Categories";
     public static String noCateTxt = "No categories found.";
     public static String creaCateSuccess = "The Category has been created!";
-    // TODO add the message
-    public static String sameCreaCateName = "";
+    public static String sameCateName = "Name has already been taken";
     public static String updaCateSuccees = " has been updated!";
-    public static String sameUpdaCateName = "Name has already been taken";
     public static String addCategoryUrl = baseUrl + "categories/new";
     public static String categoriesUrl = baseUrl + "categories";
     public static String delCateSuccess = " has been deleted!";
@@ -82,8 +81,6 @@ public class WebConstants {
 
     public static String loginUrl = baseUrl + "users/sign_in";
     //public static String loginTitle = "Please Sign In";
-
-    public static String duplicateBeaconDanger = "Name has already been taken";
 
     public static String staffUrl = baseUrl + "staffs";
     public static String addStaffUrl = baseUrl + "staffs/new";
