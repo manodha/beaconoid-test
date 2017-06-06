@@ -72,7 +72,7 @@ public class WebConstants {
     public static String storeIndexTitle = "Stores";
     public static String noStoreTxt = "No store found.";
     public static String creaStoreSucess = "The Store has been created!";
-    public static String sameStoreName = "Sorry we can't add this store. Store with same name exists.";
+    public static String sameStoreName = "Name has already been taken";
     public static String updaStoreSucess = " has been updated!";
     public static String delStoreError = " has not been deleted! Beacons are assigned to this store.";
     public static String delStoreSucess = " has been deleted!";

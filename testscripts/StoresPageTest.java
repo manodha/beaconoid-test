@@ -36,14 +36,14 @@ public class StoresPageTest extends FunctionalTest {
         beacons = beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle);
     }
 
-    @Test(priority = 1, testName = "TC_SP_01")
+    @Test(priority = 1, testName = "TC_SP_01", description = "Verify that user can see the title Stores when the Store Page is accessed from the Navigation Menu")
     public void chkIfUserCanAccessSP(){
         // Accessing the stores Page
         storesPage = accessStoresPage(webDriver, navigationMenu);
         assertEquals(WebConstants.storeIndexTitle, storesPage.getIndexTitle());
     }
 
-    @Test(priority = 2, testName = "TC_SP_02")
+    @Test(priority = 2, testName = "TC_SP_02", description = "Verify that the message 'No store found.'  is visible in the Store Table if there are no stores created.")
     public void chkIfNoStoreMsgIsShown(){
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
         // Verifying that there are no stores
@@ -52,7 +52,7 @@ public class StoresPageTest extends FunctionalTest {
         assertEquals(storesPage.getNoStoreTxt(), WebConstants.noStoreTxt);
     }
 
-    @Test(priority = 3, testName = "TC_SP_03")
+    @Test(priority = 3, testName = "TC_SP_03", description = "Verify that user can not create a store if the required fields are not filled")
     @Parameters({"storeName", "storeUniqueCode"})
     public void chkIfStoreCanBeCreaWORF(String storeName, String storeUniqueCode) {
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
@@ -70,7 +70,7 @@ public class StoresPageTest extends FunctionalTest {
         assertEquals(WebConstants.addStoreUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 4, testName = "TC_SP_04")
+    @Test(priority = 4, testName = "TC_SP_04", description = "Verify that user can create a store if all the required fields are filled")
     @Parameters({"storeName", "storeUniqueCode"})
     public void checkIfStoreCanBeCreaWRF(String storeName, String storeUniqueCode) {
         assertEquals(WebConstants.addStoreUrl, webDriver.getCurrentUrl());
@@ -92,7 +92,7 @@ public class StoresPageTest extends FunctionalTest {
                 ))));
     }
 
-    @Test(priority = 5, testName = "TC_SP_05")
+    @Test(priority = 5, testName = "TC_SP_05", description = "Verify that user can not create a store with the same name")
     @Parameters({"storeName", "storeUniqueCode"})
     public void chkIfStoreCanBeCreaWSN(String name, String code){
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
@@ -103,14 +103,10 @@ public class StoresPageTest extends FunctionalTest {
 
         // checking if unsuccessfull message is shown to user
         assertEquals(WebConstants.sameStoreName, storesPage.getDangerAlert());
-
-        // TODO change the assert url to addStoreUrl
-        assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
+        assertEquals(WebConstants.addStoreUrl, webDriver.getCurrentUrl());
 
         // Accesing the stores page
-
-        //TODO uncomment the below code once the above issue has been resolved
-        // if(!webDriver.getCurrentUrl().equals(WebConstants.storesUrl))
+        if(!webDriver.getCurrentUrl().equals(WebConstants.storesUrl))
             storesPage = accessStoresPage(webDriver, navigationMenu);
 
         allStores = storesPage.getAllStores();
@@ -123,7 +119,7 @@ public class StoresPageTest extends FunctionalTest {
         assertEquals(1, numOfStoreWSN);
     }
 
-    @Test(priority = 6, testName = "TC_SP_06")
+    @Test(priority = 6, testName = "TC_SP_06", description = "Verify that the the created store in the Test Case TC_SP_04 will be in the Stores Table")
     @Parameters({"storeName", "storeUniqueCode"})
     public void chkIfStoreIsInStoreTable(String name, String code){
         // Verifying that there is at least one Store in the Store Table
@@ -136,7 +132,7 @@ public class StoresPageTest extends FunctionalTest {
 
     }
 
-    @Test(priority = 7, testName = "TC_SP_07")
+    @Test(priority = 7, testName = "TC_SP_07", description = "Verify that user can not update a store if the required fields are not filled")
     @Parameters({"storeName", "storeUniqueCode", "storeNameNew", "storeUniqueCodeNew"})
     public void chkIfStoreCanBeUpdaWORF(String oldName, String oldCode, String name, String code){
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
@@ -158,9 +154,7 @@ public class StoresPageTest extends FunctionalTest {
     }
 
 
-
-
-    @Test(priority = 8, testName = "TC_SP_08" )
+    @Test(priority = 8, testName = "TC_SP_08", description = "Verify that user can update a store successfully if the required fields are filled")
     @Parameters({"storeName", "storeUniqueCode", "storeNameNew", "storeUniqueCodeNew", "salesNew"})
     public void chkIfStoreCanBeUpda(String storeName, String storeUniqueCode, String storeNameNew,
                                       String storeUniqueCodeNew, String salesNew) {
@@ -183,7 +177,7 @@ public class StoresPageTest extends FunctionalTest {
         createStore(webDriver, storesPage, WebConstants.defaultTestStore);
     }
 
-    @Test(priority = 9, testName = "TC_SP_09", groups = "UpdateStoreWSN")
+    @Test(priority = 9, testName = "TC_SP_09", groups = "UpdateStoreWSN", description = "Verify that user can not update a store with an existing store name")
     @Parameters({"storeNameNew", "storeUniqueCodeNew"})
     public void checkIfStoreCanBeUpdaWSN(String name, String code) throws InterruptedException {
         Stores store = storesPage.getStore(storesPage.getAllStores(), name, code);
@@ -194,8 +188,7 @@ public class StoresPageTest extends FunctionalTest {
         storesPage.createUpdateStore(WebConstants.defaultTestStore);
         Thread.sleep(WebConstants.waitMilliSeconds);
         assertEquals(editLink, webDriver.getCurrentUrl());
-
-        /*TODO add the assertion for the faliure message*/
+        assertEquals(WebConstants.sameStoreName, storesPage.getDangerAlert());
 
         if(!webDriver.getCurrentUrl().equals(WebConstants.storesUrl))
             storesPage = accessStoresPage(webDriver, navigationMenu);
@@ -211,8 +204,7 @@ public class StoresPageTest extends FunctionalTest {
 
     }
 
-
-    @Test(priority = 10, testName = "TC_SP_10")
+    @Test(priority = 10, testName = "TC_SP_10", description = "Verify that store can be deleted successfully if the store is not assigned to an beacon")
     @Parameters({"storeNameNew", "storeUniqueCodeNew"})
     public void chkIfStoreWithNoBeaCanBeDel(String storeName, String storeUniqueCode) {
         if(!webDriver.getCurrentUrl().equals(WebConstants.storesUrl))
@@ -242,7 +234,7 @@ public class StoresPageTest extends FunctionalTest {
         storesPage = accessStoresPage(webDriver, navigationMenu);
     }
 
-    @Test(priority = 11, testName = "TC_SP_11", groups = "AssignedStore")
+    @Test(priority = 11, testName = "TC_SP_11", groups = "AssignedStore", description = "Verify that store can not be deleted if the store is assigned to an beacon and the user is prompted with an error message")
     public void checkIfStoreWithBeaconCanBeDel() {
         Stores store = storesPage.getStore(storesPage.getAllStores(), WebConstants.defaultTestStore.getName(),
                 WebConstants.defaultTestStore.getStoreCode());
