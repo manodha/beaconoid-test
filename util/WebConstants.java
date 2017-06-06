@@ -41,7 +41,7 @@ public class WebConstants {
     public static String newAdverTitle = "Add Advertisement";
     public static String editAdverTitle = "Edit Advertisement";
     public static String noAdverTxt = "No advertisement found.";
-    public static String sameAdverName = "";
+    public static String sameAdverNameBeacon = "Name and Beacon combination should be unique!";
 
     public static String addBeaconUrl = baseUrl + "beacons/new";
     public static String beaconsUrl = baseUrl + "beacons";

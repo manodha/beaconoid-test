@@ -46,13 +46,13 @@ public class AdvertisementsPageTest extends FunctionalTest {
         createBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
     }
 
-    @Test(priority = 1, testName = "TC_AP_01")
+    @Test(priority = 1, testName = "TC_AP_01", description = "Verify that user can see the title Advertisements when the Advertisements Page is accessed from the Navigation Menu")
     public void chkIfUserCanAccessAdverPage(){
         advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
         assertEquals(WebConstants.adverIndexTitle, advertisementsPage.getTitle());
     }
 
-    @Test(priority = 2, testName = "TC_AP_02")
+    @Test(priority = 2, testName = "TC_AP_02", description = "Verify that the message 'No advertisement found.'  is visible in the Advertisements Table if there are no advertisements created.")
     public void chkIfNoAdverMsgIsShown() {
         // Getting all the advertisments
         allAdvertisements = advertisementsPage.getAllAdvertisements();
@@ -61,7 +61,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
         }
     }
 
-    @Test(priority = 3, testName = "TC_AP_03")
+    @Test(priority = 3, testName = "TC_AP_03", description = "Verify that user can not create an Advertisement if the required fields are not filled")
     @Parameters({"adverName", "adverDescription", "adverImage", "adverPrice"})
     public void chkIfAdverBeCreaWORF(String adverName, String adverDescription, String image, String adverPrice) throws InterruptedException {
         assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
@@ -99,7 +99,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
     }
 
 
-    @Test(priority = 4, testName = "TC_AP_04")
+    @Test(priority = 4, testName = "TC_AP_04", description = "Verify that user can create an Advertisement if all the required fields are filled")
     @Parameters({"adverName", "adverDescription", "adverImage", "adverPrice"})
     public void chkIfAdverBeCreaWRF(String adverName, String adverDescription, String image, String adverPrice) {
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
@@ -117,10 +117,10 @@ public class AdvertisementsPageTest extends FunctionalTest {
         )));
     }
 
-    // TODO Uncomment the below assertion when the issue in TC_AP_04 is resolved
-    //@Test(priority = 5, testName = "TC_AP_05")
+
+    @Test(priority = 5, testName = "TC_AP_05", description = "Verify that user can not create an Advertisement with the same name and beacon name of a exisitng Advertisement")
     @Parameters({"adverName", "adverDescription", "adverImage", "adverPrice"})
-    public void chkIfAdverCanBeCreaWSN(String name, String desc, String image, String price) throws InterruptedException {
+    public void chkIfAdverCanBeCreaWSNB(String name, String desc, String image, String price) throws InterruptedException {
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
         advertisementsPage.clickNewAdvertisementBtn();
@@ -131,7 +131,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
         Thread.sleep(WebConstants.waitMilliSeconds);
 
         assertEquals(WebConstants.addAdvertisementUrl, webDriver.getCurrentUrl());
-        assertEquals(WebConstants.sameAdverName, advertisementsPage.getDangerAlert());
+        assertEquals(WebConstants.sameAdverNameBeacon, advertisementsPage.getDangerAlert());
 
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
@@ -146,7 +146,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
     }
 
 
-    @Test(priority = 6, testName = "TC_AP_06")
+    @Test(priority = 6, testName = "TC_AP_06", description = "Verify that the created Advertisement in the Test Case TC_AP_04 will be in the Advertisements Table")
     @Parameters({"adverName"})
     public void chkIfAdverIsInAdverTable(String adverName) {
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
@@ -161,7 +161,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
         )));
     }
 
-    @Test(priority = 7, testName = "TC_AP_06")
+    @Test(priority = 7, testName = "TC_AP_07", description = "Verify that user can not update an Advertisement if the required fields are not filled")
     @Parameters({"adverName", "adverNameNew", "adverDescriptionNew", "adverImageNew", "adverPriceNew"})
     public void chkIfAdverBeUpdaWORF(String adverName, String adverNameNew, String adverDescriptionNew, String image, String adverPriceNew) throws InterruptedException {
         assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
@@ -201,7 +201,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
 
     }
 
-    @Test(priority = 8, testName = "TC_AP_07")
+    @Test(priority = 8, testName = "TC_AP_08", description = "Verify that user can update an Advertisement successfully if the required fields are filled")
     @Parameters({"adverName", "adverNameNew", "adverDescriptionNew", "adverImageNew", "adverPriceNew"})
     public void chkIfAdverBeUpdaWRF(String adverName, String adverNameNew, String adverDescriptionNew, String image, String adverPriceNew) {
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
@@ -245,10 +245,10 @@ public class AdvertisementsPageTest extends FunctionalTest {
         createAdvertisement(webDriver, advertisementsPage, WebConstants.defaultTestAdvertisement);
     }
 
-    //TODO Uncomment the below assertion when the issue in TC_AP_04 is resolved
-    // @Test(priority = 9, testName = "TC_AP_09")
+
+    @Test(priority = 9, testName = "TC_AP_09", groups = "UpdaAdverWSN", description = "Verify that user can not update an Advertisement with the same name and beacon name of a exisitng Advertisement")
     @Parameters({"adverNameNew"})
-    public void chkIfAdverCanBeUpdaWSN(String name) throws InterruptedException {
+    public void chkIfAdverCanBeUpdaWSNB(String name) throws InterruptedException {
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
         Advertisement advertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(), name,
@@ -261,7 +261,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
         Thread.sleep(WebConstants.waitMilliSeconds);
 
         assertEquals(editLink, webDriver.getCurrentUrl());
-        assertEquals(WebConstants.sameAdverName, advertisementsPage.getDangerAlert());
+        assertEquals(WebConstants.sameAdverNameBeacon, advertisementsPage.getDangerAlert());
 
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
             advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
@@ -276,7 +276,7 @@ public class AdvertisementsPageTest extends FunctionalTest {
     }
 
 
-    @Test(priority = 10, testName = "TC046")
+    @Test(priority = 10, testName = "TC_AP_10", description = "Verify that user can delete an Advertisement")
     @Parameters({"adverNameNew"})
     public void chkIfAdverCanBeDel(String adverNameNew) {
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))

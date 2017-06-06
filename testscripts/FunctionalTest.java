@@ -272,7 +272,7 @@ public class FunctionalTest{
         assertEquals(WebConstants.newAdverTitle, advertisementsPage.getTitle());
         advertisementsPage.createUpdateAdvertisement(advertisement);
         try {
-            Thread.sleep(WebConstants.waitMilliSeconds+1500);
+            Thread.sleep(WebConstants.waitMilliSeconds*2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
