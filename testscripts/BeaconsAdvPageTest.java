@@ -58,7 +58,7 @@ public class BeaconsAdvPageTest extends FunctionalTest {
         beaconAdvPage = viewBeaconAdvertisements(webDriver, beaconsPage, testBeacon);
     }
 
-    @Test(priority = 1, testName = "TC_BAP_01")
+    @Test(priority = 1, testName = "TC_BAP_01", description = "Check if 'No advertisement found.' message is shown in the Advertisement table in the Specific Beacons Page")
     public void checkIFNoAdverMsgIsShown() {
         assertEquals(beaconUrl, webDriver.getCurrentUrl());
         assertNull(beaconAdvPage.getAllAdvertisements());
@@ -66,7 +66,7 @@ public class BeaconsAdvPageTest extends FunctionalTest {
     }
 
 
-    @Test(priority = 2, testName = "TC_BAP_02")
+    @Test(priority = 2, testName = "TC_BAP_02", description = "Check if user can create a Advertisement for that Specific Beacon")
     @Parameters({"adverName", "adverDescription", "adverImage", "adverPrice"})
     public void checkIfBeaconAdverCanBeCrea(String name, String desc, String image, String price) {
         assertEquals(beaconUrl, webDriver.getCurrentUrl());
@@ -91,13 +91,13 @@ public class BeaconsAdvPageTest extends FunctionalTest {
 
     }
 
-    @Test(priority = 3, testName = "TC_BAP_03")
+    @Test(priority = 3, testName = "TC_BAP_03", description = "Check if a list of Advertisements created against that beacon is shown in the Beacon Advertisement page")
     public void checkIfListBeaconAdverIsShown() {
         assertEquals(beaconUrl, webDriver.getCurrentUrl());
         assertNotNull(beaconAdvPage.getAllAdvertisements());
     }
 
-    @Test(priority = 4, testName = "TC_BAP_04")
+    @Test(priority = 4, testName = "TC_BAP_04", description = "Check if user can update an Advertisement in the Beacon Advertisement Page")
     @Parameters({"adverName", "adverNameNew", "adverDescriptionNew", "adverImageNew", "adverPriceNew"})
     public void checkIfBeaconAdverCanBeUpda(String adverName, String adverNameNew, String adverDescriptionNew, String image, String adverPriceNew) {
 
@@ -127,7 +127,7 @@ public class BeaconsAdvPageTest extends FunctionalTest {
         )));
     }
 
-    @Test(priority = 5, testName = "TC_BAP_05")
+    @Test(priority = 5, testName = "TC_BAP_05", description = "Check if user can delete an Advertisement in the Beacon Advertisement Page")
     @Parameters({"adverNameNew"})
     public void checkIfBeaconAdverCanBeDel(String adverName) {
         assertEquals(beaconUrl, webDriver.getCurrentUrl());
@@ -157,7 +157,7 @@ public class BeaconsAdvPageTest extends FunctionalTest {
         ))));
     }
 
-    @Test(priority = 6, testName = "TC_BAP_06")
+    @Test(priority = 6, testName = "TC_BAP_06", description = "Check if user is directed to the Beacon Page when clicked on Back in the Beacons Advertisement Page")
     public void checkIfBeaconPageIsOnBack() {
         if (!webDriver.getCurrentUrl().equals(beaconUrl)) {
             webDriver.get(beaconUrl);

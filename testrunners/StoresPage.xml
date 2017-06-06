@@ -8,7 +8,7 @@
     <parameter name="storeNameNew" value="Hungry Jacks Dandenong"/>
     <parameter name="storeUniqueCodeNew" value="HJ002"/>
     <parameter name="salesNew" value="100"/>
-    <test name="test">
+    <test name="Stores Page Test Cases">
         <classes>
             <class name="testscripts.StoresPageTest"/>
         </classes>

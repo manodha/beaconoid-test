@@ -64,37 +64,37 @@ public class URManagerRoleTest extends FunctionalTest {
     }
 
 
-    @Test(priority = 1, testName = "TC_SR_47", groups = "URManager")
+    @Test(priority = 1, testName = "TC_SR_47", groups = "URManager", description = "Check if a the Stores option is available for the user with the role User Report Manager")
     public void checkIfURMCantAcessStoresPage() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getStoresLink());
     }
 
-    @Test(priority = 2, testName = "TC_SR_48", groups = "URManager")
-    public void checkIfURMCantAccessCategoPage() {
+    @Test(priority = 2, testName = "TC_SR_48", groups = "URManager", description = "Check if a the Categories option is available for the user with the role User Report Manager")
+    public void checkIfURMCantAccessCatePage() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getCategoriesLink());
     }
 
-    @Test(priority = 3, testName = "TC_SR_49", groups = "URManager")
+    @Test(priority = 3, testName = "TC_SR_49", groups = "URManager", description = "Check if a the Beacons option is available for the user with the role User Report Manager")
     public void checkIfURMCantAccessBeaconPage() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getBeaconsLink());
     }
 
-    @Test(priority = 4, testName = "TC_SR_50", groups = "URManager")
+    @Test(priority = 4, testName = "TC_SR_50", groups = "URManager", description = "Check if a the Advertisements option is available for the user with the role User Report Manager")
     public void checkIfURMCantAccessAdverPage() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getAdvertisementsLink());
     }
 
-    @Test(priority = 5, testName = "TC_SR_51", groups = "URManager")
+    @Test(priority = 5, testName = "TC_SR_51", groups = "URManager", description = "Check if a the Staff option is available for the user with the role User Report Manager")
     public void checkIfURMCantAccessStaffPage() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getStaffLink());
     }
 
-    @Test(priority = 6, testName = "TC_SR_52", groups = "URManager")
+    @Test(priority = 6, testName = "TC_SR_52", groups = "URManager", description = "Check if User Report Manager can access Dashboard Page")
     public void checkIfURMCanAccessDashboard() {
         assertEquals(WebConstants.baseUrl, webDriver.getCurrentUrl());
         assertNotNull(navigationMenu.getDashboardLink());
@@ -102,7 +102,7 @@ public class URManagerRoleTest extends FunctionalTest {
         assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 7, testName = "TC_SR_53", groups = "URManager")
+    @Test(priority = 7, testName = "TC_SR_53", groups = "URManager", description = "Check if User Report Manager can access Reports Page")
     public void checkIfURMCanAccessReports() {
         assertNotNull(navigationMenu.getReportLink());
         reportPage = accessReportPage(webDriver, navigationMenu);

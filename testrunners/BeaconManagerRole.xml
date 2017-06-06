@@ -14,7 +14,6 @@
     <parameter name="beacon_manager_role" value="Beacon Manager"/>
     <parameter name="user_report_manager_role" value="User Report Manager"/>
 
-
     <!--Beacons Details-->
     <parameter name="uniqueRef1" value="TGI003"/>
     <parameter name="beaconName1" value="TGI Beacon 3"/>
@@ -28,7 +27,7 @@
     <parameter name="adverImage" value=""/>
     <parameter name="adverPrice" value="5.00"/>
 
-    <test name="test">
+    <test name="Beacon Manager Role Test Cases">
         <classes>
             <class name="testscripts.BeaconManagerRoleTest"/>
         </classes>

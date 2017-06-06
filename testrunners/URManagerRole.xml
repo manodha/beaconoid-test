@@ -14,7 +14,7 @@
     <parameter name="beacon_manager_role" value="Beacon Manager"/>
     <parameter name="user_report_manager_role" value="User Report Manager"/>
 
-    <test name="test">
+    <test name="User Manager Role Test Cases">
         <classes>
             <class name="testscripts.URManagerRoleTest"/>
         </classes>

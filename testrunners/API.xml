@@ -4,7 +4,7 @@
 
     <parameter name="clientEmail" value="manodha@yahoo.com"/>
 
-    <test name="test">
+    <test name="API Test Cases">
         <classes>
             <class name="testscripts.APITest"/>
         </classes>

@@ -7,7 +7,8 @@
     <parameter name="categoryDescription" value="Vitamins/Proteins/Supplements"/>
     <parameter name="categoryNameNew" value="Health"/>
     <parameter name="categoryDescriptionNew" value="Vitamins/Proteins"/>
-    <test name="test">
+
+    <test name="Categories Page Test Cases">
         <classes>
             <class name="testscripts.CategoriesPageTest"/>
         </classes>

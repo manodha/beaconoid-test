@@ -26,7 +26,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
 
     @BeforeTest
     @Parameters({"email", "password", "userName3", "userEmail3", "nickname3", "userPassword3", "confirmPassword3", "store_manager_role"})
-    public void setUpTestData(String loginEmail, String loginPassword, String name, String email, String nickname,
+    public void setupTestData(String loginEmail, String loginPassword, String name, String email, String nickname,
                               String password, String confirmPassword, String role) {
         navigationMenu = loginToBeaconoid(webDriver, loginEmail, loginPassword);
         staffPage = accessStaffPage(webDriver, navigationMenu);
@@ -55,20 +55,20 @@ public class StoreManagerRoleTest extends FunctionalTest {
         }
     }
 
-    @Test(priority = 1, testName = "TC096", groups = "stores_categories")
+    @Test(priority = 1, testName = "TC_SR_24", groups = "stores_categories", description = "Check if Store Manager can access Dashboard Page")
     public void checkIfSMCanAccessDasboard() {
         assertNotNull(navigationMenu.getDashboardLink());
         dashboardPage = accessDashboardPage(webDriver, navigationMenu);
         assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 2, testName = "TC097", groups = "stores_categories")
+    @Test(priority = 2, testName = "TC_SR_25", groups = "stores_categories", description = "Check if the Reports option is available in the Navigation Menu for the user with the role Store Manager")
     public void checkIfSMCanAccessReports() {
         assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getReportLink());
     }
 
-    @Test(priority = 3, testName = "TC098", groups = "stores_categories")
+    @Test(priority = 3, testName = "TC_SR_26", groups = "stores_categories", description = "Check if the Staff option is available in the Navigation Menu for the user with the role Store Manager")
     public void checkIfSMCanAccessStaffPage() {
         assertEquals(WebConstants.dashboardUrl, webDriver.getCurrentUrl());
         assertNull(navigationMenu.getReportLink());
@@ -76,14 +76,14 @@ public class StoreManagerRoleTest extends FunctionalTest {
 
     /* Store Manager - Stores Page Test Cases */
 
-    @Test(priority = 4, testName = "TC099", groups = "stores_categories")
+    @Test(priority = 4, testName = "TC_SR_27", groups = "stores_categories", description = "Check if Store Manager can access Stores Page")
     public void checkIfSMCanAccessStorePage() {
         assertNotNull(navigationMenu.getStoresLink());
         storesPage = accessStoresPage(webDriver, navigationMenu);
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 5, testName = "TC100", groups = "stores_categories")
+    @Test(priority = 5, testName = "TC_SR_28", groups = "stores_categories", description = "Check if Store Manager can create a new Store")
     @Parameters({"storeName", "storeUniqueCode", "sales"})
     public void checkIfSMCanCreaNewStore(String name, String uniqueCode, String sales) {
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
@@ -95,13 +95,13 @@ public class StoreManagerRoleTest extends FunctionalTest {
         )));
     }
 
-    @Test(priority = 6, testName = "TC101", groups = "stores_categories")
+    @Test(priority = 6, testName = "TC_SR_29", groups = "stores_categories", description = "Check if a list of Stores is visible to the Store Manager")
     public void checkIfSMCanSeeAListOfStores() {
         assertEquals(WebConstants.storesUrl, webDriver.getCurrentUrl());
         assertNotNull(storesPage.getAllStores());
     }
 
-    @Test(priority = 7, testName = "TC102", groups = "stores_categories")
+    @Test(priority = 7, testName = "TC_SR_30", groups = "stores_categories" ,description = "Check if Store Manager can update an existing Store")
     @Parameters({"storeName", "storeUniqueCode"})
     public void checkIfSMCanUpdaStore(String name, String code) {
         Stores store = storesPage.getStore(storesPage.getAllStores(), name, code);
@@ -118,7 +118,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
         )));
     }
 
-    @Test(priority = 23, testName = "TC103", groups = "delete_category_store")
+    @Test(priority = 23, testName = "TC_SR_31", groups = "delete_category_store", description = "Check if Store Manager can delete an existing Store")
     public void checkIfSMCanDeleteStore() {
         if (!webDriver.getCurrentUrl().equals(WebConstants.storesUrl))
             storesPage = accessStoresPage(webDriver, navigationMenu);
@@ -135,14 +135,14 @@ public class StoreManagerRoleTest extends FunctionalTest {
 
     /* Store Manager - Categories Page Test Cases */
 
-    @Test(priority = 8, testName = "TC104", groups = "stores_categories")
+    @Test(priority = 8, testName = "TC_SR_32", groups = "stores_categories", description = "Check if Store Manager can access Categories Page")
     public void checkIfSMCanAccessCategoPage() {
         assertNotNull(navigationMenu.getCategoriesLink());
         categoryPage = accessCategoriesPage(webDriver, navigationMenu);
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 9, testName = "TC105", groups = "stores_categories")
+    @Test(priority = 9, testName = "TC_SR_33", groups = "stores_categories", description = "Check if Store Manager can create a new Category")
     @Parameters({"categoryName", "categoryDescription"})
     public void checkIfSMCanCreaCategory(String name, String desc) {
         createCategory(webDriver, categoryPage, new Category(name, desc));
@@ -152,13 +152,13 @@ public class StoreManagerRoleTest extends FunctionalTest {
         )));
     }
 
-    @Test(priority = 10, testName = "TC106", groups = "stores_categories")
+    @Test(priority = 10, testName = "TC_SR_34", groups = "stores_categories", description = "Check if a list of Categories is visible to the Store Manager")
     public void checkIfSMCanSeeListOfCatego() {
         assertEquals(WebConstants.categoriesUrl, webDriver.getCurrentUrl());
         assertNotNull(categoryPage.getAllCategories());
     }
 
-    @Test(priority = 11, testName = "TC107", groups = "stores_categories")
+    @Test(priority = 11, testName = "TC_SR_35", groups = "stores_categories", description = "Check if Store Manager can update an existing Category")
     @Parameters({"categoryName", "categoryDescription"})
     public void checkIfSMCanUpdaCatego(String name, String desc) {
         Category category = categoryPage.getCategory(categoryPage.getAllCategories(), name, desc);
@@ -175,7 +175,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
         )));
     }
 
-    @Test(priority = 22, testName = "TC108", groups = "delete_category_store")
+    @Test(priority = 22, testName = "TC_SR_36", groups = "delete_category_store", description = "Check if Store Manager can delete an existing Category")
     public void checkIfSMCanDeleteCatego() {
         if (!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
             accessCategoriesPage(webDriver, navigationMenu);
@@ -212,20 +212,20 @@ public class StoreManagerRoleTest extends FunctionalTest {
 
     /* Store Manager - Beacons Page Test Cases */
 
-    @Test(priority = 12, testName = "TC109", groups = "beacons_advertisements")
+    @Test(priority = 12, testName = "TC_SR_37", groups = "beacons_advertisements", description = "Check if Store Manager can access Beacons Page")
     public void checkIfSMCanAccessBeaconsPage() throws InterruptedException {
         assertNotNull(navigationMenu.getBeaconsLink());
         beaconsPage = accessBeaconsPage(webDriver, navigationMenu);
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 13, testName = "TC110", groups = "beacons_advertisements")
+    @Test(priority = 13, testName = "TC_SR_38", groups = "beacons_advertisements", description = "Check if a list of Beacons is visible to the Store Manager")
     public void checkIfSMCanSeeListOfBeacons() {
         assertEquals(WebConstants.beaconsUrl, webDriver.getCurrentUrl());
         assertNotNull(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle));
     }
 
-    @Test(priority = 14, testName = "TC111", groups = "beacons_advertisements")
+    @Test(priority = 14, testName = "TC_SR_39", groups = "beacons_advertisements", description = "Check if Store Manager can create a new Beacon")
     public void checkIfSMCanCreaBeacons() {
         beaconsPage.clickNewBeaconBtn();
         try {
@@ -237,7 +237,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
         assertEquals(WebConstants.notAuthorisedMsg, beaconsPage.getDangerAlert());
     }
 
-    @Test(priority = 15, testName = "TC112", groups = "beacons_advertisements")
+    @Test(priority = 15, testName = "TC_SR_40", groups = "beacons_advertisements", description = "Check if Store Manager can update an existing Beacon")
     public void checkIfSMCanUpdaBeacon() {
         Beacons beacon = beaconsPage.getBeacon(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), WebConstants.defaultTestBeacon.getUniqueRef(),
                 WebConstants.defaultTestBeacon.getName());
@@ -251,7 +251,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
         assertEquals(WebConstants.notAuthorisedMsg, beaconsPage.getDangerAlert());
     }
 
-    @Test(priority = 16, testName = "TC113", groups = "beacons_advertisements")
+    @Test(priority = 16, testName = "TC_SR_41", groups = "beacons_advertisements", description = "Check if Store Manager can delete an existing Beacon")
     public void checkIfSMCanDelBeacon() {
         Beacons beacon = beaconsPage.getBeacon(beaconsPage.getRegOtherBeacons(WebConstants.otherBeaconTitle), WebConstants.defaultTestBeacon.getUniqueRef(),
                 WebConstants.defaultTestBeacon.getName());
@@ -272,20 +272,20 @@ public class StoreManagerRoleTest extends FunctionalTest {
 
     /* Store Manager - Advertisements Page Test Cases */
 
-    @Test(priority = 17, testName = "TC114", groups = "beacons_advertisements")
+    @Test(priority = 17, testName = "TC_SR_42", groups = "beacons_advertisements", description = "Check if Store Manager can access Advertisements Page")
     public void checkIfSMCanAccessAdverPage() {
         assertNotNull(navigationMenu.getAdvertisementsLink());
         advertisementsPage = accessAdvertisementsPage(webDriver, navigationMenu);
         assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
     }
 
-    @Test(priority = 18, testName = "TC115", groups = "beacons_advertisements")
+    @Test(priority = 18, testName = "TC_SR_43", groups = "beacons_advertisements", description = "Check if a list of Advertisements is visible to the Store Manager")
     public void checkIfSMCanSeeListOfAdver() {
         assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
         assertNotNull(advertisementsPage.getAllAdvertisements());
     }
 
-    @Test(priority = 19, testName = "TC116", groups = "beacons_advertisements")
+    @Test(priority = 19, testName = "TC_SR_44", groups = "beacons_advertisements", description = "Check if Store Manager can create a new Advertisement")
     public void checkIfSMCanCreaAdver() {
         assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
         advertisementsPage.clickNewAdvertisementBtn();
@@ -298,7 +298,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
         assertEquals(WebConstants.notAuthorisedMsg, advertisementsPage.getDangerAlert());
     }
 
-    @Test(priority = 20, testName = "TC117", groups = "beacons_advertisements")
+    @Test(priority = 20, testName = "TC_SR_45", groups = "beacons_advertisements", description = "Check if Store Manager can update an existing Advertisement")
     public void checkIfSMCanUpdaAdver() {
         assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
         Advertisement advertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(),
@@ -313,7 +313,7 @@ public class StoreManagerRoleTest extends FunctionalTest {
         assertEquals(WebConstants.notAuthorisedMsg, advertisementsPage.getDangerAlert());
     }
 
-    @Test(priority = 21, testName = "TC118", groups = "beacons_advertisements")
+    @Test(priority = 21, testName = "TC_SR_46", groups = "beacons_advertisements", description = "Check if Store Manager can delete an existing Advertisement")
     public void checkIfSMCanDelAdver() {
         assertEquals(WebConstants.advertisementsUrl, webDriver.getCurrentUrl());
         Advertisement advertisement = advertisementsPage.getAdvertisment(advertisementsPage.getAllAdvertisements(),

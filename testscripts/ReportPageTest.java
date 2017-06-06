@@ -39,7 +39,7 @@ public class ReportPageTest extends FunctionalTest {
         reportPage = accessReportPage(reportDriver, reportNavMenu);
     }
 
-    @Test(priority = 1, testName = "TC_RP_01")
+    @Test(priority = 1, testName = "TC_RP_01", description = "Check if the Total Stores Count in Report Page increase in real time when a store get created")
     @Parameters({"storeName", "storeUniqueCode", "sales"})
     public void checkIfCountIncreOnStoreCrea(String name, String uniqueCode, String sales) {
         int storeCount = reportPage.getTotalStores();
@@ -49,7 +49,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(++storeCount, reportPage.getTotalStores());
     }
 
-    @Test(priority = 2, testName = "TC_RP_02")
+    @Test(priority = 2, testName = "TC_RP_02", description = "Check if the Total Stores Count in Report Page increase in real time when a store get updated")
     @Parameters({"storeName", "storeUniqueCode"})
     public void checkIfCountIncreOnStoreUpda(String name, String uniqueCode) {
         int storeCount = reportPage.getTotalStores();
@@ -58,7 +58,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(storeCount, reportPage.getTotalStores());
     }
 
-    @Test(priority = 3, testName = "TC_RP_03")
+    @Test(priority = 3, testName = "TC_RP_03", description = "Check if the Total Categories Count in Report Page increase in real time when a category get created")
     @Parameters({"categoryName", "categoryDescription"})
     public void checkIfCountIncreOnCateCrea(String name, String desc) {
         int cateCount = reportPage.getTotalCategories();
@@ -68,7 +68,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(++cateCount, reportPage.getTotalCategories());
     }
 
-    @Test(priority = 4, testName = "TC_RP_04")
+    @Test(priority = 4, testName = "TC_RP_04", description = "Check if the Total Categories Count in Report Page increase in real time when a category get updated")
     @Parameters({"categoryName", "categoryDescription"})
     public void checkIfCountIncreOnCateUpda(String name, String desc) {
         int cateCount = reportPage.getTotalCategories();
@@ -84,7 +84,7 @@ public class ReportPageTest extends FunctionalTest {
         createBeacon(webDriver, beaconsPage, WebConstants.defaultTestBeacon);
     }
 
-    @Test(priority = 5, testName = "TC_RP_05", groups = "Advertisements")
+    @Test(priority = 5, testName = "TC_RP_05", groups = "Advertisements", description = "Check if the Total Advertisements Count in Report Page increase in real time when an advertisement get created")
     @Parameters({"adverName", "adverDescription", "adverImage", "adverPrice"})
     public void checkIfCountIncreOnAdverCrea(String name, String desc, String image, String price) {
         int adverCount = reportPage.getTotalAdvertisements();
@@ -95,7 +95,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(++adverCount, reportPage.getTotalAdvertisements());
     }
 
-    @Test(priority = 6, testName = "TC_RP_06", groups = "Advertisements")
+    @Test(priority = 6, testName = "TC_RP_06", groups = "Advertisements", description = "Check if the Total Advertisements Count in Report Page increase in real time when an advertisement get updated")
     @Parameters({"adverName"})
     public void checkIfCountIncreOnAdverUpda(String name) {
         int adverCount = reportPage.getTotalAdvertisements();
@@ -108,7 +108,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(adverCount, reportPage.getTotalAdvertisements());
     }
 
-    @Test(priority = 7, testName = "TC_RP_07", groups = "Advertisements")
+    @Test(priority = 7, testName = "TC_RP_07", groups = "Advertisements", description = "Check if the Total Advertisements count in Report Page decrease in real time when an advertisement get deleted")
     public void checkIfCountDecreOnDelAdver() {
         int adverCount = reportPage.getTotalAdvertisements();
         if (!webDriver.getCurrentUrl().equals(WebConstants.advertisementsUrl))
@@ -125,7 +125,7 @@ public class ReportPageTest extends FunctionalTest {
     }
 
 
-    @Test(priority = 8, testName = "TC_RP_08")
+    @Test(priority = 8, testName = "TC_RP_08", description = "Check if the Total Categories Count in Report Page decrease in real time when an category get deleted")
     public void checkIfCountDecreOnDelCate() {
         int cateCount = reportPage.getTotalCategories();
         if (!webDriver.getCurrentUrl().equals(WebConstants.categoriesUrl))
@@ -134,7 +134,7 @@ public class ReportPageTest extends FunctionalTest {
         assertEquals(--cateCount, reportPage.getTotalCategories());
     }
 
-    @Test(priority = 9, testName = "TC_RP_09")
+    @Test(priority = 9, testName = "TC_RP_09", description = "Check if the Total Stores Count in Report Page decrease in real time when an store get deleted")
     public void checkIfCountDecreOnDelStore() {
         int storeCount = reportPage.getTotalStores();
         if (!webDriver.getCurrentUrl().equals(WebConstants.storesUrl))

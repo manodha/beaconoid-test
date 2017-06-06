@@ -19,7 +19,7 @@
     <parameter name="longitudeNew" value="83.2758490"/>
 
 
-    <test name="test">
+    <test name="Beacons Page Test Cases">
         <classes>
             <class name="testscripts.BeaconsPageTest"/>
         </classes>

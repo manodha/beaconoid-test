@@ -318,6 +318,11 @@ public class FunctionalTest{
         assertEquals(WebConstants.staffUrl, webDriver.getCurrentUrl());
         staffPage.clickNewStaffBtn();
         assertEquals(WebConstants.addStaffUrl, webDriver.getCurrentUrl());
+        try {
+            Thread.sleep(WebConstants.waitMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         staffPage.creaUpdateStaff(staff);
         try {
             Thread.sleep(WebConstants.waitMilliSeconds);

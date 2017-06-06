@@ -15,7 +15,7 @@
     <parameter name="adverImageNew" value=""/>
     <parameter name="adverPriceNew" value="4.00"/>
 
-    <test name="test">
+    <test name="Beacon Advertisements Page Test Cases">
         <classes>
             <class name="testscripts.BeaconsAdvPageTest"/>
         </classes>

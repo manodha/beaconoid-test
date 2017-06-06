@@ -16,7 +16,7 @@
     <parameter name="adverImage" value="/res/sale_sign.jpg"/>
     <parameter name="adverPrice" value="5.00"/>
 
-    <test name="test">
+    <test name="Report Page Test Cases">
         <classes>
             <class name="testscripts.ReportPageTest"/>
         </classes>

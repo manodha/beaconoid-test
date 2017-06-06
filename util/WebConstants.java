@@ -81,7 +81,7 @@ public class WebConstants {
 
 
     public static String loginUrl = baseUrl + "users/sign_in";
-    public static String loginTitle = "Please Sign In";
+    //public static String loginTitle = "Please Sign In";
 
     public static String duplicateBeaconDanger = "Name has already been taken";
 
@@ -89,5 +89,6 @@ public class WebConstants {
     public static String addStaffUrl = baseUrl + "staffs/new";
     public static String deleteStaffMsg = " has been deleted!";
     public static String notAuthorisedMsg = "You are not authorized to perform this action.";
+    public static String sameEmailError = "Email has already been taken";
 
 }

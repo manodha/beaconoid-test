@@ -24,7 +24,7 @@
     <parameter name="categoryName" value="Health/Life Style"/>
     <parameter name="categoryDescription" value="Vitamins/Proteins/Supplements"/>
 
-    <test name="test">
+    <test name="Store Manager Role Test Cases">
         <classes>
             <class name="testscripts.StoreManagerRoleTest"/>
         </classes>

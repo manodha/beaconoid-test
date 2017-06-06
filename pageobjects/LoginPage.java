@@ -1,5 +1,6 @@
 package pageobjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -57,6 +58,12 @@ public class LoginPage extends PageObject {
     // Method to get the Title of the Login Page
     public String getTitleText() {
         return titleH3.getText();
+    }
+
+    public Boolean isLoginPage(){
+        if(webDriver.findElement(By.id("user_email"))!=null && webDriver.findElement(By.id("user_password"))!=null)
+            return true;
+        return false;
     }
 
 }

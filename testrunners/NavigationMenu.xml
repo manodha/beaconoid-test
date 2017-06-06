@@ -1,7 +1,8 @@
 <suite name="navigation_menu_test_scripts">
     <parameter name="email" value="antodoms@gmail.com"/>
     <parameter name="password" value="password"/>
-    <test name="test">
+
+    <test name="Navigation Menu Test Cases">
         <classes>
             <class name="testscripts.NavigationMenuTest"/>
         </classes>
